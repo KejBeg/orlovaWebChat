@@ -19,7 +19,15 @@ connection.connect((error) => {
 });
 
 // Creating Tables
-messageTable = `CREATE TABLE IF NOT EXISTS messages (message TEXT)`;
+
+// Message table
+messageTable = `CREATE TABLE IF NOT EXISTS messages (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	message TEXT,
+	author TEXT
+	)`;
+
 connection.query(messageTable, (error, result) => {
 	if (error) {
 		console.log(`An error occured while creating the table ${error}`);
