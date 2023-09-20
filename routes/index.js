@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 
 // Import database
-const dbConnection = require(`../database`);
 const connection = require('../database');
 
 // Routes
