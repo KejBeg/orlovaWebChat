@@ -1,8 +1,6 @@
 blbina
 blbý
 bordel
-bordel na kolečkách
-bordelmamá
 bukvice
 buzerant
 buzík
@@ -10,16 +8,15 @@ buzna
 cecek
 ciferník
 cyp
-čubčí syn
-čumět
+čubčí
 čuráček
 čurák
 čúrák
 čůrák
 dementi
-do hajzlu
-do piče
-do prdele
+hajzlu
+piče
+prdele
 držet držku
 držet hubu
 držet klapačku
@@ -39,41 +36,33 @@ homokláda
 hovínko
 hovno
 hovnocuc
-huba
 chcanky
 chcát
 chcípnout
 chlastat
 chuj
 idiot
-jdi se pojebat
+pojebat
 jebačka
 jebat
-jít bodnout
-jít do hajzlu
-jít do prdele
-jít vycpat
+hajzlu
+prdele
+vycpat
 kokot
-kokotina
 kretén
 ksindl
 kunda
 kurevník
 kurva
-kurva drát
+kurva
 kurvafix
 kurvit
 kušna
-kůň
 lempl
 lofas
 mamrd
 morda
 mrd
-mrdačka
-mrdat
-mrdka
-mrdník
 mrcha
 nasraný
 nasrat
@@ -102,14 +91,12 @@ podělat
 pojebaný
 posrat
 prcat
-prd
 prdel
 prdelka
 prdelolezec
 prdět
 prdnout
 prevét
-průser
 přefiknout
 přeříznout
 rozesraný
@@ -117,7 +104,7 @@ rozesrat
 rozmrdaný
 rypák
 sajrajt
-sere pes
+sere
 sračka
 sralbotka
 sranec
@@ -133,17 +120,12 @@ strup
 šukézní
 šulin
 šulín
-tma jako v prdeli
-trtkat
-ty píčo
-user
-vlezdoprdelista
+píčo
 vyjebaný
 vyprdnout
 vysrat
 zajebaný
 zasranec
-zásun
 zbouchnout
 zkurvenec
 zkurvený
@@ -153,3 +135,56 @@ zmrd
 zobák
 zpíčený
 žrát
+arse
+arsehead
+arsehole
+ass
+asshole
+bastard
+bitch
+bloody
+bollocks
+brotherfucker
+bugger
+bullshit
+child-fucker
+Christ on a bike
+Christ on a cracker
+cock
+cocksucker
+crap
+cunt
+damn
+damn it
+dick
+dickhead
+dyke
+fatherfucker
+frigger
+fuck
+fucker
+goddamn
+godsdamn
+holy shit
+horseshit
+in shit
+kike
+motherfucker
+nigga
+nigra
+pigfucker
+piss
+prick
+pussy
+shit
+shit ass
+shite
+sisterfucker
+slut
+son of a whore
+son of a bitch
+spastic
+sweet Jesus
+turd
+twat
+wanker
