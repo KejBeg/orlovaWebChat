@@ -17,7 +17,7 @@ git clone https://github.com/KejBeg/orlovaWebChat.git
 	- Should be automatically installed with Node.js
 - MySQL
 	- sudo apt install mysql-server
-	- https://www.dev.mysql.com/downloads
+	- https://dev.mysql.com/downloads
 
 ### Starting
 
