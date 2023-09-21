@@ -34,7 +34,8 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	message TEXT,
-	author TEXT
+	author TEXT,
+	isOffensive BIT
 	)`;
 
 connection.query(messageTable, (error, result) => {
