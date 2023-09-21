@@ -30,10 +30,12 @@ router.post('/', (req, res) => {
 	res.redirect('/');
 });
 
-const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split('\n');
+const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split(/\r?\n/);
+console.log(`${swearWords}`);
 function isMessageOffensive(message) {
-	for (word of swearWords) {
-		if (message.toLowerCase().includes(word)) return true;
+	for (word in swearWords) {
+		console.log(`${word} ; ${message} ; ${message.toLowerCase()} ; ${swearWords[word]}`);
+		if (message.toLowerCase().includes(swearWords[word])) return true;
 	}
 
 	return false;
