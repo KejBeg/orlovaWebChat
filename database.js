@@ -35,7 +35,7 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 	time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	message TEXT,
 	author TEXT,
-	isOffensive BIT
+	isOffensive BOOLEAN
 	)`;
 
 connection.query(messageTable, (error, result) => {
