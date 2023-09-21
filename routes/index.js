@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
 const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split('\n');
 function isMessageOffensive(message) {
 	for (word of swearWords) {
-		if (message.includes(word)) return true;
+		if (message.toLowerCase().includes(word)) return true;
 	}
 
 	return false;
