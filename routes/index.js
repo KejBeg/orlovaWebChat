@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
 	let message = req.body.message;
 	let author = 'Anonymous';
-	let isOffensive = isMessageOffensive(message)
+	let isOffensive = isMessageOffensive(message);
 	connection.query(
 		`INSERT INTO messages (message, author, isOffensive) VALUES (?,?,?)`,
 		[message, author, isOffensive],
@@ -30,10 +30,10 @@ router.post('/', (req, res) => {
 	res.redirect('/');
 });
 
-const swearWords = fs.readFile('bannedWords.txt', 'utf-8').split('\n')
-function isMessageOffensive(message){
-	for(word of swearWords){
-		if(message.includes(word)) return true;
+const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split('\n');
+function isMessageOffensive(message) {
+	for (word of swearWords) {
+		if (message.includes(word)) return true;
 	}
 
 	return false;
