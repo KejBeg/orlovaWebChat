@@ -18,6 +18,15 @@ connection.connect((error) => {
 	}
 });
 
+function getSqlData(sql, callback) {
+	connection.query(sql, (error, result) => {
+		if (error) {
+			throw error;
+		}
+		log(result);
+	});
+}
+
 // Creating Tables
 
 // Message table
