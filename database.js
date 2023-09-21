@@ -36,9 +36,26 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 	message TEXT,
 	author TEXT,
 	isOffensive BOOLEAN
-	)`;
+)`;
 
+// Users table
+usersTable = `CREATE TABLE IF NOT EXISTS users (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username TEXT,
+	password TEXT
+)`;
+
+// Creae message table
 connection.query(messageTable, (error, result) => {
+	if (error) {
+		console.log(`An error occured while creating the table ${error}`);
+	} else {
+		console.log('Table created successfully');
+	}
+});
+
+// Create users table
+connection.query(usersTable, (error, result) => {
 	if (error) {
 		console.log(`An error occured while creating the table ${error}`);
 	} else {
