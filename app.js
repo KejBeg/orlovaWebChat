@@ -22,9 +22,11 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 
 // Routers
 const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
 
 // Using the routers
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 
 // Listening to the port
 app.listen(process.env.PORT || 3000);
