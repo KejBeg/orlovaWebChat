@@ -45,12 +45,26 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	password TEXT
 )`;
 
-// Creae message table
+// Story mode messages table 
+// Question leads to several entities with an answer and another question
+storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
+	id INT NOT NULL UNIQUE PRIMARY KEY,
+	answer TEXT,
+	guestion TEXT,
+	answer1Id INT,
+	answer2Id INT,
+	answer3Id INT,
+	FOREIGN KEY (answer1Id) REFERENCES storyMessages(id),
+	FOREIGN KEY (answer2Id) REFERENCES storyMessages(id),
+	FOREIGN KEY (answer3Id) REFERENCES storyMessages(id)
+)`;
+
+// Create message table
 connection.query(messageTable, (error, result) => {
 	if (error) {
 		console.log(`An error occured while creating the table ${error}`);
 	} else {
-		console.log('Table created successfully');
+		console.log('Table messageTable created successfully');
 	}
 });
 
@@ -59,7 +73,16 @@ connection.query(usersTable, (error, result) => {
 	if (error) {
 		console.log(`An error occured while creating the table ${error}`);
 	} else {
-		console.log('Table created successfully');
+		console.log('Table usersTable created successfully');
+	}
+});
+
+// Create Story mesages table
+connection.query(storyTable, (error, result) => {
+	if (error) {
+		console.log(`An error occured while creating the table ${error}`);
+	} else {
+		console.log('Table storyTable created successfully');
 	}
 });
 
