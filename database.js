@@ -38,13 +38,6 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 	isOffensive BOOLEAN
 )`;
 
-// Users table
-usersTable = `CREATE TABLE IF NOT EXISTS users (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	username TEXT,
-	password TEXT
-)`;
-
 // Story mode messages table 
 // Question leads to several entities with an answer and another question
 storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
@@ -56,7 +49,16 @@ storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
 	answer3Id INT,
 	FOREIGN KEY (answer1Id) REFERENCES storyMessages(id),
 	FOREIGN KEY (answer2Id) REFERENCES storyMessages(id),
-	FOREIGN KEY (answer3Id) REFERENCES storyMessages(id)
+	FOREIGN KEY (answer3Id) REFERENCES storyMessages(id) 
+)`;
+
+// Users table
+usersTable = `CREATE TABLE IF NOT EXISTS users (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username TEXT,
+	password TEXT,
+	storyQuestion INT,
+	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 )`;
 
 // Create message table
@@ -68,21 +70,21 @@ connection.query(messageTable, (error, result) => {
 	}
 });
 
-// Create users table
-connection.query(usersTable, (error, result) => {
-	if (error) {
-		console.log(`An error occured while creating the table ${error}`);
-	} else {
-		console.log('Table usersTable created successfully');
-	}
-});
-
 // Create Story mesages table
 connection.query(storyTable, (error, result) => {
 	if (error) {
 		console.log(`An error occured while creating the table ${error}`);
 	} else {
 		console.log('Table storyTable created successfully');
+	}
+});
+
+// Create users table
+connection.query(usersTable, (error, result) => {
+	if (error) {
+		console.log(`An error occured while creating the table ${error}`);
+	} else {
+		console.log('Table usersTable created successfully');
 	}
 });
 
