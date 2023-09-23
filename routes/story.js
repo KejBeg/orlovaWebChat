@@ -7,9 +7,8 @@ const connection = require('../database');
 
 // Routes
 router.get('/', async (req, res) => {
-	let question = await getQuestion(1); //TODO: --- placeholder 1; redo with user ID
-	console.log(question + " question FINAL ------");
-	res.render('story', {q:question});
+	let questionObj = await getQuestion(1); //TODO: --- placeholder 1; redo with user ID
+	res.render('story', {q:questionObj.question, a1:questionObj.answers[0], a2:questionObj.answers[1], a3:questionObj.answers[2]});
 });
 
 router.post('/', (req, res) => {
@@ -32,7 +31,6 @@ router.post('/', (req, res) => {
 async function getQuestion(userID){
 	let question;
 	let questionID;
-
 	
 	//Gets current questionID from user
 	questionID = await new Promise(function(resolve,reject){
@@ -47,17 +45,35 @@ async function getQuestion(userID){
 	});
 
 	//Gets current question string using questionID
-	question = await new Promise(function(resolve,reject){
-		connection.query(`SELECT question FROM storyMessages WHERE id = ?`, questionID, (error, result) => {
+	questionArray = await new Promise(function(resolve,reject){
+		connection.query(`SELECT * FROM storyMessages WHERE id = ?`, questionID, (error, result) => {
 			if (error) {
 				console.log(`An error occured while accesing the message ${error}`);
 				return reject(error);
 			}
+
 			question = result[0]["question"];
-			resolve(question);
+			answers = [result[0]["answer1Id"], result[0]["answer2Id"], result[0]["answer3Id"]]
+			resolve([question, answers]);
 		});
 	});
-	return question;
+
+	question = questionArray.shift();
+	answersID = questionArray[0]; //the .shift fucks it up somehow so [0] is needed
+
+	//gets Answers to the question using answersID
+	answers = await new Promise(function(resolve,reject){
+		connection.query(`SELECT answer FROM storyMessages WHERE id = ? OR id = ? OR id = ?`, answersID, (error, result) => {
+			if (error) {
+				console.log(`An error occured while accesing the message ${error}`);
+				return reject(error);
+			}
+			answers = [result[0]["answer"], result[1]["answer"], result[2]["answer"]]
+			resolve(answers);
+		});
+	});
+
+	return {question,answers};
 }
 // Export the router
 module.exports = router;
