@@ -43,7 +43,7 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
 	id INT NOT NULL UNIQUE PRIMARY KEY,
 	answer TEXT,
-	guestion TEXT,
+	question TEXT,
 	answer1Id INT,
 	answer2Id INT,
 	answer3Id INT,
