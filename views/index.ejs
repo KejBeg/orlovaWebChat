@@ -1,4 +1,5 @@
 <form name="chatForm" method="post">
+	<% for(i = 0; i < messages.length; i++)  { %> <h5> <%= messages[i].author + ": " + messages[i].message %> </h5> <% } %> 
 	<input type="text" name="message" id="chat-form-text" />
 	<input type="submit" value="Send" />
 </form>
