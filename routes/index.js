@@ -7,8 +7,9 @@ const fs = require('fs'); //interacts with files
 const connection = require('../database');
 
 // Routes
-router.get('/', (req, res) => {
-	res.render('index');
+router.get('/', async (req, res) => {
+	messageArray = await getMessageArray();
+	res.render('index', {messages:messageArray});
 });
 
 router.post('/', (req, res) => {
@@ -39,5 +40,23 @@ function isMessageOffensive(message) {
 	return false;
 }
 
+async function getMessageArray(){
+
+	messageArray = await new Promise(function(resolve,reject){
+		connection.query(`SELECT * FROM messages ORDER BY id DESC LIMIT 10`, (error, result) => {
+			if (error) {
+				console.log(`An error occured while accesing the message ${error}`);
+				return reject(error);
+			}
+
+			//messageArray = Object.values(result).map((messages) => messages.message);
+			//messageArray = JSON.parse(result);
+			messageArray = result;
+			resolve(messageArray.reverse());
+		});
+	});
+
+	return messageArray;
+}
 // Export the router
 module.exports = router;
