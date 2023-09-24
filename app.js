@@ -8,6 +8,7 @@ const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // Database
 const dbConnection = require('./database');
@@ -19,6 +20,7 @@ app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
+app.use(cookieParser());
 
 // Routers
 const indexRouter = require('./routes/index');

@@ -39,6 +39,10 @@ npm run devStart
 npm run start
 ```
 
+## Warnings
+
+- User cookies are extremely insecure and should not be used in production
+
 ## Creators
 
 ### Hat Dealer
