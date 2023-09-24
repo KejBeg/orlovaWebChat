@@ -18,23 +18,32 @@ connection.connect((error) => {
 	}
 });
 
-function sendSqlQuery(sql, read = false) {
-	connection.query(sql, dataInsertion, (error, result) => {
-		// If there is an error, log it and return
-		if (error) {
-			console.log(`An error occured while sending SQL query: ${error}`);
-			return;
-		}
+/**
+ * Sends a SQL query to the database
+ * @param {string} sql The SQL query to send
+ * @param {boolean} read Whether the query should return a result or not
+ * @param {object} dataInsertion The data to insert into the query
+ * @returns {object} The result of the query
+ **/
+function sendSqlQuery(sql, dataInsertion, read = false) {
+	return new Promise((resolve, reject) => {
+		connection.query(sql, dataInsertion, (error, result) => {
 
-		console.log('SQL query sent successfully');
+			// Error Handler
+			if (error) {
+				return reject(`An error occured during sending an SQL query: ${error}`)
+			}
 
-		// If the query is a read query, return the result
-		if (read) {
-			console.log(`Returning result from SQL query: ${result}`);
-			return result;
-		}
-	});
-}
+			// Returning the result if reading
+			if (read) {
+				return resolve(result)
+			}
+
+			// Returning if not reading
+			return resolve()
+
+		});
+
 
 // Creating Tables
 
@@ -99,3 +108,4 @@ connection.query(usersTable, (error, result) => {
 });
 
 module.exports = connection;
+module.exports = sendSqlQuery;

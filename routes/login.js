@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Import database
 const database = require('../database');
+const sendSqlQuery = require('../database');
 
 // Routes
 router.get('/', (req, res) => {
