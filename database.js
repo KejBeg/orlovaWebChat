@@ -18,12 +18,21 @@ connection.connect((error) => {
 	}
 });
 
-function getSqlData(sql, callback) {
-	connection.query(sql, (error, result) => {
+function sendSqlQuery(sql, read = false) {
+	connection.query(sql, dataInsertion, (error, result) => {
+		// If there is an error, log it and return
 		if (error) {
-			throw error;
+			console.log(`An error occured while sending SQL query: ${error}`);
+			return;
 		}
-		log(result);
+
+		console.log('SQL query sent successfully');
+
+		// If the query is a read query, return the result
+		if (read) {
+			console.log(`Returning result from SQL query: ${result}`);
+			return result;
+		}
 	});
 }
 
@@ -38,7 +47,7 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 	isOffensive BOOLEAN
 )`;
 
-// Story mode messages table 
+// Story mode messages table
 // Question leads to several entities with an answer and another question
 storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
 	id INT NOT NULL UNIQUE PRIMARY KEY,
@@ -57,6 +66,7 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	username TEXT,
 	password TEXT,
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	storyQuestion INT,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 )`;
