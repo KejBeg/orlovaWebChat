@@ -10,14 +10,20 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 // Routes
 router.get('/', async (req, res) => {
 	messageArray = await getMessageArray();
+
+	// Cookie setup
+	if (req.cookies.username == undefined) {
+		res.cookie('username', 'Anonymous');
+	}
+
 	res.render('index', { messages: messageArray });
 });
 
 router.post('/', async (req, res) => {
 	let message = await req.body.message;
-	let author = await 'Anonymous';
+	let author = (await req.cookies.username) || 'Anonymous';
 	let isOffensive = await isMessageOffensive(message);
-	sendSqlQuery(
+	await sendSqlQuery(
 		`INSERT INTO messages (message, author, isOffensive) VALUES (?,?,?)`,
 		[message, author, isOffensive]
 	)
