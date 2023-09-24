@@ -7,7 +7,7 @@ const connection = require('../database').connection;
 
 // Routes
 router.get('/', async (req, res) => {
-	let questionObj = await getQuestion(1); //TODO: --- placeholder 1; redo with user ID
+	let questionObj = await getQuestion(req.cookies.username);
 	res.render('story', {
 		q: questionObj.question,
 		a1: questionObj.answers[0],
@@ -20,8 +20,8 @@ router.post('/', (req, res) => {
 	let answerID = req.body.answerID;
 
 	connection.query(
-		`UPDATE users SET storyQuestion = ? WHERE id = ?`,
-		[answerID, 1], //TODO: --- user ID = 1 is a placeholder; redo when its possible to get user ID from client
+		`UPDATE users SET storyQuestion = ? WHERE name = ?`,
+		[answerID, req.cookies.username],
 		(error, result) => {
 			if (error) {
 				console.log(`An error occured while inserting the message ${error}`);
@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
 	res.redirect('/story');
 });
 
-async function getQuestion(userID) {
+async function getQuestion(userName) {
 	let question;
 	let questionID;
 
@@ -41,7 +41,7 @@ async function getQuestion(userID) {
 	questionID = await new Promise(function (resolve, reject) {
 		connection.query(
 			`SELECT storyQuestion FROM users WHERE id = ?`,
-			userID,
+			userName,
 			(error, result) => {
 				if (error) {
 					console.log(`An error occured while accesing the message ${error}`);
