@@ -81,7 +81,7 @@ async function getQuestion(userID) {
 	//gets Answers to the question using answersID
 	answers = await new Promise(function (resolve, reject) {
 		connection.query(
-			`SELECT answer FROM storyMessages WHERE id = ? OR id = ? OR id = ?`,
+			`SELECT * FROM storyMessages WHERE id = ? OR id = ? OR id = ?`,
 			answersID,
 			(error, result) => {
 				if (error) {
@@ -89,9 +89,9 @@ async function getQuestion(userID) {
 					return reject(error);
 				}
 				answers = [
-					result[0]['answer'],
-					result[1]['answer'],
-					result[2]['answer'],
+					result[0],
+					result[1],
+					result[2],
 				];
 				resolve(answers);
 			}
