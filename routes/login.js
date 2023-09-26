@@ -67,10 +67,10 @@ async function userExists(username) {
 		true
 	);
 
-	if (result != '') {
-		return true;
-	} else {
+	if (result == undefined) {
 		return false;
+	} else {
+		return true;
 	}
 }
 
@@ -80,16 +80,16 @@ router.post('/register', async (req, res) => {
 		const password = await req.body.password;
 
 		// If the user exists, redirect to login
-		if (userExists(username)) {
+		if (await userExists(username)) {
 			console.log(`User ${username} already exists`);
 			return res.redirect('/login');
 		}
 
 		// Generating token
-		let token = await generateUserToken();
+		let token = await verifyUserToken();
 
 		// Checking if token is already taken
-		while (tokenExists(token)) {
+		while (verifyUserToken(token)) {
 			token = await generateUserToken();
 		}
 
@@ -142,6 +142,11 @@ async function verifyUserToken(token) {
 	try {
 		// Getting all tokens from database
 		let allTokens = await sendSqlQuery('SELECT token FROM tokens', [], true);
+
+		// If there are no tokens in the database, return false
+		if (allTokens == undefined) {
+			return false;
+		}
 
 		// If token is found in database, return true
 		for (oneToken in allTokens) {
