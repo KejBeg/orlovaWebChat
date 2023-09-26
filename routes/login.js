@@ -16,29 +16,23 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+	try {
+	} catch (error) {}
+
 	const username = await req.body.username;
 	const password = await req.body.password;
-	let databasePassword;
 
-	// Getting password from database
-	await sendSqlQuery(
+	let databasePassword = await sendSqlQuery(
 		'SELECT password FROM users WHERE username = ?',
 		[username],
 		true
-	)
-		.then((result) => {
-			if (result == '') {
-				console.log(`User ${username} does not exist`);
-				res.redirect('/login');
-			}
+	);
 
-			databasePassword = result[0].password;
-			console.log('Password from database: ' + databasePassword);
-		})
-		.catch((error) => {
-			console.log(`An error occured while logging in: ${error}`);
-			res.redirect('/login');
-		});
+	// Getting password from database
+	if (databasePassword == '') {
+		console.log(`User ${username} does not exist`);
+		return res.redirect('/login');
+	}
 
 	// Checking if password is correct
 	if (password == databasePassword) {
@@ -54,46 +48,63 @@ router.get('/register', async (req, res) => {
 	res.render('login/register');
 });
 
-router.post('/register', async (req, res) => {
-	const username = await req.body.username;
-	const password = await req.body.password;
+/**
+ * Function that checks if a user exists
+ * @param {string} username
+ * @returns True if the user exists, false if it does not
+ */
+async function userExists(username) {
+	let result = await sendSqlQuery(
+		'SELECT * FROM users WHERE username = ?',
+		[username],
+		true
+	);
 
-	let userExists;
-
-	// Checking if the user exists
-	await sendSqlQuery('SELECT * FROM users WHERE username = ?', [username], true)
-		.then((result) => {
-			console.log(result);
-			if (result != '') {
-				userExists = true;
-			} else {
-				userExists = false;
-			}
-		})
-		.catch((err) => {
-			return res.redirect('/login');
-		});
-
-	// If the user exists, redirect to login
-	if (userExists) {
-		console.log(`User ${username} already exists`);
-		return res.redirect('/login');
+	if (result != '') {
+		return true;
+	} else {
+		return false;
 	}
+}
 
-	// Creating the user
-	await sendSqlQuery('INSERT INTO users (username, password) VALUES (?,?)', [
-		username,
-		password,
-	])
-		.then(() => {
-			console.log(`User ${username} created successfully`);
-			res.cookie('username', username);
-			return res.redirect('/');
-		})
-		.catch((err) => {
-			console.log(`An error occured while creating a user: ${err}`);
+router.post('/register', async (req, res) => {
+	try {
+		const username = await req.body.username;
+		const password = await req.body.password;
+
+		// Checking if the user exists
+
+		// If the user exists, redirect to login
+		if (userExists(username)) {
+			console.log(`User ${username} already exists`);
 			return res.redirect('/login');
-		});
+		}
+
+		// Generating token
+		generateUserToken()
+			// If token is successfully generated, set the token variable
+			.then((token) => {
+				token = token;
+			})
+			// If token is not successfully generated, redirect to register
+			.catch((error) => {
+				return redirect('/register');
+			});
+
+		// Checking if the token is already taken
+
+		// Creating the user
+		await sendSqlQuery(
+			'INSERT INTO users (username, password, token) VALUES (?,?, ?)',
+			[username, password, token]
+		);
+		console.log(`User ${username} created successfully`);
+		res.cookie('username', username);
+		return res.redirect('/');
+	} catch (error) {
+		console.log(`An error occured while creating a user: ${error}`);
+		return res.redirect('/register');
+	}
 });
 
 // Logout route
@@ -107,21 +118,17 @@ router.get('/logout', async (req, res) => {
  * @returns a token
  */
 async function generateUserToken() {
-	return new Promise((resolve, reject) => {
-		crypto.randomBytes(parseInt(process.env.TOKEN_BITS), (error, buffer) => {
-			// Error handling
-			if (error) {
-				reject(`Could not generate token: ${error}`);
-				return;
-			}
+	crypto.randomBytes(parseInt(process.env.TOKEN_BITS), (error, buffer) => {
+		// Error handling
+		if (error) {
+			throw error;
+		}
 
-			console.log('Token generated successfully');
+		console.log('Token generated successfully');
 
-			// Generating token
-			let token = buffer.toString('hex');
-			console.log(token);
-			resolve(token);
-		});
+		// Generating token
+		let token = buffer.toString('hex');
+		return token;
 	});
 }
 
@@ -131,31 +138,24 @@ async function generateUserToken() {
  * @returns True if the token is already taken, false if it is not
  */
 async function verifyUserToken(token) {
-	return new Promise((resolve, reject) => {
+	try {
 		// Getting all tokens from database
-		let allTokens;
-		sendSqlQuery('SELECT token FROM tokens', [], true)
-			.then((result) => {
-				allTokens = result;
-			})
-			.catch((error) => {
-				reject(error);
-			});
+		let allTokens = await sendSqlQuery('SELECT token FROM tokens', [], true);
 
 		// If token is found in database, return true
-		for (token in allTokens) {
-			if (token == token) {
-				resolve(true);
-				return;
+		for (oneToken in allTokens) {
+			if (oneToken == token) {
+				return true;
 			}
-
-			// If token is not found in database, return false
-			resolve(false);
 		}
-	});
-}
 
-generateUserToken();
+		// If token is not found in database, return false
+		return false;
+	} catch (error) {
+		console.log(`An error occured while verifying a token: ${error}`);
+		throw error;
+	}
+}
 
 // Export the router
 module.exports = router;
