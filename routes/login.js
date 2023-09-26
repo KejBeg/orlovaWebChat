@@ -28,6 +28,13 @@ router.post('/', async (req, res) => {
 		true
 	);
 
+	// Getting the user's token
+	let token = await sendSqlQuery(
+		'SELECT token FROM users WHERE username = ?',
+		[username],
+		true
+	);
+
 	// Getting password from database
 	if (databasePassword == '') {
 		console.log(`User ${username} does not exist`);
@@ -37,7 +44,7 @@ router.post('/', async (req, res) => {
 	// Checking if password is correct
 	if (password == databasePassword) {
 		console.log(`User ${username} logged in successfully`);
-		res.cookie('username', username);
+		res.cookie('userToken', token);
 		return res.redirect('/');
 	}
 	return res.redirect('/login');
@@ -72,8 +79,6 @@ router.post('/register', async (req, res) => {
 		const username = await req.body.username;
 		const password = await req.body.password;
 
-		// Checking if the user exists
-
 		// If the user exists, redirect to login
 		if (userExists(username)) {
 			console.log(`User ${username} already exists`);
@@ -81,25 +86,21 @@ router.post('/register', async (req, res) => {
 		}
 
 		// Generating token
-		generateUserToken()
-			// If token is successfully generated, set the token variable
-			.then((token) => {
-				token = token;
-			})
-			// If token is not successfully generated, redirect to register
-			.catch((error) => {
-				return redirect('/register');
-			});
+		let token = await generateUserToken();
 
-		// Checking if the token is already taken
+		// Checking if token is already taken
+		while (tokenExists(token)) {
+			token = await generateUserToken();
+		}
 
 		// Creating the user
 		await sendSqlQuery(
 			'INSERT INTO users (username, password, token) VALUES (?,?, ?)',
 			[username, password, token]
 		);
+
 		console.log(`User ${username} created successfully`);
-		res.cookie('username', username);
+		res.cookie('userToken', token);
 		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while creating a user: ${error}`);
@@ -109,7 +110,7 @@ router.post('/register', async (req, res) => {
 
 // Logout route
 router.get('/logout', async (req, res) => {
-	res.clearCookie('username');
+	res.clearCookie('usrToken');
 	res.redirect('/');
 });
 
