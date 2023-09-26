@@ -74,6 +74,7 @@ storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
 // Users table
 usersTable = `CREATE TABLE IF NOT EXISTS users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	token TEXT,
 	username TEXT,
 	password TEXT,
 	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
