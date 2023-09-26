@@ -75,10 +75,11 @@ storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
 usersTable = `CREATE TABLE IF NOT EXISTS users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	token TEXT,
+	username TEXT UNIQUE,
 	username TEXT,
 	password TEXT,
 	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	storyQuestion INT,
+	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 )`;
 
