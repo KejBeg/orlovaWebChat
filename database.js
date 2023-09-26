@@ -26,23 +26,19 @@ connection.connect((error) => {
  * @returns {object} The result of the query
  **/
 function sendSqlQuery(sql, dataInsertion, read = false) {
-	return new Promise(function (resolve, reject) {
-		connection.query(sql, dataInsertion, (error, result) => {
-			if (error) {
-				console.log(`An error occured while Sending SQL query ${error}`);
-				return reject(error);
-			}
+	connection.query(sql, dataInsertion, (error, result) => {
+		// Error handling
+		if (error) {
+			throw error;
+		}
 
-			console.log('SQL query sent successfully');
-			// If the query is a read query, return the result
-			if (read) {
-				console.log(`SQL query read successfully, result: ${result}`);
-				return resolve(result);
-			}
+		console.log('SQL query sent successfully');
 
-			// If the query is not a read query, return nothing
-			return resolve();
-		});
+		// If the query is a read query, return the result
+		if (read) return result;
+
+		// If the query is not a read query, just return
+		return;
 	});
 }
 
@@ -74,10 +70,9 @@ storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
 // Users table
 usersTable = `CREATE TABLE IF NOT EXISTS users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	token TEXT,
-	username TEXT UNIQUE,
 	username TEXT,
 	password TEXT,
+	token TEXT,
 	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)

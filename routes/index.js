@@ -20,19 +20,20 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	let message = await req.body.message;
-	let author = (await req.cookies.username) || 'Anonymous';
-	let isOffensive = await isMessageOffensive(message);
-	await sendSqlQuery(
-		`INSERT INTO messages (message, author, isOffensive) VALUES (?,?,?)`,
-		[message, author, isOffensive]
-	)
-		.then(() => {
-			res.redirect('/');
-		})
-		.catch((error) => {
-			res.redirect('/');
-		});
+	try {
+		let message = await req.body.message;
+		let author = (await req.cookies.username) || 'Anonymous';
+		let isOffensive = await isMessageOffensive(message);
+		await sendSqlQuery(
+			`INSERT INTO messages (message, author, isOffensive) VALUES (?,?,?)`,
+			[message, author, isOffensive]
+		);
+
+		return res.redirect('/');
+	} catch (error) {
+		console.log(`An error occured while sending a message: ${error}`);
+		return res.redirect('/');
+	}
 });
 
 const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split(/\r?\n/);
