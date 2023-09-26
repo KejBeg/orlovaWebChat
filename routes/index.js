@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 	// Cookie setup
 	if (req.cookies.username == undefined) {
-		res.cookie('username', 'Anonymous');
+		// TODO
 	}
 
 	res.render('index', { messages: messageArray });
