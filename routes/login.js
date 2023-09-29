@@ -7,6 +7,7 @@ const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 const crypto = require('crypto'); // Used for token generation
 const { all } = require('.');
+const { log } = require('console');
 
 // Routes
 
@@ -86,10 +87,11 @@ router.post('/register', async (req, res) => {
 		}
 
 		// Generating token
-		let token = await verifyUserToken();
+		let token = await generateUserToken();
+		console.log('token ' + token);
 
 		// Checking if token is already taken
-		while (verifyUserToken(token)) {
+		while ((await verifyUserToken(token)) == true) {
 			token = await generateUserToken();
 		}
 
@@ -119,18 +121,11 @@ router.get('/logout', async (req, res) => {
  * @returns a token
  */
 async function generateUserToken() {
-	crypto.randomBytes(parseInt(process.env.TOKEN_BITS), (error, buffer) => {
-		// Error handling
-		if (error) {
-			throw error;
-		}
-
-		console.log('Token generated successfully');
-
-		// Generating token
-		let token = buffer.toString('hex');
-		return token;
-	});
+	let token = crypto
+		.randomBytes(parseInt(process.env.TOKEN_BITS))
+		.toString('hex');
+	console.log('Token successfully generated');
+	return token;
 }
 
 /**
@@ -141,7 +136,8 @@ async function generateUserToken() {
 async function verifyUserToken(token) {
 	try {
 		// Getting all tokens from database
-		let allTokens = await sendSqlQuery('SELECT token FROM tokens', [], true);
+		let allTokens = await sendSqlQuery('SELECT token FROM users', [], true);
+		console.log(allTokens);
 
 		// If there are no tokens in the database, return false
 		if (allTokens == undefined) {

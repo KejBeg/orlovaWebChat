@@ -73,10 +73,10 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	username TEXT,
 	password TEXT,
 	token TEXT,
-	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
-)`;
+	)`;
 
 // Create message table
 connection.query(messageTable, (error, result) => {
