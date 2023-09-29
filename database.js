@@ -73,37 +73,21 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	username TEXT,
 	password TEXT,
 	token TEXT,
-	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 	)`;
 
-// Create message table
-connection.query(messageTable, (error, result) => {
-	if (error) {
-		console.log(`An error occured while creating the table ${error}`);
-	} else {
-		console.log('Table messageTable created successfully');
-	}
-});
-
-// Create Story mesages table
-connection.query(storyTable, (error, result) => {
-	if (error) {
-		console.log(`An error occured while creating the table ${error}`);
-	} else {
-		console.log('Table storyTable created successfully');
-	}
-});
+console.log('Generating tables');
 
 // Create users table
-connection.query(usersTable, (error, result) => {
-	if (error) {
-		console.log(`An error occured while creating the table ${error}`);
-	} else {
-		console.log('Table usersTable created successfully');
-	}
-});
+sendSqlQuery(usersTable);
+
+// Create message table
+sendSqlQuery(messageTable);
+
+// Create Story mesages table
+sendSqlQuery(storyTable);
 
 module.exports = {
 	connection: connection,
