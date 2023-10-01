@@ -25,20 +25,30 @@ connection.connect((error) => {
  * @param {object} dataInsertion The data to insert into the query
  * @returns {object} The result of the query
  **/
-function sendSqlQuery(sql, dataInsertion, read = false) {
-	connection.query(sql, dataInsertion, (error, result) => {
-		// Error handling
-		if (error) {
-			throw error;
-		}
+async function sendSqlQuery(sql, dataInsertion, read = false) {
+	return new Promise((resolve, reject) => {
+		connection.query(sql, dataInsertion, (error, result) => {
+			// Error handling
+			if (error) {
+				reject(error);
+				return;
+			}
 
-		console.log('SQL query sent successfully');
+			console.log('SQL query sent successfully');
 
-		// If the query is a read query, return the result
-		if (read) return result;
+			// Turn the result into a JSON
+			result = JSON.parse(JSON.stringify(result));
 
-		// If the query is not a read query, just return
-		return;
+			// If the query is a read query, return the result
+			if (read) {
+				resolve(result);
+				return;
+			}
+
+			// If the query is not a read query, just return
+			resolve();
+			return;
+		});
 	});
 }
 
@@ -49,14 +59,15 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	message TEXT,
-	author TEXT,
-	isOffensive BOOLEAN
+	author INT,
+	isOffensive BOOLEAN,
+	FOREIGN KEY (author) REFERENCES users(id)
 )`;
 
 // Story mode messages table
 // Question leads to several entities with an answer and another question
 storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
-	id INT NOT NULL UNIQUE PRIMARY KEY,
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	answer TEXT,
 	question TEXT,
 	answer1Id INT,
@@ -73,10 +84,10 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	username TEXT,
 	password TEXT,
 	token TEXT,
-	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	storyQuestion INT DEFAULT 0,
-	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	)`;
+// storyQuestion INT DEFAULT 0
+// FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 
 console.log('Generating tables');
 
@@ -88,6 +99,11 @@ sendSqlQuery(messageTable);
 
 // Create Story mesages table
 sendSqlQuery(storyTable);
+
+// Create Anonymous user if it doesn't exist
+sendSqlQuery(
+	`INSERT IGNORE INTO users (id, username, password, token) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous')`
+);
 
 module.exports = {
 	connection: connection,

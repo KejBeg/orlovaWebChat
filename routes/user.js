@@ -6,74 +6,61 @@ const router = express.Router();
 const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 const crypto = require('crypto'); // Used for token generation
-const { all } = require('.');
-const { log } = require('console');
 
 // Routes
 
 // Login route
-router.get('/', async (req, res) => {
-	res.render('login/login');
+router.get('/login', async (req, res) => {
+	res.render('user/login');
 });
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
 	try {
-	} catch (error) {}
+		const username = await req.body.username;
+		const password = await req.body.password;
 
-	const username = await req.body.username;
-	const password = await req.body.password;
+		let databasePassword = await sendSqlQuery(
+			'SELECT password FROM users WHERE username = ?',
+			[username],
+			true
+		);
+		databasePassword = databasePassword[0].password;
 
-	let databasePassword = await sendSqlQuery(
-		'SELECT password FROM users WHERE username = ?',
-		[username],
-		true
-	);
+		// Checking if user exists
+		if (!userExists(username)) {
+			console.log(`User ${username} does not exist`);
+			return res.redirect('/user/login');
+		}
 
-	// Getting the user's token
-	let token = await sendSqlQuery(
-		'SELECT token FROM users WHERE username = ?',
-		[username],
-		true
-	);
+		// Checking if password is correct
+		if (password != databasePassword) {
+			console.log(`User ${username} entered the wrong password`);
+			return res.redirect('/user/login');
+		}
 
-	// Getting password from database
-	if (databasePassword == '') {
-		console.log(`User ${username} does not exist`);
-		return res.redirect('/login');
-	}
+		// Getting the user's token
+		let token = await sendSqlQuery(
+			'SELECT token FROM users WHERE username = ?',
+			[username],
+			true
+		);
+		token = token[0].token;
 
-	// Checking if password is correct
-	if (password == databasePassword) {
+		// Checking if password is correct
 		console.log(`User ${username} logged in successfully`);
 		res.cookie('userToken', token);
+
 		return res.redirect('/');
+	} catch (error) {
+		console.log(`An error occured while logging in: ${error}`);
+		return res.redirect('/user/login');
 	}
-	return res.redirect('/login');
 });
 
 // Register route
 router.get('/register', async (req, res) => {
-	res.render('login/register');
+	res.render('user/register');
 });
-
-/**
- * Function that checks if a user exists
- * @param {string} username
- * @returns True if the user exists, false if it does not
- */
-async function userExists(username) {
-	let result = await sendSqlQuery(
-		'SELECT * FROM users WHERE username = ?',
-		[username],
-		true
-	);
-
-	if (result == undefined) {
-		return false;
-	} else {
-		return true;
-	}
-}
 
 router.post('/register', async (req, res) => {
 	try {
@@ -88,7 +75,6 @@ router.post('/register', async (req, res) => {
 
 		// Generating token
 		let token = await generateUserToken();
-		console.log('token ' + token);
 
 		// Checking if token is already taken
 		while ((await verifyUserToken(token)) == true) {
@@ -97,7 +83,7 @@ router.post('/register', async (req, res) => {
 
 		// Creating the user
 		await sendSqlQuery(
-			'INSERT INTO users (username, password, token) VALUES (?,?, ?)',
+			'INSERT INTO users (username, password, token) VALUES (?, ?, ?)',
 			[username, password, token]
 		);
 
@@ -112,9 +98,28 @@ router.post('/register', async (req, res) => {
 
 // Logout route
 router.get('/logout', async (req, res) => {
-	res.clearCookie('usrToken');
+	res.clearCookie('userToken');
 	res.redirect('/');
 });
+
+/**
+ * Function that checks if a user exists
+ * @param {string} username
+ * @returns True if the user exists, false if it does not
+ */
+async function userExists(username) {
+	let result = await sendSqlQuery(
+		'SELECT * FROM users WHERE username = ?',
+		[username],
+		true
+	);
+
+	if (result == undefined || result == '') {
+		return false;
+	} else {
+		return true;
+	}
+}
 
 /**
  * Function that generates a token
@@ -137,7 +142,6 @@ async function verifyUserToken(token) {
 	try {
 		// Getting all tokens from database
 		let allTokens = await sendSqlQuery('SELECT token FROM users', [], true);
-		console.log(allTokens);
 
 		// If there are no tokens in the database, return false
 		if (allTokens == undefined) {

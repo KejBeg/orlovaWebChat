@@ -22,14 +22,22 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(cookieParser());
 
+// Setting token to Anonymous
+app.use((req, res, next) => {
+	if (!req.cookies.userToken) {
+		res.cookie('userToken', 'Anonymous');
+	}
+	next();
+});
+
 // Routers
 const indexRouter = require('./routes/index');
-const loginRouter = require('./routes/login');
+const userRouter = require('./routes/user');
 const storyRouter = require('./routes/story');
 
 // Using the routers
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
+app.use('/user', userRouter);
 app.use('/story', storyRouter);
 
 // Listening to the port
