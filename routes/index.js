@@ -11,22 +11,34 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 router.get('/', async (req, res) => {
 	messageArray = await getMessageArray();
 
-	// Cookie setup
-	if (req.cookies.username == undefined) {
-		// TODO
-	}
-
 	res.render('index', { messages: messageArray });
 });
 
 router.post('/', async (req, res) => {
 	try {
 		let message = await req.body.message;
-		let author = (await req.cookies.username) || 'Anonymous';
+		let authorToken = await req.cookies.userToken;
 		let isOffensive = await isMessageOffensive(message);
+
+		// Get author id
+		let authorId = await sendSqlQuery(
+			'SELECT id FROM users WHERE token = ?',
+			[authorToken],
+			true
+		);
+
+		authorId = authorId[0].id;
+
+		console.log(`User ${authorId} sent a message`);
+
+		// Check if user exists
+		if (authorId == undefined) {
+			throw new Error('User does not exist');
+		}
+
 		await sendSqlQuery(
 			`INSERT INTO messages (message, author, isOffensive) VALUES (?,?,?)`,
-			[message, author, isOffensive]
+			[message, authorId, isOffensive]
 		);
 
 		return res.redirect('/');
@@ -45,25 +57,27 @@ function isMessageOffensive(message) {
 	return false;
 }
 
+/**
+ * Gets the last 10 messages from the database
+ * @returns {array} An array of the last 10 messages
+ */
 async function getMessageArray() {
-	messageArray = await new Promise(function (resolve, reject) {
-		connection.query(
-			`SELECT * FROM messages ORDER BY id DESC LIMIT 10`,
-			(error, result) => {
-				if (error) {
-					console.log(`An error occured while accesing the message ${error}`);
-					return reject(error);
-				}
+	let messageArray = await sendSqlQuery(
+		`SELECT *
+		FROM messages
+		JOIN users ON messages.author = users.id
+		ORDER BY time DESC
+		LIMIT 10
+		`,
+		[],
+		true
+	);
 
-				//messageArray = Object.values(result).map((messages) => messages.message);
-				//messageArray = JSON.parse(result);
-				messageArray = result;
-				resolve(messageArray.reverse());
-			}
-		);
-	});
+	// Reverse the array
+	messageArray.reverse();
 
 	return messageArray;
 }
+
 // Export the router
 module.exports = router;
