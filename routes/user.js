@@ -9,11 +9,15 @@ const crypto = require('crypto'); // Used for token generation
 
 // Routes
 
-// Login route
+// GET login route
+// Renders the login page
 router.get('/login', async (req, res) => {
 	res.render('user/login');
 });
 
+// POST login route
+// Gets username and password from POST request and checks if they are correct
+// If they are correct, token is set and user is redirected to index
 router.post('/login', async (req, res) => {
 	try {
 		const username = await req.body.username;
@@ -57,11 +61,14 @@ router.post('/login', async (req, res) => {
 	}
 });
 
-// Register route
+// GET register route
 router.get('/register', async (req, res) => {
 	res.render('user/register');
 });
 
+// POST register route
+// Gets username and password from POST request and creates a user, if the username isn't taken
+// Sets token and redirects to index
 router.post('/register', async (req, res) => {
 	try {
 		const username = await req.body.username;
@@ -96,14 +103,15 @@ router.post('/register', async (req, res) => {
 	}
 });
 
-// Logout route
+// GET logout route
+// Clears the user token and redirects to index
 router.get('/logout', async (req, res) => {
 	res.clearCookie('userToken');
 	res.redirect('/');
 });
 
 /**
- * Function that checks if a user exists
+ * Checks if a user exists
  * @param {string} username
  * @returns True if the user exists, false if it does not
  */
