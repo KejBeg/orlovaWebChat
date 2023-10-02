@@ -19,7 +19,7 @@ git clone https://github.com/KejBeg/orlovaWebChat.git
 	- sudo apt install mysql-server
 	- https://dev.mysql.com/downloads
 
-### Starting
+### How to run
 
 - Installing on Node.js dependencies
 
@@ -39,16 +39,22 @@ npm run devStart
 npm run start
 ```
 
-## Warnings
-
-- User cookies are extremely insecure and should not be used in production
+### Warnings
 
 ## Creators
 
 ### Hat Dealer
 
+- Back-end developer
+
 ### Robkoo
+
+- Front-end developer
 
 ### Samcoo
 
+- Front-end developer
+
 ### KejBeg
+
+- Full-stack developer
