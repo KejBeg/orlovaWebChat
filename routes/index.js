@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs'); //interacts with files
+const { parse } = require('path');
 
 // Import database
 const connection = require('../database').connection;
@@ -83,9 +84,11 @@ async function getMessageArray() {
 		ORDER BY time DESC
 		LIMIT ?
 		`,
-		[proccess.env.GET_MESSAGE_LIMIT],
+		[parseInt(process.env.GET_MESSAGE_LIMIT)],
 		true
 	);
+	// Q: how do i convert a string of numbers into an int
+	// A: parseInt()
 
 	// Reverse the array
 	messageArray.reverse();
