@@ -34,31 +34,11 @@ router.post('/', (req, res) => {
 });
 
 async function getQuestion(userToken) {
-	let question;
-	let questionID;
-
-	//Gets current questionID from user
-	questionID = await new Promise(function (resolve, reject) {
-		connection.query(
-			`SELECT storyQuestion FROM users WHERE token = ?`,
-			userToken,
-			(error, result) => {
-				if (error) {
-					console.log(`An error occured while accesing the message ${error}`);
-					return reject(error);
-				}
-				questionID = result[0]['storyQuestion'];
-
-				resolve(questionID);
-			}
-		);
-	});
-
-	//Gets current question string using questionID
+	//Gets current question string using userToken
 	questionArray = await new Promise(function (resolve, reject) {
 		connection.query(
-			`SELECT * FROM storyMessages WHERE id = ?`,
-			questionID,
+			`SELECT * FROM storyMessages WHERE id = (SELECT storyQuestion FROM users WHERE token = ?);`,
+			userToken,
 			(error, result) => {
 				if (error) {
 					console.log(`An error occured while accesing the message ${error}`);
