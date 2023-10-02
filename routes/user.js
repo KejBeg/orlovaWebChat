@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
 		databasePassword = databasePassword[0].password;
 
 		// Checking if user exists
-		if (!userExists(username)) {
+		if (!userExistsByName(username)) {
 			console.log(`User ${username} does not exist`);
 			return res.redirect('/user/login');
 		}
@@ -75,18 +75,13 @@ router.post('/register', async (req, res) => {
 		const password = await req.body.password;
 
 		// If the user exists, redirect to login
-		if (await userExists(username)) {
+		if (await userExistsByName(username)) {
 			console.log(`User ${username} already exists`);
 			return res.redirect('/login');
 		}
 
-		// Generating token
-		let token = await generateUserToken();
-
-		// Checking if token is already taken
-		while ((await verifyUserToken(token)) == true) {
-			token = await generateUserToken();
-		}
+		// Getting a new token
+		const token = await getNewToken();
 
 		// Creating the user
 		await sendSqlQuery(
@@ -104,8 +99,31 @@ router.post('/register', async (req, res) => {
 });
 
 // GET logout route
-// Clears the user token and redirects to index
+// Logs the user out and redirects to index
+// If not Anonymous, change token
 router.get('/logout', async (req, res) => {
+	let currentToken = await req.cookies.userToken;
+	let userExists = await userExistsByToken(currentToken);
+
+	// If user exists, change token
+	if (userExists && currentToken != 'Anonymous') {
+		// Gets username
+		let username = await sendSqlQuery(
+			'SELECT username FROM users WHERE token = ?',
+			[currentToken],
+			true
+		);
+
+		// Generates new token
+		let newToken = await getNewToken();
+
+		// Changes token
+		await sendSqlQuery('UPDATE users SET token = ? WHERE token = ?', [
+			newToken,
+			currentToken,
+		]);
+	}
+
 	res.clearCookie('userToken');
 	res.redirect('/');
 });
@@ -115,7 +133,7 @@ router.get('/logout', async (req, res) => {
  * @param {string} username
  * @returns True if the user exists, false if it does not
  */
-async function userExists(username) {
+async function userExistsByName(username) {
 	let result = await sendSqlQuery(
 		'SELECT * FROM users WHERE username = ?',
 		[username],
@@ -127,6 +145,42 @@ async function userExists(username) {
 	} else {
 		return true;
 	}
+}
+
+/**
+ * Gets if user exists by token
+ * @param {string} token Token for which to scan
+ * @returns
+ */
+async function userExistsByToken(token) {
+	let result = await sendSqlQuery(
+		'SELECT * FROM users WHERE token = ?',
+		[token],
+		true
+	);
+
+	if (result == undefined || result == '') {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/**
+ * Gets a new token and verifies if it is already taken or not
+ * @returns a unique token
+ */
+async function getNewToken() {
+	// Generating token
+	let token = await generateUserToken();
+
+	// Checking if token is already taken
+	while ((await verifyUserToken(token)) == true) {
+		token = await generateUserToken();
+	}
+
+	console.log('Created new token successfully');
+	return token;
 }
 
 /**
