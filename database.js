@@ -107,6 +107,7 @@ sendSqlQuery(
 	`INSERT IGNORE INTO users (id, username, password, token) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous')`
 );
 
+// Exports
 module.exports = {
 	connection: connection,
 	sendSqlQuery: sendSqlQuery,

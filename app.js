@@ -22,7 +22,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(cookieParser());
 
-// Setting token to Anonymous
+// Setting token to Anonymous if it doesn't exist
 app.use((req, res, next) => {
 	if (!req.cookies.userToken) {
 		res.cookie('userToken', 'Anonymous');
