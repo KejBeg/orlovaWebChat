@@ -23,13 +23,6 @@ router.post('/', (req, res) => {
 	sendSqlQuery(
 		`UPDATE users SET storyQuestion = ? WHERE token = ?`,
 		[answerID, req.cookies.userToken],
-		(error, result) => {
-			if (error) {
-				console.log(`An error occured while inserting the message ${error}`);
-			} else {
-				console.log('Message inserted successfully');
-			}
-		}
 	);
 	res.redirect('/story');
 });
@@ -38,43 +31,29 @@ async function getQuestion(userToken) {
 	//Gets current question string using userToken
 	questionArray = await sendSqlQuery(
 			`SELECT * FROM storyMessages WHERE id = (SELECT storyQuestion FROM users WHERE token = ?);`,
-			userToken,
-			(error, result) => {
-				if (error) {
-					console.log(`An error occured while accesing the message ${error}`);
-					return reject(error);
-				}
-
-				question = result[0]['question'];
-				answers = [
-					result[0]['answer1Id'],
-					result[0]['answer2Id'],
-					result[0]['answer3Id'],
-				];
-				resolve([question, answers]);
-			}
+			[userToken],
+			true
 		);
 
-	question = questionArray.shift();
-	answersID = questionArray[0]; //the .shift fucks it up somehow so [0] is needed
+	question = questionArray[0]['question'];
+	answersID = [
+		questionArray[0]['answer1Id'],
+		questionArray[0]['answer2Id'],
+		questionArray[0]['answer3Id'],
+	];
 
 	//gets Answers to the question using answersID
-	answers = await sendSqlQuery(
+	answersResult = await sendSqlQuery(
 			`SELECT * FROM storyMessages WHERE id = ? OR id = ? OR id = ?`,
 			answersID,
-			(error, result) => {
-				if (error) {
-					console.log(`An error occured while accesing the message ${error}`);
-					return reject(error);
-				}
-				answers = [
-					result[0],
-					result[1],
-					result[2],
-				];
-				resolve(answers);
-			}
+			true
 		);
+
+	answers = [
+		answersResult[0],
+		answersResult[1],
+		answersResult[2],
+	];
 
 	return { question, answers };
 }
