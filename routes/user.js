@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
 		}
 
 		// Checking if password is correct
-		if (password != databasePassword) {
+		if (!(await verifyPassword(databasePassword, password))) {
 			console.log(`User ${username} entered the wrong password`);
 			return res.redirect('/user/login');
 		}
@@ -80,13 +80,22 @@ router.post('/register', async (req, res) => {
 			return res.redirect('/login');
 		}
 
+		// Checking if password is valid
+		if (!(await isPasswordValid(password))) {
+			console.log(`${username} entered an invalid password`);
+			return res.redirect('/user/register');
+		}
+
 		// Getting a new token
 		const token = await getNewToken();
+
+		// Hash the password
+		const hashedPassword = await encryptPassword(password);
 
 		// Creating the user
 		await sendSqlQuery(
 			'INSERT INTO users (username, password, token) VALUES (?, ?, ?)',
-			[username, password, token]
+			[username, hashedPassword, token]
 		);
 
 		console.log(`User ${username} created successfully`);
@@ -94,7 +103,7 @@ router.post('/register', async (req, res) => {
 		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while creating a user: ${error}`);
-		return res.redirect('/register');
+		return res.redirect('/user/register');
 	}
 });
 
@@ -126,6 +135,18 @@ router.get('/logout', async (req, res) => {
 
 	res.clearCookie('userToken');
 	res.redirect('/');
+});
+
+router.get('/list', async (req, res) => {
+	try {
+		// Get all users
+		let users = await sendSqlQuery('SELECT * FROM users', [], true);
+
+		res.render('user/list', { users: users });
+	} catch (error) {
+		console.log(`An error happened while getting the user list: ${error}`);
+		return res.redirect('/');
+	}
 });
 
 /**
@@ -223,6 +244,79 @@ async function verifyUserToken(token) {
 		console.log(`An error occured while verifying a token: ${error}`);
 		throw error;
 	}
+}
+
+/**
+ * Encrypts/hashes a password
+ * @param {string} password
+ * @returns {string} An encrypted password
+ */
+async function encryptPassword(password) {
+	try {
+		// Generating salt
+		const passwordSalt = await crypto
+			.randomBytes(parseInt(process.env.PASSWORD_SALT_BITS))
+			.toString('hex');
+
+		// Generating password hash
+		const passwordHash = await crypto
+			.pbkdf2Sync(
+				password,
+				passwordSalt,
+				parseInt(process.env.PASSWORD_ITERATION_LIMIT),
+				parseInt(process.env.PASSWORD_KEY_LENGTH),
+				process.env.PASSWORD_ENCRYPTION_ALGORITHM
+			)
+			.toString('hex');
+
+		// Return the encrypted password
+		return `${passwordHash}.${passwordSalt}`;
+	} catch (error) {
+		console.log(`An error occured while encrypting a password: ${error}`);
+		throw error;
+	}
+}
+
+/**
+ * Verifies if a password is correct
+ * @param {string} databasePassword
+ * @param {string} loginPassword
+ * @returns {boolean} If passwords match, returns true, if they don't, returns false
+ */
+async function verifyPassword(databasePassword, loginPassword) {
+	try {
+		// Split the password hash and salt
+		const [passwordHash, passwordSalt] = databasePassword.split('.');
+
+		const hashedPasswordBuf = Buffer.from(passwordHash, 'hex');
+		const suppliedPasswordBuf = await crypto.pbkdf2Sync(
+			loginPassword,
+			passwordSalt,
+			parseInt(process.env.PASSWORD_ITERATION_LIMIT),
+			parseInt(process.env.PASSWORD_KEY_LENGTH),
+			process.env.PASSWORD_ENCRYPTION_ALGORITHM
+		);
+
+		// Return true if passwords match, false if they don't
+		return crypto.timingSafeEqual(hashedPasswordBuf, suppliedPasswordBuf);
+	} catch (error) {
+		console.log(`An error occured while verifying a password: ${error}`);
+		throw error;
+	}
+}
+
+/**
+ * Checks if a password meets the requirements
+ * @param {string} password
+ * @returns {boolean}
+ */
+async function isPasswordValid(password) {
+	// Checking the length of password
+	if (password.length < parseInt(process.env.PASSWORD_MIN_LENGTH)) {
+		return false;
+	}
+
+	return true;
 }
 
 // Export the router
