@@ -88,11 +88,7 @@ async function getQuestion(userName) {
 					console.log(`An error occured while accesing the message ${error}`);
 					return reject(error);
 				}
-				answers = [
-					result[0],
-					result[1],
-					result[2],
-				];
+				answers = [result[0], result[1], result[2]];
 				resolve(answers);
 			}
 		);
