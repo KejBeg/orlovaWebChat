@@ -137,6 +137,18 @@ router.get('/logout', async (req, res) => {
 	res.redirect('/');
 });
 
+router.get('/list', async (req, res) => {
+	try {
+		// Get all users
+		let users = await sendSqlQuery('SELECT * FROM users', [], true);
+
+		res.render('user/list', { users: users });
+	} catch (error) {
+		console.log(`An error happened while getting the user list: ${error}`);
+		return res.redirect('/');
+	}
+});
+
 /**
  * Checks if a user exists
  * @param {string} username
@@ -234,6 +246,11 @@ async function verifyUserToken(token) {
 	}
 }
 
+/**
+ * Encrypts/hashes a password
+ * @param {string} password
+ * @returns {string} An encrypted password
+ */
 async function encryptPassword(password) {
 	try {
 		// Generating salt
@@ -260,6 +277,12 @@ async function encryptPassword(password) {
 	}
 }
 
+/**
+ * Verifies if a password is correct
+ * @param {string} databasePassword
+ * @param {string} loginPassword
+ * @returns {boolean} If passwords match, returns true, if they don't, returns false
+ */
 async function verifyPassword(databasePassword, loginPassword) {
 	try {
 		// Split the password hash and salt
