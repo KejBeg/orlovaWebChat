@@ -20,20 +20,20 @@ router.get('/', async (req, res) => {
 router.post('/', (req, res) => {
 	let answerID = req.body.answerID;
 
-	sendSqlQuery(
-		`UPDATE users SET storyQuestion = ? WHERE token = ?`,
-		[answerID, req.cookies.userToken],
-	);
+	sendSqlQuery(`UPDATE users SET storyQuestion = ? WHERE token = ?`, [
+		answerID,
+		req.cookies.userToken,
+	]);
 	res.redirect('/story');
 });
 
 async function getQuestion(userToken) {
 	//Gets current question string using userToken
 	questionArray = await sendSqlQuery(
-			`SELECT * FROM storyMessages WHERE id = (SELECT storyQuestion FROM users WHERE token = ?);`,
-			[userToken],
-			true
-		);
+		`SELECT * FROM storyMessages WHERE id = (SELECT storyQuestion FROM users WHERE token = ?);`,
+		[userToken],
+		true
+	);
 	console.log(JSON.stringify(questionArray));
 	question = questionArray[0]['question'];
 	answersID = [
@@ -44,27 +44,12 @@ async function getQuestion(userToken) {
 
 	//gets Answers to the question using answersID
 	answersResult = await sendSqlQuery(
-			`SELECT * FROM storyMessages WHERE id = ? OR id = ? OR id = ?`,
-			answersID,
-<<<<<<< HEAD
-			(error, result) => {
-				if (error) {
-					console.log(`An error occured while accesing the message ${error}`);
-					return reject(error);
-				}
-				answers = [result[0], result[1], result[2]];
-				resolve(answers);
-			}
-=======
-			true
->>>>>>> 78b09ebeca3b00837dfda78c86035687765f8cd6
-		);
+		`SELECT * FROM storyMessages WHERE id = ? OR id = ? OR id = ?`,
+		answersID,
+		true
+	);
 
-	answers = [
-		answersResult[0],
-		answersResult[1],
-		answersResult[2],
-	];
+	answers = [answersResult[0], answersResult[1], answersResult[2]];
 
 	return { question, answers };
 }
