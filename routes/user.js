@@ -6,6 +6,7 @@ const router = express.Router();
 const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 const crypto = require('crypto'); // Used for token generation
+const { log } = require('console');
 
 // Routes
 
@@ -137,6 +138,8 @@ router.get('/logout', async (req, res) => {
 	res.redirect('/');
 });
 
+// GET user list route
+// Gets all users from the database and renders the user list page
 router.get('/list', async (req, res) => {
 	try {
 		// Get all users
@@ -145,6 +148,35 @@ router.get('/list', async (req, res) => {
 		res.render('user/list', { users: users });
 	} catch (error) {
 		console.log(`An error happened while getting the user list: ${error}`);
+		return res.redirect('/');
+	}
+});
+
+// GET user profile route
+// Gets the user's profile and renders the profile page
+router.get('/list/:id', async (req, res) => {
+	try {
+		// Get user's token
+		let wantedId = req.params.id;
+
+		// Check if user exists by id
+		if (!(await userExistsById(wantedId))) {
+			console.log(`Id ${wantedId} does not exist`);
+			return res.redirect('/');
+		}
+
+		// Get user's data
+		let user = await sendSqlQuery(
+			'SELECT * FROM users WHERE id = ?',
+			[wantedId],
+			true
+		);
+
+		res.render('user/profile', { user: user[0] });
+	} catch (error) {
+		console.log(
+			`An error happened during rendering the profile page: ${error}`
+		);
 		return res.redirect('/');
 	}
 });
@@ -184,6 +216,33 @@ async function userExistsByToken(token) {
 		return false;
 	} else {
 		return true;
+	}
+}
+
+/**
+ * Gets if a user exists by checking ID
+ * @param {int} wantedId
+ * @returns {boolean}
+ */
+async function userExistsById(wantedId) {
+	try {
+		// Getting user data
+		let result = await sendSqlQuery(
+			'SELECT * FROM users WHERE id = ?',
+			[wantedId],
+			true
+		);
+
+		if (result == undefined || result == '') {
+			return false;
+		} else {
+			return true;
+		}
+	} catch (error) {
+		console.log(
+			`An error occured while checking if a user exists by id: ${error}`
+		);
+		throw error;
 	}
 }
 
