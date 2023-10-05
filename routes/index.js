@@ -27,12 +27,17 @@ router.post('/', async (req, res) => {
 		let authorToken = await req.cookies.userToken;
 		let isOffensive = await isMessageOffensive(message);
 
-		// Get author id
+		// Get author id and if hes banned
 		let authorId = await sendSqlQuery(
-			'SELECT id FROM users WHERE token = ?',
+			'SELECT id, isBanned FROM users WHERE token = ?',
 			[authorToken],
 			true
 		);
+		
+		authorIsBanned = authorId[0].isBanned;
+		if(authorIsBanned){
+			throw new Error('User is currently banned and cannot send messages!');
+		}
 
 		authorId = authorId[0].id;
 
