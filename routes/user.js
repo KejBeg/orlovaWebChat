@@ -167,12 +167,27 @@ router.get('/list/:id', async (req, res) => {
 
 		// Get user's data
 		let user = await sendSqlQuery(
-			'SELECT * FROM users WHERE id = ?',
+			'SELECT * FROM users WHERE id =?',
 			[wantedId],
 			true
 		);
 
-		res.render('user/profile', { user: user[0] });
+		console.log(JSON.stringify(user));
+		
+		let userMessages = await sendSqlQuery(
+			'SELECT * FROM messages WHERE author = ?',
+			[user[0].id],
+			true
+		)
+
+		let messageCount = userMessages.length;
+
+		res.render('user/profile', { 
+			user: user[0],
+			creationDate: rephraseMySQLDate(user[0].userCreationDate),
+			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate,true),
+			messageCount: messageCount,
+		});
 	} catch (error) {
 		console.log(
 			`An error happened during rendering the profile page: ${error}`
@@ -180,6 +195,19 @@ router.get('/list/:id', async (req, res) => {
 		return res.redirect('/');
 	}
 });
+
+/**
+ * Rephrases mySQL Date string to a different, more human readable format
+ * @param {string} mySQLDate
+ * @param {boolean} includeSeconds
+ * @returns modified mySQL Date
+ */
+function rephraseMySQLDate(mySQLDate, includeSeconds=false) {
+	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
+
+	if(includeSeconds) return (d + "." + M + " " + y  + " - " + h + ":" + m + ":" + s);
+	return (d + "." + M + " " + y  + " - " + h + ":" + m);
+}
 
 /**
  * Checks if a user exists
