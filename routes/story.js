@@ -34,7 +34,7 @@ async function getQuestion(userToken) {
 		[userToken],
 		true
 	);
-	console.log(JSON.stringify(questionArray));
+
 	question = questionArray[0]['question'];
 	answersID = [
 		questionArray[0]['answer1Id'],
