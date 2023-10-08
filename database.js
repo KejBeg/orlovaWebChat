@@ -87,7 +87,8 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	isBanned BOOLEAN DEFAULT 0,
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
-	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	lastActiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	)`;
 // storyQuestion INT DEFAULT 0
 // FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)

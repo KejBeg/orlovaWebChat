@@ -15,6 +15,12 @@ router.get('/', async (req, res) => {
 		a2: questionObj.answers[1],
 		a3: questionObj.answers[2],
 	});
+
+	//records activity in database
+	sendSqlQuery(
+		'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
+		[req.cookies.userToken]
+	);
 });
 
 router.post('/', (req, res) => {
