@@ -167,12 +167,49 @@ router.get('/list/:id', async (req, res) => {
 
 		// Get user's data
 		let user = await sendSqlQuery(
-			'SELECT * FROM users WHERE id = ?',
+			'SELECT * FROM users WHERE id =?',
 			[wantedId],
 			true
 		);
 
-		res.render('user/profile', { user: user[0] });
+		let userMessages = await sendSqlQuery(
+			'SELECT * FROM messages WHERE author = ?',
+			[user[0].id],
+			true
+		)
+
+		let messageCount = userMessages.length;
+
+		let accountAge = await sendSqlQuery(
+			'SELECT DATEDIFF(CURDATE(),?) AS accountAgeDays',
+			[user[0].userCreationDate],
+			true
+		);
+
+		let avarageMessagesPerDay = messageCount / (accountAge[0].accountAgeDays + 1);
+
+		let longestMessage = await sendSqlQuery(
+			'SELECT message FROM messages WHERE author = "?" ORDER BY LENGTH(message) DESC LIMIT 1;',
+			[user[0].id],
+			true
+		)
+		
+		let totalMsgLength = 0;
+		userMessages.forEach(element => {
+			totalMsgLength += element.message.length;
+		});
+		let avarageMessageLength = totalMsgLength / messageCount; 
+
+		res.render('user/profile', { 
+			user: user[0],
+			creationDate: rephraseMySQLDate(user[0].userCreationDate),
+			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate,true),
+			msgPerDay: avarageMessagesPerDay,
+			messageCount: messageCount,
+			longestMessage: longestMessage[0].message,
+			avarageMsgLength: avarageMessageLength,
+			isUserBanned: user[0].isBanned
+		});
 	} catch (error) {
 		console.log(
 			`An error happened during rendering the profile page: ${error}`
@@ -180,6 +217,32 @@ router.get('/list/:id', async (req, res) => {
 		return res.redirect('/');
 	}
 });
+
+/**
+ * Rephrases mySQL Date string to a different, more human readable format
+ * @param {string} mySQLDate
+ * @param {boolean} includeSeconds
+ * @returns modified mySQL Date
+ */
+function rephraseMySQLDate(mySQLDate, includeTime=false) {
+	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
+
+	if(includeTime) return (d + "." + M + " " + y  + " - " + h + ":" + m + ":" + s);
+	return (d + "." + M + " " + y);
+}
+
+function mySQLDateToJSON(mySQLDate){
+	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
+
+	return {
+		'year' : y,
+		'month' : M,
+		'day' : d,
+		'hour' : h,
+		'minute' : m,
+		'second' : s
+	};
+}
 
 /**
  * Checks if a user exists
