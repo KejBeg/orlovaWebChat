@@ -88,7 +88,9 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
-)`;
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	lastActiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	)`;
 // storyQuestion INT DEFAULT 0
 // FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 

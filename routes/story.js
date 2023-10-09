@@ -8,6 +8,11 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 
 // Routes
 router.get('/', async (req, res) => {
+
+	if(req.cookies.userToken == 'Anonymous') {
+		return res.redirect('/user/login');
+	}
+
 	let questionObj = await getQuestion(req.cookies.userToken);
 	res.render('story', {
 		q: questionObj.question,
@@ -15,6 +20,12 @@ router.get('/', async (req, res) => {
 		a2: questionObj.answers[1],
 		a3: questionObj.answers[2],
 	});
+
+	//records activity in database
+	sendSqlQuery(
+		'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
+		[req.cookies.userToken]
+	);
 });
 
 router.post('/', (req, res) => {
@@ -34,7 +45,7 @@ async function getQuestion(userToken) {
 		[userToken],
 		true
 	);
-	console.log(JSON.stringify(questionArray));
+
 	question = questionArray[0]['question'];
 	answersID = [
 		questionArray[0]['answer1Id'],
