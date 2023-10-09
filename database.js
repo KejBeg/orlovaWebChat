@@ -85,10 +85,10 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	password TEXT,
 	token TEXT,
 	isBanned BOOLEAN DEFAULT 0,
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
-	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-	)`;
+)`;
 // storyQuestion INT DEFAULT 0
 // FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 
