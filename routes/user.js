@@ -92,7 +92,7 @@ router.post('/register', async (req, res) => {
 
 		// Hash the password
 		const hashedPassword = await encryptPassword(password);
-
+		3000;
 		// Creating the user
 		await sendSqlQuery(
 			'INSERT INTO users (username, password, token) VALUES (?, ?, ?)',
@@ -176,7 +176,7 @@ router.get('/list/:id', async (req, res) => {
 			'SELECT * FROM messages WHERE author = ?',
 			[user[0].id],
 			true
-		)
+		);
 
 		let messageCount = userMessages.length;
 
@@ -186,34 +186,103 @@ router.get('/list/:id', async (req, res) => {
 			true
 		);
 
-		let avarageMessagesPerDay = messageCount / (accountAge[0].accountAgeDays + 1);
+		let avarageMessagesPerDay =
+			messageCount / (accountAge[0].accountAgeDays + 1);
 
 		let longestMessage = await sendSqlQuery(
 			'SELECT message FROM messages WHERE author = "?" ORDER BY LENGTH(message) DESC LIMIT 1;',
 			[user[0].id],
 			true
-		)
-		
+		);
+
 		let totalMsgLength = 0;
-		userMessages.forEach(element => {
+		userMessages.forEach((element) => {
 			totalMsgLength += element.message.length;
 		});
-		let avarageMessageLength = totalMsgLength / messageCount; 
+		let avarageMessageLength = totalMsgLength / messageCount;
 
-		res.render('user/profile', { 
+		res.render('user/profile', {
 			user: user[0],
 			creationDate: rephraseMySQLDate(user[0].userCreationDate),
-			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate,true),
+			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate, true),
 			msgPerDay: avarageMessagesPerDay,
 			messageCount: messageCount,
 			longestMessage: longestMessage[0].message,
 			avarageMsgLength: avarageMessageLength,
-			isUserBanned: user[0].isBanned
+			isUserBanned: user[0].isBanned,
 		});
 	} catch (error) {
 		console.log(
 			`An error happened during rendering the profile page: ${error}`
 		);
+		return res.redirect('/');
+	}
+});
+
+// GET user edit route
+// Renders the edit page
+router.get('/edit', async (req, res) => {
+	try {
+		// Get user's token
+		let currentToken = await req.cookies.userToken;
+
+		// Check if user exists by token
+		if (!(await userExistsByToken(currentToken))) {
+			console.log(`Token ${currentToken} does not exist`);
+			return res.redirect('/');
+		}
+
+		// Anonymous can't edit a profile
+		if (currentToken == 'Anonymous') {
+			console.log('Anonymous tried to edit a profile');
+			return res.redirect('/');
+		}
+
+		// Render the edit page
+		return res.render('user/edit');
+	} catch (error) {
+		console.log(`An error happened during rendering the edit page: ${error}`);
+		return res.redirect('/');
+	}
+});
+
+// POST user edit route
+// Gets the new username from POST request and changes them
+router.post('/edit', async (req, res) => {
+	try {
+		// Get user's token
+		let currentToken = await req.cookies.userToken;
+
+		// Check if user exists by token
+		if (!(await userExistsByToken(currentToken))) {
+			console.log(`Token ${currentToken} does not exist`);
+			return res.redirect('/');
+		}
+
+		// Anonymous can't edit a profile
+		if (currentToken == 'Anonymous') {
+			console.log('Anonymous tried to edit a profile');
+			return res.redirect('/');
+		}
+
+		// Get new username
+		let newUsername = await req.body.username;
+
+		// Can't have more users with the same username
+		if (await userExistsByName(newUsername)) {
+			console.log('Username already exists');
+			return res.redirect('/');
+		}
+
+		// Change username
+		sendSqlQuery('UPDATE users SET username = ? WHERE token = ?', [
+			newUsername,
+			currentToken,
+		]);
+
+		res.redirect('/');
+	} catch (error) {
+		console.log(`An error happened during editing a user: ${error}`);
 		return res.redirect('/');
 	}
 });
@@ -224,23 +293,23 @@ router.get('/list/:id', async (req, res) => {
  * @param {boolean} includeSeconds
  * @returns modified mySQL Date
  */
-function rephraseMySQLDate(mySQLDate, includeTime=false) {
-	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
+function rephraseMySQLDate(mySQLDate, includeTime = false) {
+	let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
 
-	if(includeTime) return (d + "." + M + " " + y  + " - " + h + ":" + m + ":" + s);
-	return (d + "." + M + " " + y);
+	if (includeTime) return d + '.' + M + ' ' + y + ' - ' + h + ':' + m + ':' + s;
+	return d + '.' + M + ' ' + y;
 }
 
-function mySQLDateToJSON(mySQLDate){
-	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
+function mySQLDateToJSON(mySQLDate) {
+	let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
 
 	return {
-		'year' : y,
-		'month' : M,
-		'day' : d,
-		'hour' : h,
-		'minute' : m,
-		'second' : s
+		year: y,
+		month: M,
+		day: d,
+		hour: h,
+		minute: m,
+		second: s,
 	};
 }
 
