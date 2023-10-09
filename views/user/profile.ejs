@@ -1,5 +1,9 @@
 <p>user id: <%= user.id %></p>
 <p>username: <%= user.username %></p>
-<p>account creation date: <%= creationDate %></p>
-<p>account last active date: <%= lastActiveDate %></p>
+<p>account creation: <%= creationDate %></p>
+<p>account last active: <%= lastActiveDate %></p>
 <p>number of messages: <%= messageCount %></p>
+<p>avarage number of messages per day: <%= msgPerDay %></p>
+<p>avarage length of a message <%= avarageMsgLength %></p>
+<p>longest users message: <%= longestMessage %></p>
+<% if(isUserBanned)  { %> <p> USER IS BANNED! </p> <% } %>

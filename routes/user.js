@@ -172,8 +172,6 @@ router.get('/list/:id', async (req, res) => {
 			true
 		);
 
-		console.log(JSON.stringify(user));
-		
 		let userMessages = await sendSqlQuery(
 			'SELECT * FROM messages WHERE author = ?',
 			[user[0].id],
@@ -182,11 +180,35 @@ router.get('/list/:id', async (req, res) => {
 
 		let messageCount = userMessages.length;
 
+		let accountAge = await sendSqlQuery(
+			'SELECT DATEDIFF(CURDATE(),?) AS accountAgeDays',
+			[user[0].userCreationDate],
+			true
+		);
+
+		let avarageMessagesPerDay = messageCount / (accountAge[0].accountAgeDays + 1);
+
+		let longestMessage = await sendSqlQuery(
+			'SELECT message FROM messages WHERE author = "?" ORDER BY LENGTH(message) DESC LIMIT 1;',
+			[user[0].id],
+			true
+		)
+		
+		let totalMsgLength = 0;
+		userMessages.forEach(element => {
+			totalMsgLength += element.message.length;
+		});
+		let avarageMessageLength = totalMsgLength / messageCount; 
+
 		res.render('user/profile', { 
 			user: user[0],
 			creationDate: rephraseMySQLDate(user[0].userCreationDate),
 			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate,true),
+			msgPerDay: avarageMessagesPerDay,
 			messageCount: messageCount,
+			longestMessage: longestMessage[0].message,
+			avarageMsgLength: avarageMessageLength,
+			isUserBanned: user[0].isBanned
 		});
 	} catch (error) {
 		console.log(
@@ -202,11 +224,24 @@ router.get('/list/:id', async (req, res) => {
  * @param {boolean} includeSeconds
  * @returns modified mySQL Date
  */
-function rephraseMySQLDate(mySQLDate, includeSeconds=false) {
+function rephraseMySQLDate(mySQLDate, includeTime=false) {
 	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
 
-	if(includeSeconds) return (d + "." + M + " " + y  + " - " + h + ":" + m + ":" + s);
-	return (d + "." + M + " " + y  + " - " + h + ":" + m);
+	if(includeTime) return (d + "." + M + " " + y  + " - " + h + ":" + m + ":" + s);
+	return (d + "." + M + " " + y);
+}
+
+function mySQLDateToJSON(mySQLDate){
+	let [y,M,d,h,m,s] = mySQLDate.match(/\d+/g);
+
+	return {
+		'year' : y,
+		'month' : M,
+		'day' : d,
+		'hour' : h,
+		'minute' : m,
+		'second' : s
+	};
 }
 
 /**
