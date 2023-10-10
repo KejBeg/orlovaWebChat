@@ -67,7 +67,7 @@ messageTable = `CREATE TABLE IF NOT EXISTS messages (
 // Story mode messages table
 // Question leads to several entities with an answer and another question
 storyTable = `CREATE TABLE IF NOT EXISTS storyMessages (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id INT NOT NULL PRIMARY KEY,
 	answer TEXT,
 	question TEXT,
 	answer1Id INT,
@@ -84,23 +84,23 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	username TEXT,
 	password TEXT,
 	token TEXT,
+	isBanned BOOLEAN DEFAULT 0,
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
-	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	lastActiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	)`;
-// storyQuestion INT DEFAULT 0
-// FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id)
 
 console.log('Generating tables');
+
+// Create Story mesages table
+sendSqlQuery(storyTable);
 
 // Create users table
 sendSqlQuery(usersTable);
 
 // Create message table
 sendSqlQuery(messageTable);
-
-// Create Story mesages table
-sendSqlQuery(storyTable);
 
 // Create Anonymous user if it doesn't exist
 sendSqlQuery(

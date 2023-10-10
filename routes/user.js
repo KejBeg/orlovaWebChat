@@ -6,6 +6,7 @@ const router = express.Router();
 const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 const crypto = require('crypto'); // Used for token generation
+const { log } = require('console');
 
 // Routes
 
@@ -91,7 +92,7 @@ router.post('/register', async (req, res) => {
 
 		// Hash the password
 		const hashedPassword = await encryptPassword(password);
-
+		3000;
 		// Creating the user
 		await sendSqlQuery(
 			'INSERT INTO users (username, password, token) VALUES (?, ?, ?)',
@@ -137,6 +138,8 @@ router.get('/logout', async (req, res) => {
 	res.redirect('/');
 });
 
+// GET user list route
+// Gets all users from the database and renders the user list page
 router.get('/list', async (req, res) => {
 	try {
 		// Get all users
@@ -148,6 +151,167 @@ router.get('/list', async (req, res) => {
 		return res.redirect('/');
 	}
 });
+
+// GET user profile route
+// Gets the user's profile and renders the profile page
+router.get('/list/:id', async (req, res) => {
+	try {
+		// Get user's token
+		let wantedId = req.params.id;
+
+		// Check if user exists by id
+		if (!(await userExistsById(wantedId))) {
+			console.log(`Id ${wantedId} does not exist`);
+			return res.redirect('/');
+		}
+
+		// Get user's data
+		let user = await sendSqlQuery(
+			'SELECT * FROM users WHERE id =?',
+			[wantedId],
+			true
+		);
+
+		let userMessages = await sendSqlQuery(
+			'SELECT * FROM messages WHERE author = ?',
+			[user[0].id],
+			true
+		);
+
+		let messageCount = userMessages.length;
+
+		let accountAge = await sendSqlQuery(
+			'SELECT DATEDIFF(CURDATE(),?) AS accountAgeDays',
+			[user[0].userCreationDate],
+			true
+		);
+
+		let avarageMessagesPerDay =
+			messageCount / (accountAge[0].accountAgeDays + 1);
+
+		let longestMessage = await sendSqlQuery(
+			'SELECT message FROM messages WHERE author = "?" ORDER BY LENGTH(message) DESC LIMIT 1;',
+			[user[0].id],
+			true
+		);
+
+		let totalMsgLength = 0;
+		userMessages.forEach((element) => {
+			totalMsgLength += element.message.length;
+		});
+		let avarageMessageLength = totalMsgLength / messageCount;
+
+		res.render('user/profile', {
+			user: user[0],
+			creationDate: rephraseMySQLDate(user[0].userCreationDate),
+			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate, true),
+			msgPerDay: avarageMessagesPerDay,
+			messageCount: messageCount,
+			longestMessage: longestMessage[0].message,
+			avarageMsgLength: avarageMessageLength,
+			isUserBanned: user[0].isBanned,
+		});
+	} catch (error) {
+		console.log(
+			`An error happened during rendering the profile page: ${error}`
+		);
+		return res.redirect('/');
+	}
+});
+
+// GET user edit route
+// Renders the edit page
+router.get('/edit', async (req, res) => {
+	try {
+		// Get user's token
+		let currentToken = await req.cookies.userToken;
+
+		// Check if user exists by token
+		if (!(await userExistsByToken(currentToken))) {
+			console.log(`Token ${currentToken} does not exist`);
+			return res.redirect('/');
+		}
+
+		// Anonymous can't edit a profile
+		if (currentToken == 'Anonymous') {
+			console.log('Anonymous tried to edit a profile');
+			return res.redirect('/');
+		}
+
+		// Render the edit page
+		return res.render('user/edit');
+	} catch (error) {
+		console.log(`An error happened during rendering the edit page: ${error}`);
+		return res.redirect('/');
+	}
+});
+
+// POST user edit route
+// Gets the new username from POST request and changes them
+router.post('/edit', async (req, res) => {
+	try {
+		// Get user's token
+		let currentToken = await req.cookies.userToken;
+
+		// Check if user exists by token
+		if (!(await userExistsByToken(currentToken))) {
+			console.log(`Token ${currentToken} does not exist`);
+			return res.redirect('/');
+		}
+
+		// Anonymous can't edit a profile
+		if (currentToken == 'Anonymous') {
+			console.log('Anonymous tried to edit a profile');
+			return res.redirect('/');
+		}
+
+		// Get new username
+		let newUsername = await req.body.username;
+
+		// Can't have more users with the same username
+		if (await userExistsByName(newUsername)) {
+			console.log('Username already exists');
+			return res.redirect('/');
+		}
+
+		// Change username
+		sendSqlQuery('UPDATE users SET username = ? WHERE token = ?', [
+			newUsername,
+			currentToken,
+		]);
+
+		res.redirect('/');
+	} catch (error) {
+		console.log(`An error happened during editing a user: ${error}`);
+		return res.redirect('/');
+	}
+});
+
+/**
+ * Rephrases mySQL Date string to a different, more human readable format
+ * @param {string} mySQLDate
+ * @param {boolean} includeSeconds
+ * @returns modified mySQL Date
+ */
+function rephraseMySQLDate(mySQLDate, includeTime = false) {
+	let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
+
+	if (includeTime) return d + '.' + M + ' ' + y + ' - ' + h + ':' + m + ':' + s;
+	return d + '.' + M + ' ' + y;
+}
+
+function mySQLDateToJSON(mySQLDate) {
+	let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
+
+	return {
+		year: y,
+		month: M,
+		day: d,
+		hour: h,
+		minute: m,
+		second: s,
+	};
+}
 
 /**
  * Checks if a user exists
@@ -184,6 +348,33 @@ async function userExistsByToken(token) {
 		return false;
 	} else {
 		return true;
+	}
+}
+
+/**
+ * Gets if a user exists by checking ID
+ * @param {int} wantedId
+ * @returns {boolean}
+ */
+async function userExistsById(wantedId) {
+	try {
+		// Getting user data
+		let result = await sendSqlQuery(
+			'SELECT * FROM users WHERE id = ?',
+			[wantedId],
+			true
+		);
+
+		if (result == undefined || result == '') {
+			return false;
+		} else {
+			return true;
+		}
+	} catch (error) {
+		console.log(
+			`An error occured while checking if a user exists by id: ${error}`
+		);
+		throw error;
 	}
 }
 
