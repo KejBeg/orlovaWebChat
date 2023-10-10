@@ -12,6 +12,7 @@
         <div>
 			<% for(i = 0; i < messages.length; i++) { %>
             <p> <%= messages[i].username + ": " + messages[i].message %> </p>
+			<% } %>
         </div>
 		<form name="chatForm" method="post">
 			<input type="text" name="message" id="chat-form-text" class="messageBox">
