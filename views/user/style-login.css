@@ -1,0 +1,43 @@
+body{
+    background-image: url("leaves.jpg");
+}
+
+h1{
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 0.5cm;
+    width: 8cm;
+    border-radius: 24px; 
+    margin-left: 41%;
+    margin-top: 7.5cm;
+    text-align: center;
+    font-size: 2cm;
+}
+
+button {
+    font-size: large;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 0.5cm;
+    border-radius: 24px;
+    cursor: pointer;
+    font-style: bold;
+}
+
+input {
+    font-size: large;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 0.5cm;
+    border-radius: 24px;
+}
+
+form {
+    margin-left: 28%;
+}
