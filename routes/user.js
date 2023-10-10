@@ -235,7 +235,7 @@ router.get('/edit', async (req, res) => {
 		// Anonymous can't edit a profile
 		if (currentToken == 'Anonymous') {
 			console.log('Anonymous tried to edit a profile');
-			return res.redirect('/');
+			return res.redirect('/user/register');
 		}
 
 		// Render the edit page
@@ -262,7 +262,7 @@ router.post('/edit', async (req, res) => {
 		// Anonymous can't edit a profile
 		if (currentToken == 'Anonymous') {
 			console.log('Anonymous tried to edit a profile');
-			return res.redirect('/');
+			return res.redirect('/user/register');
 		}
 
 		// Get new username
