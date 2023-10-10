@@ -11,11 +11,17 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 // Routes
 
 // GET index route
-// Gets the last 10 messages from the database and renders the index page
+// Gets the last n messages from the database and renders the index page
 router.get('/', async (req, res) => {
 	messageArray = await getMessageArray();
 
 	res.render('index', { messages: messageArray });
+
+	//records activity in database
+	sendSqlQuery(
+		'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
+		[req.cookies.userToken]
+	);
 });
 
 // POST index route
@@ -27,12 +33,17 @@ router.post('/', async (req, res) => {
 		let authorToken = await req.cookies.userToken;
 		let isOffensive = await isMessageOffensive(message);
 
-		// Get author id
+		// Get author id and if hes banned
 		let authorId = await sendSqlQuery(
-			'SELECT id FROM users WHERE token = ?',
+			'SELECT id, isBanned FROM users WHERE token = ?',
 			[authorToken],
 			true
 		);
+		
+		authorIsBanned = authorId[0].isBanned;
+		if(authorIsBanned){
+			throw new Error('User is currently banned and cannot send messages!');
+		}
 
 		authorId = authorId[0].id;
 
