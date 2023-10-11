@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Discord z wishe</title>
-        <link rel="stylesheet" href="style-chat.css">
-        <link rel="icon" href="user/leaf.ico">        
-    </head>
-    <body>
-        <button type="button" onclick="location.href='user/login.ejs'">Sign out</button>
-        <h1 align="center">Discord z wishe</h1>
-        <div>
-			<% for(i = 0; i < messages.length; i++) { %>
-            <p> <%= messages[i].username + ": " + messages[i].message %> </p>
-			<% } %>
-        </div>
-		<form name="chatForm" method="post">
-			<input type="text" name="message" id="chat-form-text" class="messageBox">
-			<input type="submit" value="Send" class="backendSubmit">
-		</form>
-	</body>
-</html>
+<button type="button" onclick="location.href='user/login.ejs'">Sign out</button>
+<h1 align="center">Discord z wishe</h1>
+<div>
+    <% for(i = 0; i < messages.length; i++) { %>
+    <p> <%= messages[i].username + ": " + messages[i].message %> </p>
+    <% } %>
+</div>
+<form name="chatForm" method="post">
+    <input type="text" name="message" id="chat-form-text" class="messageBox">
+    <input type="submit" value="Send" class="backendSubmit">
+</form>
