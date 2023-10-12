@@ -15,7 +15,7 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 router.get('/', async (req, res) => {
 	messageArray = await getMessageArray();
 
-	res.render('index', { messages: messageArray, error: 'aisd' });
+	res.render('index', { messages: messageArray});
 
 	//records activity in database
 	sendSqlQuery(
