@@ -15,10 +15,8 @@ router.get('/', async (req, res) => {
 
 	let questionObj = await getQuestion(req.cookies.userToken);
 	res.render('story', {
-		q: questionObj.question,
-		a1: questionObj.answers[0],
-		a2: questionObj.answers[1],
-		a3: questionObj.answers[2],
+		q : questionObj.question,
+		a : answers
 	});
 
 	//records activity in database
@@ -47,20 +45,15 @@ async function getQuestion(userToken) {
 	);
 
 	question = questionArray[0]['question'];
-	answersID = [
-		questionArray[0]['answer1Id'],
-		questionArray[0]['answer2Id'],
-		questionArray[0]['answer3Id'],
-	];
+	answers = {
+		answerId1 : questionArray[0]['answer1Id'],
+		answerId2 :  questionArray[0]['answer2Id'],
+		answerId3 :  questionArray[0]['answer3Id'],
 
-	//gets Answers to the question using answersID
-	answersResult = await sendSqlQuery(
-		`SELECT * FROM storyMessages WHERE id = ? OR id = ? OR id = ?`,
-		answersID,
-		true
-	);
-
-	answers = [answersResult[0], answersResult[1], answersResult[2]];
+		answer1 : questionArray[0]['answer1'],
+		answer2 : questionArray[0]['answer2'],
+		answer3 : questionArray[0]['answer3']
+	};
 
 	return { question, answers };
 }
