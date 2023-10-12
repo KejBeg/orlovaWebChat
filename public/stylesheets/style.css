@@ -1,5 +1,7 @@
 body{
     background-image: url("../images/leaves.jpg");
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
 }
 
 #chatH1{
@@ -75,6 +77,8 @@ body{
     border-color: rgb(0, 63, 0);
     border-width: 20px;
     border-radius: 24px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
 }
 
 #storyInput {
@@ -87,4 +91,6 @@ body{
     border-width: 5px;
     border-radius: 5px;
     width: 35px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
 }
