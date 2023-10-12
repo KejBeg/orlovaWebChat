@@ -37,6 +37,21 @@ body{
     border-radius: 24px;
 }
 
+#storyDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 17cm;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    margin-left: 17.25%;
+    margin-top: 5%;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+
 .backendSubmit{
     margin-left: 75%;
 }
@@ -56,4 +71,12 @@ body{
     border-color: rgb(0, 63, 0);
     border-width: 0.5cm;
     border-radius: 24px;
+}
+
+#storyInput {
+    position: absolute;
+    font-size: large;
+    top:93%;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
 }
