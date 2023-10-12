@@ -1,14 +1,16 @@
-<form action="" method="post" name="questionForm">
-	<input id="answer" type="number" name="answerID"/>
-	<input type="submit" value="debugValueSubmit" />
-	<h5><%= q %></h5>
-	<% if(a.answerId1 != null)  { %> <input type="button" name="answerButton1" onclick="sendAnswer(this.value)" value=<%= a.answerId1 %>> <%= a.answer1%> </input> <% } %> 
-	<% if(a.answerId2 != null)  { %> <input type="button" name="answerButton2" onclick="sendAnswer(this.value)" value=<%= a.answerId2 %>> <%= a.answer2%> </input> <% } %> 
-	<% if(a.answerId3 != null)  { %> <input type="button" name="answerButton3" onclick="sendAnswer(this.value)" value=<%= a.answerId3 %>> <%= a.answer3 %> </input> <% } %> 
-</form>
-<script>
-	function sendAnswer(id){
-		document.getElementById("answer").value = id;
-		questionForm.submit();
-	}
-</script>
+<div id="storyDiv">
+	<form action="" method="post" name="questionForm">
+		<input id="answer" type="number" name="answerID"/>
+		<input type="submit" value="debugValueSubmit" />
+		<h1 id="storyH1"><%= q %></h1>
+		<% if(a.answerId1 != null)  { %> <input type="button" id="storyInput" name="answerButton1" onclick="sendAnswer(this.value)" value=<%= a.answerId1%>> <%= a.answer1 %> </input> <% } %> 
+		<% if(a.answerId2 != null)  { %> <input type="button" id="storyInput" name="answerButton2" onclick="sendAnswer(this.value)" value=<%= a.answerId2%>> <%= a.answer2 %> </input> <% } %> 
+		<% if(a.answerId3 != null)  { %> <input type="button" id="storyInput" name="answerButton3" onclick="sendAnswer(this.value)" value=<%= a.answerId3 %>> <%= a.answer3 %> </input> <% } %> 
+	</form>
+	<script>
+		function sendAnswer(id){
+			document.getElementById("answer").value = id;
+			questionForm.submit();
+		}
+	</script>
+</div>
