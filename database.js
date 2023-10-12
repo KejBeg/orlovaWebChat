@@ -121,7 +121,7 @@ async function createUserTable(usersTable){
 	);	
 
 	sendSqlQuery(
-		`INSERT IGNORE INTO users (id, username, password, token) VALUES (0, 'Admin', 'ADMIN3363', 'testadmin')`
+		`INSERT IGNORE INTO users (id, username, password, token) VALUES (0, 'ADMIN', 'ADMIN3363', 'testadmin')`
 	);	
 }
 
