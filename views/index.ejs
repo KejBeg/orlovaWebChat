@@ -1,6 +1,5 @@
-<button type="button" onclick="location.href='user/login.ejs'">Sign out</button>
-<h1 align="center">Discord z wishe</h1>
-<div>
+<h1 align="center">Leafscord</h1>
+<div class="chatDiv">
     <% for(i = 0; i < messages.length; i++) { %>
     <p> <%= messages[i].username + ": " + messages[i].message %> </p>
     <% } %>

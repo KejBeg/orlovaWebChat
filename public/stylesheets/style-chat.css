@@ -11,20 +11,21 @@ h1{
     width: 8cm;
     border-radius: 24px; 
     margin-left: 41%;
+    padding-bottom: 1px;
 }
 
-button {
+a {
     position: relative;
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
     border-style: double;
     border-color: rgb(0, 63, 0);
-    border-width: 0.25cm;
+    border-width: 10px;
     border-radius: 12px;
     cursor: pointer;
 }
 
-div{
+.chatDiv{
     position: fixed;
     width: 31.15cm;
     height: 17cm;
@@ -33,9 +34,8 @@ div{
     margin-left: 17.25%;
     border-style: double;
     border-color: rgb(0, 63, 0);
-    border-width: 0.5cm;
+    border-width: 20px;
     border-radius: 24px;
-    padding: 0.5cm;
 }
 
 input {
