@@ -119,6 +119,10 @@ async function createUserTable(usersTable){
 	sendSqlQuery(
 		`INSERT IGNORE INTO users (id, username, password, token) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous')`
 	);	
+
+	sendSqlQuery(
+		`INSERT IGNORE INTO users (id, username, password, token) VALUES (0, 'ADMIN', 'ADMIN3363', 'testadmin')`
+	);	
 }
 
 async function setupStoryQuestions(){
