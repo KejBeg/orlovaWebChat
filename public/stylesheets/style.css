@@ -14,6 +14,10 @@ body{
     padding-bottom: 1px;
 }
 
+#storyH1{
+    text-align: center;
+}
+
 #layoutA {
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
@@ -69,14 +73,18 @@ body{
     color: rgb(0, 63, 0);
     border-style: double;
     border-color: rgb(0, 63, 0);
-    border-width: 0.5cm;
+    border-width: 20px;
     border-radius: 24px;
 }
 
 #storyInput {
-    position: absolute;
+    position: relative;
     font-size: large;
-    top:93%;
     background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    color: rgb(163, 226, 138);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 5px;
+    border-radius: 5px;
+    width: 35px;
 }
