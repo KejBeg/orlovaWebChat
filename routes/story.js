@@ -29,10 +29,17 @@ router.get('/', async (req, res) => {
 router.post('/', (req, res) => {
 	let answerID = req.body.answerID;
 
-	sendSqlQuery(`UPDATE users SET storyQuestion = ? WHERE token = ?`, [
+
+	try{
+		sendSqlQuery(`UPDATE users SET storyQuestion = ? WHERE token = ?`, [
 		answerID,
 		req.cookies.userToken,
-	]);
+	]);}
+	catch (err){
+		console.log(`An error happened while setting user question: ${err}`);
+		return res.redirect('/');
+	}
+
 	res.redirect('/story');
 });
 

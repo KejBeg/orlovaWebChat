@@ -1,10 +1,10 @@
-<h1 align="center">Leafscord</h1>
-<div class="chatDiv">
+<h1 align="center" id="chatH1">Leafscord</h1>
+<div id="chatDiv">
     <% for(i = 0; i < messages.length; i++) { %>
     <p> <%= messages[i].username + ": " + messages[i].message %> </p>
     <% } %>
 </div>
 <form name="chatForm" method="post">
-    <input type="text" name="message" id="chat-form-text" class="messageBox">
-    <input type="submit" value="Send" class="backendSubmit">
+    <input type="text" name="message" id="chatInput" class="messageBox">
+    <input type="submit" value="Send" id="chatInput" class="backendSubmit">
 </form>
