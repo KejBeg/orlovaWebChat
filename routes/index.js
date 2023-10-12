@@ -15,7 +15,7 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 router.get('/', async (req, res) => {
 	messageArray = await getMessageArray();
 
-	res.render('index', { messages: messageArray });
+	res.render('index', { messages: messageArray, error: 'aisd' });
 
 	//records activity in database
 	sendSqlQuery(
@@ -39,9 +39,9 @@ router.post('/', async (req, res) => {
 			[authorToken],
 			true
 		);
-		
+
 		authorIsBanned = authorId[0].isBanned;
-		if(authorIsBanned){
+		if (authorIsBanned) {
 			throw new Error('User is currently banned and cannot send messages!');
 		}
 
