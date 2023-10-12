@@ -187,7 +187,7 @@ router.get('/list/:id', async (req, res) => {
 		);
 
 		let avarageMessagesPerDay =
-			messageCount / (accountAge[0].accountAgeDays + 1);
+			Math.round( (messageCount / (accountAge[0].accountAgeDays + 1)) * 100 ) / 100;
 
 		let longestMessage = await sendSqlQuery(
 			'SELECT message FROM messages WHERE author = "?" ORDER BY LENGTH(message) DESC LIMIT 1;',
@@ -199,7 +199,7 @@ router.get('/list/:id', async (req, res) => {
 		userMessages.forEach((element) => {
 			totalMsgLength += element.message.length;
 		});
-		let avarageMessageLength = totalMsgLength / messageCount;
+		let avarageMessageLength = Math.round( (totalMsgLength / messageCount) * 100 ) / 100;
 
 		res.render('user/profile', {
 			user: user[0],
