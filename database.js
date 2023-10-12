@@ -154,8 +154,5 @@ async function setupStoryQuestions(){
 
 			('8', 'Správně, Teď jedna otázka. Kolik času strávíš denně na sociálních sítích? (např. Instagram, Snapchat, TikTok apod.', 'NEDOKONČENO', 'NEDOKONČENO', 'NEDOKONČENO', '0', '0', '0');
 	`
-	updateStoryQuery = `
-
-	`
 	sendSqlQuery(setupStoryQuery);
 }
