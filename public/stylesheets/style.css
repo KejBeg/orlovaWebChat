@@ -14,6 +14,10 @@ body{
     padding-bottom: 1px;
 }
 
+#storyH1{
+    text-align: center;
+}
+
 #layoutA {
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
@@ -37,6 +41,21 @@ body{
     border-radius: 24px;
 }
 
+#storyDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 17cm;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    margin-left: 17.25%;
+    margin-top: 5%;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+
 .backendSubmit{
     margin-left: 75%;
 }
@@ -54,6 +73,18 @@ body{
     color: rgb(0, 63, 0);
     border-style: double;
     border-color: rgb(0, 63, 0);
-    border-width: 0.5cm;
+    border-width: 20px;
     border-radius: 24px;
+}
+
+#storyInput {
+    position: relative;
+    font-size: large;
+    background-color: rgb(163, 226, 138);
+    color: rgb(163, 226, 138);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 5px;
+    border-radius: 5px;
+    width: 35px;
 }
