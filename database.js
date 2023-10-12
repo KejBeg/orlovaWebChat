@@ -144,7 +144,7 @@ async function setupStoryQuestions(){
 		INSERT INTO storyMessages VALUES 
 			('0', 'Ahoj!', 'Ahoj.', NULL, NULL, '1', NULL, NULL),
 			('1', 'Chceš se naučit něco o netolismu a závislosti na internetu?', 'Ano!', 'ani ne..', NULL, '3', '2', NULL),
-			('2', 'KONEC ---------------', 'na zacatek'), NULL, NULL, 0, NULL, NULL),
+			('2', 'KONEC ---------------', 'na zacatek', NULL, NULL, 0, NULL, NULL),
 			('3', 'Tak Jdeme na to! Víš něco o neolitismu?', 'Ano', 'Ne', 'Co to je neolitismus?', '4', '9', '9'),
 			('4', 'Co je to neolitismus?', 'Je to nakupování drog přes internet', 'Je to závislost na "Virtuálních drogách', '..nějaký fetish?', '5', '6', '5'),
 			('5', 'Špatně zkus ještě jednou. Co je to neolitismus?', 'Je to nakupování drog přes internet', 'Je to závislost na "Virtuálních drogách', '..nějaký fetish?', '5', '6', '5'),
