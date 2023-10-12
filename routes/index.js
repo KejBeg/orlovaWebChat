@@ -45,6 +45,10 @@ router.post('/', async (req, res) => {
 			throw new Error('User is currently banned and cannot send messages!');
 		}
 
+		if (message.replace(/\s/g, '').length == 0){
+			throw new Error('User is sending only spaces!');
+		}
+
 		authorId = authorId[0].id;
 
 		console.log(`User ${authorId} sent a message`);
