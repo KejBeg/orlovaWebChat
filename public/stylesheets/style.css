@@ -1,10 +1,33 @@
-body{
+body {
     background-image: url("../images/leaves.jpg");
     font-family: 'Nanum Gothic Coding', monospace;
     font-family: 'Young Serif', serif;
 }
 
-#chatH1{
+#layoutA {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#loginA {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    font-size: large;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+    cursor: pointer;
+}
+
+#chatH1 {
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
     border-style: double;
@@ -16,18 +39,38 @@ body{
     padding-bottom: 1px;
 }
 
-#storyH1{
+#storyH1 {
     text-align: center;
 }
 
-#layoutA {
+#loginH1 {
+    position: relative;
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
+    font-size: 80px;
+    text-align: center;
     border-style: double;
-    border-color: rgb(0, 63, 0);
-    border-width: 10px;
-    border-radius: 12px;
-    cursor: pointer;
+    border-color: rgb(0, 63, 0);    
+    width: 400px;
+    border-radius: 24px;
+    border-width: 18px; 
+    margin-left: 38%;
+    margin-top: 16%;
+}
+
+#registerH1 {
+    position: relative;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    font-size: 80px;
+    text-align: center;
+    border-style: double;
+    border-color: rgb(0, 63, 0);    
+    width: 400px;
+    border-radius: 24px;
+    border-width: 18px; 
+    margin-left: 38%;
+    margin-top: 16%;
 }
 
 #chatDiv{
@@ -57,7 +100,6 @@ body{
     border-radius: 24px;
 }
 
-
 .backendSubmit{
     margin-left: 75%;
 }
@@ -67,10 +109,44 @@ body{
     padding-right: 39%;
 }
 
+#loginForm {
+    margin-left: 28%;
+}
+
+#registerForm {
+    margin-left: 31.5%;
+}
+
 #chatInput {
     position: absolute;
     font-size: large;
     top:93%;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#loginInput {
+    position: relative;
+    font-size: large;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#registerInput {
+    position: relative;
+    font-size: large;
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
     border-style: double;
