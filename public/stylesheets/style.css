@@ -2,7 +2,7 @@ body{
     background-image: url("../images/leaves.jpg");
 }
 
-h1{
+#chatH1{
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
     border-style: double;
@@ -14,8 +14,7 @@ h1{
     padding-bottom: 1px;
 }
 
-a {
-    position: relative;
+#layoutA {
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
     border-style: double;
@@ -25,7 +24,7 @@ a {
     cursor: pointer;
 }
 
-.chatDiv{
+#chatDiv{
     position: fixed;
     width: 31.15cm;
     height: 17cm;
@@ -38,10 +37,33 @@ a {
     border-radius: 24px;
 }
 
-input {
+#storyDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 17cm;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    margin-left: 17.25%;
+    margin-top: 5%;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+
+.backendSubmit{
+    margin-left: 75%;
+}
+
+.messageBox{
+    margin-left: 20%;
+    padding-right: 39%;
+}
+
+#chatInput {
     position: absolute;
     font-size: large;
-    margin-left: 17%;
     top:93%;
     background-color: rgb(163, 226, 138);
     color: rgb(0, 63, 0);
@@ -51,11 +73,10 @@ input {
     border-radius: 24px;
 }
 
-.backendSubmit{
-    margin-left: 75%;
-}
-
-.messageBox{
-    margin-left: 20%;
-    padding-right: 39%;
+#storyInput {
+    position: absolute;
+    font-size: large;
+    top:93%;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
 }
