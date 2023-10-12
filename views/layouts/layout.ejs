@@ -4,19 +4,18 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Orlova Chat</title>
-		<link rel="stylesheet" href="stylesheets/style-chat.css" />
-		<link rel="stylesheet" href="stylesheets/style-login.css" />
+		<link rel="stylesheet" href="stylesheets/style.css" />
 		<link rel="icon" href="images/leaf.ico" />
 	</head>
 	<body>
 		<section>
 			<%- include('../partials/error.ejs') %>
 			<nav id="top-navbar">
-				<span><a href="/">Chat</a></span>
-				<span><a href="/user/login">Login</a></span>
-				<span><a href="/user/logout">Logout</a></span>
-				<span><a href="/user/list">User List</a></span>
-				<span><a href="/story">Story Mode</a></span>
+				<span><a id="layoutA" href="/">Chat</a></span>
+				<span><a id="layoutA" href="/user/login">Login</a></span>
+				<span><a id="layoutA" href="/user/logout">Logout</a></span>
+				<span><a id="layoutA" href="/user/list">User List</a></span>
+				<span><a id="layoutA" href="/story">Story Mode</a></span>
 			</nav>
 			<%- body %>
 		</section>
