@@ -2,8 +2,8 @@
 	<input id="answer" type="number" name="answerID"/>
 	<input type="submit" value="debugValueSubmit" />
 	<h5><%= q %></h5>
-	<% if(a.answerId1 != null)  { %> <input type="button" name="answerButton1" onclick="sendAnswer(this.value)" value=<%= a.answerId1 %>> <%= a.answer1%> </input> <% } %> 
-	<% if(a.answerId2 != null)  { %> <input type="button" name="answerButton2" onclick="sendAnswer(this.value)" value=<%= a.answerId2 %>> <%= a.answer2%> </input> <% } %> 
+	<% if(a.answerId1 != null)  { %> <input type="button" name="answerButton1" onclick="sendAnswer(this.value)" value=<%= a.answerId1%>> <%= a.answer1 %> </input> <% } %> 
+	<% if(a.answerId2 != null)  { %> <input type="button" name="answerButton2" onclick="sendAnswer(this.value)" value=<%= a.answerId2%>> <%= a.answer2 %> </input> <% } %> 
 	<% if(a.answerId3 != null)  { %> <input type="button" name="answerButton3" onclick="sendAnswer(this.value)" value=<%= a.answerId3 %>> <%= a.answer3 %> </input> <% } %> 
 </form>
 <script>
