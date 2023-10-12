@@ -92,11 +92,11 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 
 console.log('Generating tables');
 
+// Create User table and make anonymous account
+createUserTable(usersTable);
+
 // Create Story mesages table
 sendSqlQuery(storyTable);
-
-// Create users table
-sendSqlQuery(usersTable);
 
 // Create message table
 sendSqlQuery(messageTable);
@@ -104,16 +104,22 @@ sendSqlQuery(messageTable);
 // Creates story questions if they werent created yet
 setupStoryQuestions();
 
-// Create Anonymous user if it doesn't exist
-sendSqlQuery(
-	`INSERT IGNORE INTO users (id, username, password, token) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous')`
-);
-
 // Exports
 module.exports = {
 	connection: connection,
 	sendSqlQuery: sendSqlQuery,
 };
+
+async function createUserTable(usersTable){
+
+	// Create users table
+	await sendSqlQuery(usersTable);
+
+	// Create Anonymous user if it doesn't exist
+	sendSqlQuery(
+		`INSERT IGNORE INTO users (id, username, password, token) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous')`
+	);	
+}
 
 async function setupStoryQuestions(){
 	firstQuestion = await sendSqlQuery(
