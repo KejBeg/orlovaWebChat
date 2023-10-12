@@ -6,16 +6,19 @@
 		<title>Leafscord</title>
 		<link rel="stylesheet" href="stylesheets/style.css" />
 		<link rel="icon" href="images/leaf.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Young+Serif&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<section>
 			<%- include('../partials/error.ejs') %>
 			<nav id="top-navbar">
 				<span><a id="layoutA" href="/">Chat</a></span>
-				<span><a id="layoutA" href="../user/login">Login</a></span>
-				<span><a id="layoutA" href="../user/logout">Logout</a></span>
-				<span><a id="layoutA" href="../user/list">User List</a></span>
-				<span><a id="layoutA" href="../story">Story Mode</a></span>
+				<span><a id="layoutA" href="/user/login">Login</a></span>
+				<span><a id="layoutA" href="/user/logout">Logout</a></span>
+				<span><a id="layoutA" href="/user/list">User List</a></span>
+				<span><a id="layoutA" href="/story">Story Mode</a></span>
 			</nav>
 			<%- body %>
 		</section>
