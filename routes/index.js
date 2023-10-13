@@ -13,9 +13,10 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 // GET index route
 // Gets the last n messages from the database and renders the index page
 router.get('/', async (req, res) => {
-	messageArray = await getMessageArray();
+	let messageArray = await getMessageArray();
+	let error = await req.query.error;
 
-	res.render('index', { messages: messageArray});
+	res.render('index', { messages: messageArray, error : error});
 
 	//records activity in database
 	sendSqlQuery(
