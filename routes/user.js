@@ -6,14 +6,20 @@ const router = express.Router();
 const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 const crypto = require('crypto'); // Used for token generation
-const { log } = require('console');
 
 // Routes
 
 // GET login route
 // Renders the login page
 router.get('/login', async (req, res) => {
-	res.render('user/login');
+	try {
+		let error = await req.query.error;
+		res.render('user/login', { error: error });	
+	} catch (error) {
+		console.log(`An error occured while rendering the login page: ${error}`);
+		let errorMessage = await encodeURIComponent('An error occured while rendering the login page');
+		return res.redirect(`/?error=${errorMessage}`);
+	}
 });
 
 // POST login route
@@ -29,18 +35,23 @@ router.post('/login', async (req, res) => {
 			[username],
 			true
 		);
+
 		databasePassword = databasePassword[0].password;
 
 		// Checking if user exists
-		if (!userExistsByName(username)) {
+		// If not, redirect to login with error message
+		if (!(await userExistsByName(username))) {
 			console.log(`User ${username} does not exist`);
-			return res.redirect('/user/login');
+			let errorMessage = await encodeURIComponent('User does not exist');
+			return res.redirect(`/user/login/?error=${errorMessage}`);
 		}
 
 		// Checking if password is correct
+		// If not, redirect to login with error message
 		if (!(await verifyPassword(databasePassword, password))) {
 			console.log(`User ${username} entered the wrong password`);
-			return res.redirect('/user/login');
+			let errorMessage = await encodeURIComponent('Wrong password');
+			return res.redirect(`/user/login/?error=${errorMessage}`);
 		}
 
 		// Getting the user's token
@@ -51,20 +62,29 @@ router.post('/login', async (req, res) => {
 		);
 		token = token[0].token;
 
-		// Checking if password is correct
 		console.log(`User ${username} logged in successfully`);
+
+		// Setting the user's token
 		res.cookie('userToken', token);
 
 		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while logging in: ${error}`);
-		return res.redirect('/user/login');
+		let errorMessage = await encodeURIComponent('An error occured while logging in');
+		return res.redirect(`/user/login/?error=${errorMessage}`);
 	}
 });
 
 // GET register route
 router.get('/register', async (req, res) => {
-	res.render('user/register');
+	try {
+		let error = await req.query.error;
+		return res.render('user/register', { error: error });
+	} catch (error) {
+		console.log(`An error occured while rendering the register page: ${error}`);
+		let errorMessage = await encodeURIComponent('An error occured while rendering the register page');
+		return res.redirect(`/?error=${errorMessage}`);
+	}
 });
 
 // POST register route
@@ -75,16 +95,18 @@ router.post('/register', async (req, res) => {
 		const username = await req.body.username;
 		const password = await req.body.password;
 
-		// If the user exists, redirect to login
+		// If the user exists, redirect to register
 		if (await userExistsByName(username)) {
 			console.log(`User ${username} already exists`);
-			return res.redirect('/login');
+			let errorMessage = await encodeURIComponent('User already exists');
+			return res.redirect(`/user/register/?error=${errorMessage}`);
 		}
 
 		// Checking if password is valid
 		if (!(await isPasswordValid(password))) {
 			console.log(`${username} entered an invalid password`);
-			return res.redirect('/user/register');
+			let errorMessage = await encodeURIComponent('Invalid password');
+			return res.redirect(`/user/register/?error=${errorMessage}`);
 		}
 
 		// Getting a new token
@@ -100,11 +122,15 @@ router.post('/register', async (req, res) => {
 		);
 
 		console.log(`User ${username} created successfully`);
+
+		// Setting the user's token
 		res.cookie('userToken', token);
+
 		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while creating a user: ${error}`);
-		return res.redirect('/user/register');
+		let errorMessage = await encodeURIComponent('An error occured while creating a user');
+		return res.redirect(`/user/register/?error=${errorMessage}`);
 	}
 });
 
@@ -112,30 +138,38 @@ router.post('/register', async (req, res) => {
 // Logs the user out and redirects to index
 // If not Anonymous, change token
 router.get('/logout', async (req, res) => {
-	let currentToken = await req.cookies.userToken;
-	let userExists = await userExistsByToken(currentToken);
+	try {
+		let currentToken = await req.cookies.userToken;
+		let userExists = await userExistsByToken(currentToken);
+	
+		// If user exists, change token
+		if (userExists && currentToken != 'Anonymous') {
+			// Gets username
+			let username = await sendSqlQuery(
+				'SELECT username FROM users WHERE token = ?',
+				[currentToken],
+				true
+			);
+	
+			// Generates new token
+			let newToken = await getNewToken();
+	
+			// Changes token
+			await sendSqlQuery('UPDATE users SET token = ? WHERE token = ?', [
+				newToken,
+				currentToken,
+			]);
+		}
+	
+		// Clearing the user's token
+		res.clearCookie('userToken');
 
-	// If user exists, change token
-	if (userExists && currentToken != 'Anonymous') {
-		// Gets username
-		let username = await sendSqlQuery(
-			'SELECT username FROM users WHERE token = ?',
-			[currentToken],
-			true
-		);
-
-		// Generates new token
-		let newToken = await getNewToken();
-
-		// Changes token
-		await sendSqlQuery('UPDATE users SET token = ? WHERE token = ?', [
-			newToken,
-			currentToken,
-		]);
+		res.redirect('/');
+	} catch (error) {
+		console.log(`An error occured while logging out: ${error}`);
+		let errorMessage = await encodeURIComponent('An error occured while logging out');
+		return res.redirect(`/?error=${errorMessage}`);
 	}
-
-	res.clearCookie('userToken');
-	res.redirect('/');
 });
 
 // GET user list route
@@ -148,7 +182,8 @@ router.get('/list', async (req, res) => {
 		res.render('user/list', { users: users });
 	} catch (error) {
 		console.log(`An error happened while getting the user list: ${error}`);
-		return res.redirect('/');
+		let errorMessage = await encodeURIComponent('An error happened while getting the user list');
+		return res.redirect(`/?error=${errorMessage}`);
 	}
 });
 
@@ -162,7 +197,8 @@ router.get('/list/:id', async (req, res) => {
 		// Check if user exists by id
 		if (!(await userExistsById(wantedId))) {
 			console.log(`Id ${wantedId} does not exist`);
-			return res.redirect('/');
+			let errorMessage = await encodeURIComponent('User does not exist');
+			return res.redirect(`/?error=${errorMessage}`);
 		}
 
 		// Get user's data
@@ -201,7 +237,7 @@ router.get('/list/:id', async (req, res) => {
 		});
 		let avarageMessageLength = Math.round( (totalMsgLength / messageCount) * 100 ) / 100;
 
-		res.render('user/profile', {
+		return res.render('user/profile', {
 			user: user[0],
 			creationDate: rephraseMySQLDate(user[0].userCreationDate),
 			lastActiveDate: rephraseMySQLDate(user[0].lastActiveDate, true),
@@ -212,10 +248,9 @@ router.get('/list/:id', async (req, res) => {
 			isUserBanned: user[0].isBanned,
 		});
 	} catch (error) {
-		console.log(
-			`An error happened during rendering the profile page: ${error}`
-		);
-		return res.redirect('/');
+		console.log(`An error happened during rendering the profile page: ${error}`);
+		let errorMessage = await encodeURIComponent('An error happened during rendering the profile page');
+		return res.redirect(`/?error=${errorMessage}`)
 	}
 });
 
@@ -229,20 +264,23 @@ router.get('/edit', async (req, res) => {
 		// Check if user exists by token
 		if (!(await userExistsByToken(currentToken))) {
 			console.log(`Token ${currentToken} does not exist`);
-			return res.redirect('/');
+			let errorMessage = await encodeURIComponent('User does not exist');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		// Anonymous can't edit a profile
 		if (currentToken == 'Anonymous') {
 			console.log('Anonymous tried to edit a profile');
-			return res.redirect('/user/register');
+			let errorMessage = await encodeURIComponent('Anonymous can\'t edit a profile');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		// Render the edit page
 		return res.render('user/edit');
 	} catch (error) {
 		console.log(`An error happened during rendering the edit page: ${error}`);
-		return res.redirect('/');
+		let errorMessage = await encodeURIComponent('An error happened during rendering the edit page');
+		return res.redirect(`/?error=${errorMessage}`)
 	}
 });
 
@@ -256,13 +294,15 @@ router.post('/edit', async (req, res) => {
 		// Check if user exists by token
 		if (!(await userExistsByToken(currentToken))) {
 			console.log(`Token ${currentToken} does not exist`);
-			return res.redirect('/');
+			let errorMessage = await encodeURIComponent('User does not exist');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		// Anonymous can't edit a profile
 		if (currentToken == 'Anonymous') {
 			console.log('Anonymous tried to edit a profile');
-			return res.redirect('/user/register');
+			let errorMessage = await encodeURIComponent('Anonymous can\'t edit a profile');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		// Get new username
@@ -271,7 +311,8 @@ router.post('/edit', async (req, res) => {
 		// Can't have more users with the same username
 		if (await userExistsByName(newUsername)) {
 			console.log('Username already exists');
-			return res.redirect('/');
+			let errorMessage = await encodeURIComponent('Username already exists');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		// Change username
@@ -283,7 +324,8 @@ router.post('/edit', async (req, res) => {
 		res.redirect('/');
 	} catch (error) {
 		console.log(`An error happened during editing a user: ${error}`);
-		return res.redirect('/');
+		let errorMessage = await encodeURIComponent('An error happened during editing a user');
+		return res.redirect(`/?error=${errorMessage}`);
 	}
 });
 
