@@ -93,11 +93,15 @@ const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split(/\r?\n/);
  * @returns
  */
 function isMessageOffensive(message) {
-	for (word in swearWords) {
-		if (message.toLowerCase().includes(swearWords[word])) return true;
+	try {
+		for (word in swearWords) {
+			if (message.toLowerCase().includes(swearWords[word])) return true;
+		}
+	
+		return false;
+	} catch (error) {
+		throw new Error(`An error occured while checking if a message is offensive: ${error}`);
 	}
-
-	return false;
 }
 
 /**
@@ -105,24 +109,26 @@ function isMessageOffensive(message) {
  * @returns {array} An array of the last 10 messages
  */
 async function getMessageArray() {
-	// Getting the messages from the database
-	let messageArray = await sendSqlQuery(
-		`SELECT *
-		FROM messages
-		JOIN users ON messages.author = users.id
-		ORDER BY time DESC
-		LIMIT ?
-		`,
-		[parseInt(process.env.GET_MESSAGE_LIMIT)],
-		true
-	);
-	// Q: how do i convert a string of numbers into an int
-	// A: parseInt()
-
-	// Reverse the array
-	messageArray.reverse();
-
-	return messageArray;
+	try {
+		// Getting the messages from the database
+		let messageArray = await sendSqlQuery(
+			`SELECT *
+			FROM messages
+			JOIN users ON messages.author = users.id
+			ORDER BY time DESC
+			LIMIT ?
+			`,
+			[parseInt(process.env.GET_MESSAGE_LIMIT)],
+			true
+		);
+	
+		// Reverse the array
+		messageArray.reverse();
+	
+		return messageArray;
+	} catch (error) {
+		throw new Error(`An error occured while getting the message array: ${error}`);
+	}
 }
 
 // Export the router
