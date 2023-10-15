@@ -36,8 +36,7 @@ router.post('/login', async (req, res) => {
 			true
 		);
 
-		databasePassword = databasePassword[0].password;
-
+		
 		// Checking if user exists
 		// If not, redirect to login with error message
 		if (!(await userExistsByName(username))) {
@@ -45,6 +44,8 @@ router.post('/login', async (req, res) => {
 			let errorMessage = await encodeURIComponent('User does not exist');
 			return res.redirect(`/user/login/?error=${errorMessage}`);
 		}
+		
+		databasePassword = databasePassword[0].password;
 
 		// Checking if password is correct
 		// If not, redirect to login with error message
