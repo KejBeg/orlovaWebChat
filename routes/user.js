@@ -337,23 +337,31 @@ router.post('/edit', async (req, res) => {
  * @returns modified mySQL Date
  */
 function rephraseMySQLDate(mySQLDate, includeTime = false) {
-	let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
-
-	if (includeTime) return d + '.' + M + ' ' + y + ' - ' + h + ':' + m + ':' + s;
-	return d + '.' + M + ' ' + y;
+	try {
+		let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
+	
+		if (includeTime) return d + '.' + M + ' ' + y + ' - ' + h + ':' + m + ':' + s;
+		return d + '.' + M + ' ' + y;
+	} catch (error) {
+		throw new Error(`An error occured while rephrasing a mySQL date: ${error}`);
+	}
 }
 
 function mySQLDateToJSON(mySQLDate) {
-	let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
-
-	return {
-		year: y,
-		month: M,
-		day: d,
-		hour: h,
-		minute: m,
-		second: s,
-	};
+	try {
+		let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
+	
+		return {
+			year: y,
+			month: M,
+			day: d,
+			hour: h,
+			minute: m,
+			second: s,
+		};
+	} catch (error) {
+		throw new Error(`An error occured while converting a mySQL date to JSON: ${error}`);
+	}
 }
 
 /**
@@ -362,16 +370,20 @@ function mySQLDateToJSON(mySQLDate) {
  * @returns True if the user exists, false if it does not
  */
 async function userExistsByName(username) {
-	let result = await sendSqlQuery(
-		'SELECT * FROM users WHERE username = ?',
-		[username],
-		true
-	);
-
-	if (result == undefined || result == '') {
-		return false;
-	} else {
-		return true;
+	try {
+		let result = await sendSqlQuery(
+			'SELECT * FROM users WHERE username = ?',
+			[username],
+			true
+		);
+	
+		if (result == undefined || result == '') {
+			return false;
+		} else {
+			return true;
+		}
+	} catch (error) {
+		throw new Error(`An error occured while checking if a user exists by name: ${error}`)
 	}
 }
 
@@ -381,16 +393,20 @@ async function userExistsByName(username) {
  * @returns
  */
 async function userExistsByToken(token) {
-	let result = await sendSqlQuery(
-		'SELECT * FROM users WHERE token = ?',
-		[token],
-		true
-	);
-
-	if (result == undefined || result == '') {
-		return false;
-	} else {
-		return true;
+	try {
+		let result = await sendSqlQuery(
+			'SELECT * FROM users WHERE token = ?',
+			[token],
+			true
+		);
+	
+		if (result == undefined || result == '') {
+			return false;
+		} else {
+			return true;
+		}
+	} catch (error) {
+		throw new Error(`An error occured while checking if a user exists by token: ${error}`);
 	}
 }
 
@@ -414,10 +430,7 @@ async function userExistsById(wantedId) {
 			return true;
 		}
 	} catch (error) {
-		console.log(
-			`An error occured while checking if a user exists by id: ${error}`
-		);
-		throw error;
+		throw new Error(`An error occured while checking if a user exists by ID: ${error}`);
 	}
 }
 
@@ -426,16 +439,20 @@ async function userExistsById(wantedId) {
  * @returns a unique token
  */
 async function getNewToken() {
-	// Generating token
-	let token = await generateUserToken();
-
-	// Checking if token is already taken
-	while ((await verifyUserToken(token)) == true) {
-		token = await generateUserToken();
+	try {
+		// Generating token
+		let token = await generateUserToken();
+	
+		// Checking if token is already taken
+		while ((await verifyUserToken(token)) == true) {
+			token = await generateUserToken();
+		}
+	
+		console.log('Created new token successfully');
+		return token;
+	} catch (error) {
+		throw new Error(`An error occured while getting a new token: ${error}`);
 	}
-
-	console.log('Created new token successfully');
-	return token;
 }
 
 /**
@@ -443,11 +460,15 @@ async function getNewToken() {
  * @returns a token
  */
 async function generateUserToken() {
-	let token = crypto
-		.randomBytes(parseInt(process.env.TOKEN_BITS))
-		.toString('hex');
-	console.log('Token successfully generated');
-	return token;
+	try {
+		let token = crypto
+			.randomBytes(parseInt(process.env.TOKEN_BITS))
+			.toString('hex');
+		console.log('Token successfully generated');
+		return token;
+	} catch (error) {
+		throw new Error(`An error occured while generating a token: ${error}`);
+	}
 }
 
 /**
@@ -475,8 +496,7 @@ async function verifyUserToken(token) {
 		// If token is not found in database, return false
 		return false;
 	} catch (error) {
-		console.log(`An error occured while verifying a token: ${error}`);
-		throw error;
+		throw new Error(`An error occured while verifying a token: ${error}`);
 	}
 }
 
@@ -506,8 +526,7 @@ async function encryptPassword(password) {
 		// Return the encrypted password
 		return `${passwordHash}.${passwordSalt}`;
 	} catch (error) {
-		console.log(`An error occured while encrypting a password: ${error}`);
-		throw error;
+		throw new Error(`An error occured while encrypting a password: ${error}`);
 	}
 }
 
@@ -534,8 +553,7 @@ async function verifyPassword(databasePassword, loginPassword) {
 		// Return true if passwords match, false if they don't
 		return crypto.timingSafeEqual(hashedPasswordBuf, suppliedPasswordBuf);
 	} catch (error) {
-		console.log(`An error occured while verifying a password: ${error}`);
-		throw error;
+		throw new Error(`An error occured while verifying a password: ${error}`);
 	}
 }
 
@@ -545,12 +563,16 @@ async function verifyPassword(databasePassword, loginPassword) {
  * @returns {boolean}
  */
 async function isPasswordValid(password) {
-	// Checking the length of password
-	if (password.length < parseInt(process.env.PASSWORD_MIN_LENGTH)) {
-		return false;
+	try {
+		// Checking the length of password
+		if (password.length < parseInt(process.env.PASSWORD_MIN_LENGTH)) {
+			return false;
+		}
+	
+		return true;
+	} catch (error) {
+		throw new Error(`An error occured while checking if a password is valid: ${error}`)
 	}
-
-	return true;
 }
 
 // Export the router
