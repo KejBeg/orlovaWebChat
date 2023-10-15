@@ -13,7 +13,9 @@ const crypto = require('crypto'); // Used for token generation
 // Renders the login page
 router.get('/login', async (req, res) => {
 	try {
+		// Getting error message
 		let error = await req.query.error;
+
 		res.render('user/login', { error: error });	
 	} catch (error) {
 		console.log(`An error occured while rendering the login page: ${error}`);
@@ -79,7 +81,9 @@ router.post('/login', async (req, res) => {
 // GET register route
 router.get('/register', async (req, res) => {
 	try {
+		// Getting error message
 		let error = await req.query.error;
+
 		return res.render('user/register', { error: error });
 	} catch (error) {
 		console.log(`An error occured while rendering the register page: ${error}`);
