@@ -15,6 +15,8 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 router.get('/', async (req, res) => {
 	try {
 		let messageArray = await getMessageArray();
+
+		// Getting error message
 		let error = await req.query.error;
 	
 		res.render('index', { messages: messageArray, error : error});
