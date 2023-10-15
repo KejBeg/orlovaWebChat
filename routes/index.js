@@ -13,16 +13,22 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 // GET index route
 // Gets the last n messages from the database and renders the index page
 router.get('/', async (req, res) => {
-	let messageArray = await getMessageArray();
-	let error = await req.query.error;
-
-	res.render('index', { messages: messageArray, error : error});
-
-	//records activity in database
-	sendSqlQuery(
-		'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
-		[req.cookies.userToken]
-	);
+	try {
+		let messageArray = await getMessageArray();
+		let error = await req.query.error;
+	
+		res.render('index', { messages: messageArray, error : error});
+	
+		//records activity in database
+		sendSqlQuery(
+			'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
+			[req.cookies.userToken]
+		);
+	} catch (error) {
+		console.log(`An error occured while loading the index page: ${error}`);
+		let errorMessage = await encodeURIComponent('An error occured while loading the index page');
+		return res.redirect(`/?error=${errorMessage}`);
+	}
 });
 
 // POST index route
@@ -43,11 +49,15 @@ router.post('/', async (req, res) => {
 
 		authorIsBanned = authorId[0].isBanned;
 		if (authorIsBanned) {
-			throw new Error('User is currently banned and cannot send messages!');
+			console.log(`User ${authorId} tried to send a message while banned`);
+			let errorMessage = await encodeURIComponent('You are banned and cannot send messages');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		if (message.replace(/\s/g, '').length == 0){
-			throw new Error('User is sending only spaces!');
+			console.log(`User ${authorId} tried to send only spaces`);
+			let errorMessage = await encodeURIComponent('You cannot send only spaces');
+			return res.redirect(`/?error=${errorMessage}`)
 		}
 
 		authorId = authorId[0].id;
@@ -57,6 +67,8 @@ router.post('/', async (req, res) => {
 		// Check if user exists
 		if (authorId == undefined) {
 			throw new Error('User does not exist');
+			console.log(`User ${authorId} tried to send a message but does not exist`);
+			let errorMessage = await encodeURIComponent('User does not exist');
 		}
 
 		await sendSqlQuery(
@@ -67,7 +79,8 @@ router.post('/', async (req, res) => {
 		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while sending a message: ${error}`);
-		return res.redirect('/');
+		let errorMessage = await encodeURIComponent('An error occured while sending a message');
+		return res.redirect(`/?error=${error}`);
 	}
 });
 
