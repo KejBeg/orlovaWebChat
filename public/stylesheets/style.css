@@ -86,6 +86,35 @@ body {
     border-radius: 24px;
 }
 
+#listDiv{
+    position: fixed;
+    width: 250px;
+    height: 17cm;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    margin-left: 38%;
+    margin-top: 7%;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#profileDiv{
+    position: fixed;
+    width: 400px;
+    height: 17cm;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    margin-left: 35%;
+    margin-top: 7%;
+    text-align: center;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
 #storyDiv{
     position: fixed;
     width: 31.15cm;
@@ -171,12 +200,6 @@ body {
     font-family: 'Young Serif', serif;
 }
 
-#listLi {
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
-    border-style: double;
-    border-color: rgb(0, 63, 0);
-    border-width: 10px;
-    border-radius: 12px;
-    cursor: pointer;
+#profilePFP{
+    width: 300px;
 }
