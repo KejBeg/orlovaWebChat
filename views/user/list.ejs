@@ -1,7 +1,9 @@
-<ul>
-	<% for (user in users) { %>
-	<li id="listLi">
-		<a href="/user/list/<%= users[user].id %>"> <%= users[user].username %> </a>
-	</li>
-	<% } %>
-</ul>
+<div id="listDiv">
+	<ul>
+		<% for (user in users) { %>
+		<li id="listLi">
+			<a href="/user/list/<%= users[user].id %>"> <%= users[user].username %> </a>
+		</li>
+		<% } %>
+	</ul>
+</div>
