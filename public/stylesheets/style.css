@@ -200,6 +200,10 @@ body {
     font-family: 'Young Serif', serif;
 }
 
+#chatPFP{
+    width: 35px;
+}
+
 #profilePFP{
     width: 300px;
 }
