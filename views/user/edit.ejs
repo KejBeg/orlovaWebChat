@@ -1,4 +1,17 @@
-<form method="post">
-	<input type="text" name="username" placeholder="username" />
-	<input type="submit" />
-</form>
+<div id="settingsDiv">
+	<h1 id="settingsH1">Settings</h1>
+	<div id="settingsDivInsideDiv">
+		<h3>Change your username</h3>
+		<form method="post">
+			<input type="text" name="username" placeholder="username" id="settingsInput"/>
+			<input type="submit" id="settingsInput"/>
+		</form>
+		<h3>Change your theme</h3>
+		<form method="post">
+			<input type="radio" name="theme" id="settingsInput">Autumn
+			<input type="radio" name="theme" id="settingsInput" checked="true">Jungle
+			<input type="radio" name="theme" id="settingsInput">Night
+			<input type="submit" id="settingsInput"/>
+		</form>
+	</div>
+</div>
