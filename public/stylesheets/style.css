@@ -73,6 +73,11 @@ body {
     margin-top: 16%;
 }
 
+#settingsH1 {
+    text-align: center;
+    font-size: 35px;
+}
+
 #chatDiv{
     position: fixed;
     width: 31.15cm;
@@ -113,6 +118,25 @@ body {
     border-color: rgb(0, 63, 0);
     border-width: 20px;
     border-radius: 24px;
+}
+
+#settingsDiv{   
+    position: fixed;
+    width: 50%;
+    height: 17cm;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    margin-left: 24%;
+    margin-top: 7%;
+    text-align: left;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#settingsDivInsideDiv{
+    margin: 15px;
 }
 
 #storyDiv{
@@ -181,7 +205,20 @@ body {
     border-style: double;
     border-color: rgb(0, 63, 0);
     border-width: 20px;
-    border-radius: 24px;
+    border-radius: 24px;    
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#settingsInput {
+    position: relative;
+    font-size: large;
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 10px;
+    border-radius: 12px;
     font-family: 'Nanum Gothic Coding', monospace;
     font-family: 'Young Serif', serif;
 }
@@ -201,9 +238,17 @@ body {
 }
 
 #chatPFP{
-    width: 35px;
+    width: 30px;
+    border-radius: 100%;
+    margin-left: 10px;
+    margin-right: 5px;
 }
 
 #profilePFP{
-    width: 300px;
+    width: 275px;
+    border-radius: 100%;
+    margin-top: 10px;
+    border-style: double;
+    border-color: rgb(0, 63, 0);
+    border-width: 10px;
 }
