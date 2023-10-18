@@ -239,6 +239,7 @@ body {
 
 #chatPFP{
     width: 30px;
+    height: 30px;
     border-radius: 100%;
     margin-left: 10px;
     margin-right: 5px;
@@ -246,6 +247,7 @@ body {
 
 #profilePFP{
     width: 275px;
+    height: 275px;
     border-radius: 100%;
     margin-top: 10px;
     border-style: double;
