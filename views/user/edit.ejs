@@ -6,12 +6,20 @@
 			<input type="text" name="username" placeholder="username" id="settingsInput"/>
 			<input type="submit" id="settingsInput"/>
 		</form>
-		<h3>Change your theme</h3>
+
+		<h3>Change your profile picture (.jpeg, .png)</h3>
 		<form method="post">
-			<input type="radio" name="theme" id="settingsInput">Autumn
-			<input type="radio" name="theme" id="settingsInput" checked="true">Jungle
-			<input type="radio" name="theme" id="settingsInput">Night
+			<input type="file" id="settingsInput" accept="image/png, image/jpeg" />
 			<input type="submit" id="settingsInput"/>
 		</form>
-	</div>
-</div>
+
+		<h3>Change your theme</h3>
+		<form method="post">
+			<input type="radio" name="theme" id="settingsInput" checked="true">Autumn
+			<input type="radio" name="theme" id="settingsInput">Jungle
+			<input type="radio" name="theme" id="settingsInput">Snowflake
+			<input type="radio" name="theme" id="settingsInput">Tribal
+			<input type="submit" id="settingsInput"/>
+		</form>
+		</div>
+</div>	

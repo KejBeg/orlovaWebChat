@@ -1,37 +1,35 @@
 body {
-    background-image: url("../images/leaves.jpg");
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    background-image: url("../images/snowflakes.jpg");
+    font-family: 'Grandstander', cursive;
 }
 
 #layoutA {
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 10px;
     border-radius: 12px;
     cursor: pointer;
 }
 
 #loginA {
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     font-size: large;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
     border-radius: 24px;
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    font-family: 'Grandstander', cursive;
     cursor: pointer;
 }
 
 #chatH1 {
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 0.5cm;
     width: 8cm;
     border-radius: 24px; 
@@ -45,12 +43,12 @@ body {
 
 #loginH1 {
     position: relative;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     font-size: 80px;
     text-align: center;
     border-style: double;
-    border-color: rgb(0, 63, 0);    
+    border-color: rgb(65, 173, 177);    
     width: 400px;
     border-radius: 24px;
     border-width: 18px; 
@@ -60,12 +58,12 @@ body {
 
 #registerH1 {
     position: relative;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     font-size: 80px;
     text-align: center;
     border-style: double;
-    border-color: rgb(0, 63, 0);    
+    border-color: rgb(65, 173, 177);    
     width: 400px;
     border-radius: 24px;
     border-width: 18px; 
@@ -82,11 +80,11 @@ body {
     position: fixed;
     width: 31.15cm;
     height: 17cm;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     margin-left: 17.25%;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
     border-radius: 24px;
 }
@@ -95,12 +93,12 @@ body {
     position: fixed;
     width: 250px;
     height: 17cm;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     margin-left: 38%;
     margin-top: 7%;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(63, 51, 0);
     border-width: 20px;
     border-radius: 24px;
 }
@@ -109,13 +107,13 @@ body {
     position: fixed;
     width: 400px;
     height: 17cm;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     margin-left: 35%;
     margin-top: 7%;
     text-align: center;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
     border-radius: 24px;
 }
@@ -124,13 +122,13 @@ body {
     position: fixed;
     width: 50%;
     height: 17cm;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     margin-left: 24%;
     margin-top: 7%;
     text-align: left;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
     border-radius: 24px;
 }
@@ -143,12 +141,12 @@ body {
     position: fixed;
     width: 31.15cm;
     height: 5cm;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     margin-left: 17.25%;
     margin-top: 15%;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(63, 51, 0);
     border-width: 20px;
     border-radius: 24px;
 }
@@ -173,68 +171,63 @@ body {
 #chatInput {
     position: absolute;
     font-size: large;
-    top:93%;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    top:90%;
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
     border-radius: 24px;
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    
 }
 
 #loginInput {
     position: relative;
     font-size: large;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
     border-radius: 24px;
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    font-family: 'Grandstander', cursive;
 }
 
 #registerInput {
     position: relative;
     font-size: large;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 20px;
-    border-radius: 24px;    
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    border-radius: 24px;
+    font-family: 'Grandstander', cursive;
 }
 
 #settingsInput {
     position: relative;
     font-size: large;
-    background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 10px;
     border-radius: 12px;
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    font-family: 'Grandstander', cursive;
 }
 
 #storyInput {
     position: relative;
     font-size: large;
-    background-color: rgb(163, 226, 138);
-    color: rgb(163, 226, 138);
+    background-color: rgb(199, 248, 246);
+    color: rgb(199, 248, 246);
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 5px;
     border-radius: 5px;
     width: 35px;
-    font-family: 'Nanum Gothic Coding', monospace;
-    font-family: 'Young Serif', serif;
+    font-family: 'Grandstander', cursive;
 }
 
 #chatPFP{
@@ -249,6 +242,6 @@ body {
     border-radius: 100%;
     margin-top: 10px;
     border-style: double;
-    border-color: rgb(0, 63, 0);
+    border-color: rgb(65, 173, 177);
     border-width: 10px;
 }
