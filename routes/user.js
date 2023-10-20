@@ -128,7 +128,7 @@ router.post('/register', async (req, res) => {
 		3000;
 		// Creating the user
 		await sendSqlQuery(
-			'INSERT INTO users (username, password, token) VALUES (?, ?, ?)',
+			'INSERT INTO users (username, password, token, theme) VALUES (?, ?, ?, "autumn")',
 			[username, hashedPassword, token]
 		);
 
@@ -397,6 +397,42 @@ router.post('/edit/changeUsername', async (req, res) => {
 	} catch (error) {
 		console.log(`An error happened during editing a user name: ${error}`);
 		let errorMessage = await encodeURIComponent('An error happened during editing a user name');
+		return res.redirect(`/?error=${errorMessage}`);
+	}
+});
+
+router.post('/edit/changeTheme', async (req, res) => {
+	try {
+		// Get user's token
+		let currentToken = await req.cookies.userToken;
+
+		// Check if user exists by token
+		if (!(await userExistsByToken(currentToken))) {
+			console.log(`Token ${currentToken} does not exist`);
+			let errorMessage = await encodeURIComponent('User does not exist');
+			return res.redirect(`/?error=${errorMessage}`)
+		}
+
+		// Anonymous can't edit a profile
+		if (currentToken == 'Anonymous') {
+			console.log('Anonymous tried to edit a profile');
+			let errorMessage = await encodeURIComponent('Anonymous can\'t edit a profile');
+			return res.redirect(`/?error=${errorMessage}`)
+		}
+		
+		// Get selected theme
+		let newTheme = await req.body.theme;
+
+		// Change username
+		sendSqlQuery('UPDATE users SET theme = ? WHERE token = ?', [
+			newTheme,
+			currentToken,
+		]);
+
+		res.redirect('/');
+	} catch (error) {
+		console.log(`An error happened during editing a user theme: ${error}`);
+		let errorMessage = await encodeURIComponent('An error happened during editing a user theme');
 		return res.redirect(`/?error=${errorMessage}`);
 	}
 });

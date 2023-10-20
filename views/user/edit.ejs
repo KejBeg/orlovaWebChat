@@ -15,10 +15,16 @@
 
 		<h3>Change your theme</h3>
 		<form action="/user/edit/changeTheme" method="post">
-			<input type="radio" name="theme" id="settingsInput" checked="true">Autumn
-			<input type="radio" name="theme" id="settingsInput">Jungle
-			<input type="radio" name="theme" id="settingsInput">Snowflake
-			<input type="radio" name="theme" id="settingsInput">Tribal
+			<input type="radio" name="theme" id="settingsInput" value="autumn" checked="true">
+			<label for="autumn">Autumn</label>
+			<input type="radio" name="theme" id="settingsInput" value="jungle">
+			<label for="jungle">Jungle</label>
+			<input type="radio" name="theme" id="settingsInput" value="snowflakes">
+			<label for="snowflakes">Snowflake</label>
+			<input type="radio" name="theme" id="settingsInput" value="tribal">
+			<label for="tribal">Tribal</label>
+			<input type="radio" name="theme" id="settingsInput" value="night">
+			<label for="night">Night</label>
 			<input type="submit" id="settingsInput"/>
 		</form>
 		</div>
