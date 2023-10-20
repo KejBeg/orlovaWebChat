@@ -84,6 +84,7 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	password TEXT,
 	token TEXT,
 	hasProfilePicture BOOLEAN DEFAULT 0,
+	theme TEXT,
 	isBanned BOOLEAN DEFAULT 0,
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
@@ -118,11 +119,11 @@ async function createUserTable(usersTable){
 
 	// Create Anonymous user if it doesn't exist
 	sendSqlQuery(
-		`INSERT IGNORE INTO users (id, username, password, token) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous')`
+		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous', "autumn")`
 	);	
 
 	sendSqlQuery(
-		`INSERT IGNORE INTO users (id, username, password, token) VALUES (2, 'ADMIN', 'testadmin', 'ADMIN3363')`
+		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (2, 'ADMIN', 'testadmin', 'ADMIN3363', "autumn")`
 	);	
 }
 
