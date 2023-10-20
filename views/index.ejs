@@ -1,13 +1,13 @@
 <script id="chat-script" src="/js/socket.js"></script>
-<h1 align="center" id="chatH1">Leafscord</h1>
+<h1 align="center" id="chatH1">Leavescord</h1>
 <div id="chatDiv">
     <% for(i = 0; i < messages.length; i++) { %>
-    <p> <%= messages[i].username + ": " + messages[i].message %> </p>
+    <% if(messages[i].hasProfilePicture) profilePicture = "/profilePictures/" + messages[i].username + ".png"
+       else profilePicture = "/profilePictures/Anonymous.png" %>
+    <p> <img src= <%= profilePicture%> width="30px" id="chatPFP"> <%= messages[i].username + ": " + messages[i].message %> </p>
     <% } %>
 </div>
 <form name="chatForm" method="post">
     <input type="text" name="message" id="chatInput" class="messageBox">
-    <input type="submit" value="Send" id="chatInput" class="backendSubmit"> 
- </form>
-<!-- <input type="text" name="message" id="chatInput" class="messageBox">
-<button id="chatInput", class="backendSubmit">Send</button> -->
+    <input type="submit" value="Send" id="chatInput" class="backendSubmit">
+</form>

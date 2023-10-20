@@ -7,6 +7,12 @@ const crypto = require('crypto'); // Used for token generation
 const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 
+const fs = require('fs'); // FS - file system
+
+const sharp = require("sharp"); // Image Processing
+const multer = require("multer"); // extracting and saving images from forms
+const upload = multer({dest: 'uploads/'}); // from multer
+
 // Routes
 
 // GET login route
@@ -287,11 +293,72 @@ router.get('/edit', async (req, res) => {
 		let errorMessage = await encodeURIComponent('An error happened during rendering the edit page');
 		return res.redirect(`/?error=${errorMessage}`)
 	}
+
 });
+
+router.post('/edit/changeProfilePic',upload.single('profilePicture'), async (req, res) => {
+	try{
+		// Get user's token
+		let currentToken = await req.cookies.userToken;
+
+		// Check if user exists by token
+		if (!(await userExistsByToken(currentToken))) {
+			console.log(`Token ${currentToken} does not exist`);
+			let errorMessage = await encodeURIComponent('User does not exist');
+			return res.redirect(`/?error=${errorMessage}`)
+		}
+
+		// Anonymous can't edit a profile
+		if (currentToken == 'Anonymous') {
+			console.log('Anonymous tried to edit a profile');
+			let errorMessage = await encodeURIComponent('Anonymous can\'t edit a profile');
+			return res.redirect(`/?error=${errorMessage}`)
+		}
+		
+		//gets profile name
+		userName = await sendSqlQuery(
+			'SELECT username FROM users WHERE token = ?;',
+			[currentToken],
+			true
+		);
+
+		//processing and saving image
+		try{
+			//process image
+			await sharp(req.file.path)
+				.resize({
+					width : 300,
+					height : 300
+				})
+				.png()
+				.toFile("public/profilePictures/" + userName[0].username +".png");
+			
+			//remove temp. file
+			fs.unlink(req.file.path, function(err){
+				if(err) return console.log(err);
+		    });
+
+			// Change profile info
+			sendSqlQuery('UPDATE users SET hasProfilePicture = true WHERE token = ?', [
+				currentToken,
+			]);
+		}catch (error) {
+			console.log(`An error happened during setting a users profile pic: ${error}`);
+			let errorMessage = await encodeURIComponent('An error happened during setting a users profile pic');
+			return res.redirect(`/?error=${errorMessage}`);
+		}
+
+		res.redirect('/');
+	}catch (error) {
+		console.log(`An error happened during editing a users profile pic: ${error}`);
+		let errorMessage = await encodeURIComponent('An error happened during editing a users profile pic');
+		return res.redirect(`/?error=${errorMessage}`);
+	}
+})
 
 // POST user edit route
 // Gets the new username from POST request and changes them
-router.post('/edit', async (req, res) => {
+router.post('/edit/changeUsername', async (req, res) => {
 	try {
 		// Get user's token
 		let currentToken = await req.cookies.userToken;
@@ -309,7 +376,7 @@ router.post('/edit', async (req, res) => {
 			let errorMessage = await encodeURIComponent('Anonymous can\'t edit a profile');
 			return res.redirect(`/?error=${errorMessage}`)
 		}
-
+		
 		// Get new username
 		let newUsername = await req.body.username;
 
@@ -328,8 +395,8 @@ router.post('/edit', async (req, res) => {
 
 		res.redirect('/');
 	} catch (error) {
-		console.log(`An error happened during editing a user: ${error}`);
-		let errorMessage = await encodeURIComponent('An error happened during editing a user');
+		console.log(`An error happened during editing a user name: ${error}`);
+		let errorMessage = await encodeURIComponent('An error happened during editing a user name');
 		return res.redirect(`/?error=${errorMessage}`);
 	}
 });

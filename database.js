@@ -83,6 +83,7 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	username TEXT,
 	password TEXT,
 	token TEXT,
+	hasProfilePicture BOOLEAN DEFAULT 0,
 	isBanned BOOLEAN DEFAULT 0,
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
