@@ -40,33 +40,14 @@ app.use(async (req, res, next) => {
 			[req.cookies.userToken],
 			true
 			);
-			userTheme = userTheme[0].theme;
-		}else{
-			//for anonymous select a random theme
-			if(userToken == 'Anonymous'){
-				randomInt = Math.floor(Math.random() * 5)
-				switch(randomInt){
-					case 0:
-						userTheme = "autumn";
-						break;
-					case 1:
-						userTheme = "jungle";
-						break;
-					case 2:
-						userTheme = "night";
-						break;
-					case 3:
-						userTheme = "snowflakes";
-						break;
-					case 4:
-						userTheme = "tribal";
-						break;
-					default:
-						userTheme = "autumn";
-						break;
-				}
-			}
+			if(userTheme != "") userTheme = userTheme[0].theme;
+			else userToken = 'Anonymous';
 		}
+		//select a random theme for anonymous and people that have it selected
+		if(userToken == 'Anonymous' || userTheme == 'random'){
+			userTheme = selectRandomTheme();
+		}
+		
 	}catch(err){
 		console.log(`An error occured while loading user themes: ${err}`);
 		let errorMessage = await encodeURIComponent('An error occured while loading user themes');
@@ -76,6 +57,31 @@ app.use(async (req, res, next) => {
 	app.locals.theme = "/stylesheets/style-" + userTheme + ".css";
 	next();
 });
+
+function selectRandomTheme(){
+	randomInt = Math.floor(Math.random() * 5)
+	switch(randomInt){
+		case 0:
+			userTheme = "autumn";
+			break;
+		case 1:
+			userTheme = "jungle";
+			break;
+		case 2:
+			userTheme = "night";
+			break;
+		case 3:
+			userTheme = "snowflakes";
+			break;
+		case 4:
+			userTheme = "tribal";
+			break;
+		default:
+			userTheme = "autumn";
+			break;
+	}
+	return userTheme;
+}
 
 // Routers
 const indexRouter = require('./routes/index');

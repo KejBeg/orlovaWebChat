@@ -101,6 +101,9 @@ console.log('Generating tables');
 // Sets correct time zone for database (GTML+2 time)
 sendSqlQuery(timeZoneQuery);
 
+// Creates story questions if they werent created yet
+setupStoryQuestions();
+
 // Create User table and make anonymous account
 createUserTable(usersTable);
 
@@ -109,9 +112,6 @@ sendSqlQuery(storyTable);
 
 // Create message table
 sendSqlQuery(messageTable);
-
-// Creates story questions if they werent created yet
-setupStoryQuestions();
 
 // Exports
 module.exports = {
@@ -126,7 +126,7 @@ async function createUserTable(usersTable){
 
 	// Create Anonymous user if it doesn't exist
 	sendSqlQuery(
-		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous', "autumn")`
+		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous', "random")`
 	);	
 
 	sendSqlQuery(
