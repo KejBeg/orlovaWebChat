@@ -25,19 +25,23 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(cookieParser());
 
-// Setting token to Anonymous if it doesn't exist
-app.use(async (req, res, next) => {
-	if (!req.cookies.userToken) {
-		res.cookie('userToken', 'Anonymous');
-	}
 
+app.use(async (req, res, next) => {
 	try{
+		let userToken = await req.cookies.userToken;
+
+		// Setting user token to Anonymous if it doesn't exist
+		if (userToken == undefined || userToken == null) {
+			res.cookie('userToken', 'Anonymous');
+		}
+
 		//sets theme
-		userToken = req.cookies.userToken;
-		if(userToken != 'Anonymous' || userToken != undefined){
+		if (userToken != 'Anonymous'){
+
+			//for logged in users select their theme
 			userTheme = await sendSqlQuery(
 			'SELECT theme FROM users WHERE token = ?',
-			[req.cookies.userToken],
+			[userToken],
 			true
 			);
 			
@@ -49,14 +53,14 @@ app.use(async (req, res, next) => {
 			userTheme = selectRandomTheme();
 		}
 		
+		app.locals.theme = "/stylesheets/style-" + userTheme + ".css";
+		next();
 	}catch(err){
 		console.log(`An error occured while loading user themes: ${err}`);
 		let errorMessage = await encodeURIComponent('An error occured while loading user themes');
 		return res.redirect(`/?error=${errorMessage}`);
 	}
 
-	app.locals.theme = "/stylesheets/style-" + userTheme + ".css";
-	next();
 });
 
 function selectRandomTheme(){
