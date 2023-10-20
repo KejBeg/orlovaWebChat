@@ -25,23 +25,30 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(cookieParser());
 
-// Setting token to Anonymous if it doesn't exist
-app.use(async (req, res, next) => {
-	if (!req.cookies.userToken) {
-		res.cookie('userToken', 'Anonymous');
-	}
 
+app.use(async (req, res, next) => {
 	try{
+		let userToken = await req.cookies.userToken;
+
+		// Setting user token to Anonymous if it doesn't exist
+		if (userToken == undefined || userToken == null) {
+			res.cookie('userToken', 'Anonymous');
+		}
+
 		//sets theme
-		if(req.cookies.userToken != 'Anonymous' || req.cookies.userToken != undefined){
-			userToken = req.cookies.userToken;
+		if (userToken != 'Anonymous'){
+
+			//for logged in users select their theme
 			userTheme = await sendSqlQuery(
 			'SELECT theme FROM users WHERE token = ?',
-			[req.cookies.userToken],
+			[userToken],
 			true
 			);
+			console.log(`User theme: ${userTheme[0].theme}`);
+
 			userTheme = userTheme[0].theme;
-		}else{
+
+		} else {
 			//for anonymous select a random theme
 			if(userToken == 'Anonymous'){
 				randomInt = Math.floor(Math.random() * 5)
@@ -67,14 +74,16 @@ app.use(async (req, res, next) => {
 				}
 			}
 		}
-	}catch(err){
-		console.log(`An error occured while loading user themes: ${err}`);
-		let errorMessage = await encodeURIComponent('An error occured while loading user themes');
-		return res.redirect(`/?error=${errorMessage}`);
-	}
 
-	app.locals.theme = "/stylesheets/style-" + userTheme + ".css";
-	next();
+		// Setting theme to app.locals so it can be used in ejs files
+		app.locals.theme = "/stylesheets/style-" + userTheme + ".css";
+		next();
+	}catch(error){
+		console.log(`An error occured while loading user themes: ${error}`);
+		let errorMessage = await encodeURIComponent('An error occured while loading user themes');
+		res.redirect(`/?error=${errorMessage}`);
+	}
+	
 });
 
 // Routers

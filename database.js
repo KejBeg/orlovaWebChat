@@ -52,6 +52,11 @@ async function sendSqlQuery(sql, dataInsertion, read = false) {
 	});
 }
 
+//sets database timezone
+timeZoneQuery = `
+	SET time_zone = '+02:00'
+`
+
 // Creating Tables
 
 // Message table
@@ -94,31 +99,35 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 
 console.log('Generating tables');
 
-async function createTables() {
+
+
+function createTables() {
+
+	// Sets correct time zone for database (GTML+2 time)
+	sendSqlQuery(timeZoneQuery);
 
 	// Create users table
-	await sendSqlQuery(usersTable);
+	sendSqlQuery(usersTable);
 
-	
 	// Create Story mesages table
-	await sendSqlQuery(storyTable);
+	sendSqlQuery(storyTable);
 	
 	// Create message table
-	await sendSqlQuery(messageTable);
+	sendSqlQuery(messageTable);
 	
 	// Creates story questions if they werent created yet
-	await setupStoryQuestions();
+	setupStoryQuestions();
 
 	// Creating default users
 	// Create Anonymous user if it doesn't exist
-	await sendSqlQuery(
+	sendSqlQuery(
 		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous', "autumn")`
 	);	
 
 	// Create Admin user if it doesn't exist
-	await sendSqlQuery(
+	sendSqlQuery(
 		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (2, 'ADMIN', 'testadmin', 'ADMIN3363', "autumn")`
-		);
+	);
 }
 
 async function setupStoryQuestions(){
@@ -128,7 +137,8 @@ async function setupStoryQuestions(){
 			[],
 			true
 		);
-		if (firstQuestion[0]['question'] != null) return;
+		
+		if (firstQuestion[0].question != null) return;
 	
 	
 		console.log('Inserting questions into storyMessages table');
@@ -161,6 +171,9 @@ async function setupStoryQuestions(){
 		throw error;
 	}
 }
+
+// Creating all tables
+createTables();
 
 // Exports
 module.exports = {
