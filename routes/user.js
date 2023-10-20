@@ -1,11 +1,11 @@
 // Imports
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto'); // Used for token generation
 
 // Import database
 const database = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
-const crypto = require('crypto'); // Used for token generation
 
 // Routes
 

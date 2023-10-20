@@ -41,4 +41,6 @@ app.use('/user', userRouter);
 app.use('/story', storyRouter);
 
 // Listening to the port
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.WEB_PORT, () => {
+	console.log(`Listening to port ${process.env.WEB_PORT}`);
+});
