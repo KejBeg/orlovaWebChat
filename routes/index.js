@@ -2,11 +2,24 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs'); //interacts with files
-const { parse } = require('path');
+const socketIoImport = require('socket.io')
 
 // Import database
 const connection = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
+
+// TODO
+// Setting up socket IO with CORS
+const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
+	cors: {
+		origin: [`http://localhost:${process.env.WEB_PORT}`]
+	}
+})
+
+// Socket IO connection
+socketIo.on('connect', async (socket) => {
+	console.log(`Connected to socketIO, token: ${socket.id}`);
+})
 
 // Routes
 
@@ -73,11 +86,19 @@ router.post('/', async (req, res) => {
 			let errorMessage = await encodeURIComponent('User does not exist');
 		}
 
+		// Inserting message into database
 		await sendSqlQuery(
 			`INSERT INTO messages (message, author, isOffensive) VALUES (?,?,?)`,
 			[message, authorId, isOffensive]
 		);
 
+		// Get message array
+		let messageArray = await getMessageArray()
+
+		// Sending the latest message array to the client
+		socketIo.emit('recieveMessage', messageArray)
+
+		// Redirecting to index
 		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while sending a message: ${error}`);
