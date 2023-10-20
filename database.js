@@ -34,7 +34,8 @@ async function sendSqlQuery(sql, dataInsertion, read = false) {
 				return;
 			}
 
-			console.log('SQL query sent successfully');
+			//už mě to reálně sere ať mi to napíše když to selže ne když to neselže když je to v pohodě tak mě to nezajíma tak ať je ticho
+			//console.log('SQL query sent successfully');
 
 			// Turn the result into a JSON
 			result = JSON.parse(JSON.stringify(result));
