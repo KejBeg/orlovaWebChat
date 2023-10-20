@@ -52,6 +52,10 @@ async function sendSqlQuery(sql, dataInsertion, read = false) {
 	});
 }
 
+//sets database timezone
+timeZoneQuery = `
+	SET time_zone = '+02:00'
+`
 // Creating Tables
 
 // Message table
@@ -93,6 +97,9 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	)`;
 
 console.log('Generating tables');
+
+// Sets correct time zone for database (GTML+2 time)
+sendSqlQuery(timeZoneQuery);
 
 // Create User table and make anonymous account
 createUserTable(usersTable);
