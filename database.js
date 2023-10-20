@@ -54,9 +54,8 @@ async function sendSqlQuery(sql, dataInsertion, read = false) {
 
 //sets database timezone
 timeZoneQuery = `
-	SET time_zone = '+02:00'
-`
-
+	SET GLOBAL time_zone = '+02:00'
+`;
 // Creating Tables
 
 // Message table
@@ -100,7 +99,6 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 console.log('Generating tables');
 
 
-
 function createTables() {
 
 	// Sets correct time zone for database (GTML+2 time)
@@ -121,7 +119,7 @@ function createTables() {
 	// Creating default users
 	// Create Anonymous user if it doesn't exist
 	sendSqlQuery(
-		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous', "autumn")`
+		`INSERT IGNORE INTO users (id, username, password, token, theme) VALUES (1, 'Anonymous', 'Anonymous', 'Anonymous', "random")`
 	);	
 
 	// Create Admin user if it doesn't exist
