@@ -1,0 +1,249 @@
+body {
+    background-image: url("../images/nightsky.jpg");
+    font-family: 'Emilys Candy', serif;
+}
+
+#layoutA {
+    background-color: #192847;
+    color: #f7da4c;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#loginA {
+    background-color: #192847;
+    color: #f7da4c;
+    font-size: large;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Emilys Candy', serif;
+    cursor: pointer;
+}
+
+#chatH1 {
+    background-color: #192847;
+    color: #f7da4c;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 0.5cm;
+    width: 8cm;
+    border-radius: 24px; 
+    margin-left: 41%;
+    padding-bottom: 1px;
+}
+
+#storyH1 {
+    text-align: center;
+}
+
+#loginH1 {
+    position: relative;
+    background-color: #192847;
+    color: #f7da4c;
+    font-size: 80px;
+    text-align: center;
+    border-style: double;
+    border-color: #f7da4c;    
+    width: 400px;
+    border-radius: 24px;
+    border-width: 18px; 
+    margin-left: 38%;
+    margin-top: 16%;
+}
+
+#registerH1 {
+    position: relative;
+    background-color: #192847;
+    color: #f7da4c;
+    font-size: 80px;
+    text-align: center;
+    border-style: double;
+    border-color: #f7da4c;    
+    width: 400px;
+    border-radius: 24px;
+    border-width: 18px; 
+    margin-left: 38%;
+    margin-top: 16%;
+}
+
+#settingsH1 {
+    text-align: center;
+    font-size: 35px;
+}
+
+#chatDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 17cm;
+    background-color: #192847;
+    color: #f7da4c;
+    margin-left: 17.25%;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#listDiv{
+    position: fixed;
+    width: 250px;
+    height: 17cm;
+    background-color: #192847;
+    color: #f7da4c;
+    margin-left: 38%;
+    margin-top: 7%;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#profileDiv{
+    position: fixed;
+    width: 400px;
+    height: 17cm;
+    background-color: #192847;
+    color: #f7da4c;
+    margin-left: 35%;
+    margin-top: 7%;
+    text-align: center;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#settingsDiv{   
+    position: fixed;
+    width: 50%;
+    height: 17cm;
+    background-color: #192847;
+    color: #f7da4c;
+    margin-left: 24%;
+    margin-top: 7%;
+    text-align: left;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#settingsDivInsideDiv{
+    margin: 15px;
+}
+
+#storyDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 5cm;
+    background-color: #192847;
+    color: #f7da4c;
+    margin-left: 17.25%;
+    margin-top: 15%;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+.backendSubmit{
+    margin-left: 75%;
+}
+
+.messageBox{
+    margin-left: 20%;
+    padding-right: 39%;
+}
+
+#loginForm {
+    margin-left: 28%;
+}
+
+#registerForm {
+    margin-left: 31.5%;
+}
+
+#chatInput {
+    position: absolute;
+    font-size: large;
+    top:90%;
+    background-color: #192847;
+    color: #f7da4c;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Emilys Candy', serif;
+}
+
+#loginInput {
+    position: relative;
+    font-size: large;
+    background-color: #192847;
+    color: #f7da4c;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Emilys Candy', serif;
+}
+
+#registerInput {
+    position: relative;
+    font-size: large;
+    background-color: #192847;
+    color: #f7da4c;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Emilys Candy', serif;
+}
+
+#settingsInput {
+    position: relative;
+    font-size: large;
+    background-color: #192847;
+    color: #f7da4c;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 10px;
+    border-radius: 12px;
+    font-family: 'Emilys Candy', serif;
+}
+
+#storyInput {
+    position: relative;
+    font-size: large;
+    background-color: #192847;
+    color: #192847;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 5px;
+    border-radius: 5px;
+    width: 35px;
+    font-family: 'Emilys Candy', serif;
+}
+
+#chatPFP{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+#profilePFP{
+    width: 275px;
+    height: 275px;
+    border-radius: 100%;
+    margin-top: 10px;
+    border-style: double;
+    border-color: #f7da4c;
+    border-width: 10px;
+}
