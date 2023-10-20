@@ -33,13 +33,14 @@ app.use(async (req, res, next) => {
 
 	try{
 		//sets theme
-		if(req.cookies.userToken != 'Anonymous' || req.cookies.userToken != undefined){
-			userToken = req.cookies.userToken;
+		userToken = req.cookies.userToken;
+		if(userToken != 'Anonymous' || userToken != undefined){
 			userTheme = await sendSqlQuery(
 			'SELECT theme FROM users WHERE token = ?',
 			[req.cookies.userToken],
 			true
 			);
+			
 			if(userTheme != "") userTheme = userTheme[0].theme;
 			else userToken = 'Anonymous';
 		}

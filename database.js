@@ -54,8 +54,8 @@ async function sendSqlQuery(sql, dataInsertion, read = false) {
 
 //sets database timezone
 timeZoneQuery = `
-	SET time_zone = '+02:00'
-`
+	SET GLOBAL time_zone = '+02:00'
+`;
 // Creating Tables
 
 // Message table
