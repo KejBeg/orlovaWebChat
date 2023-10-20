@@ -33,7 +33,7 @@ app.use(async (req, res, next) => {
 
 	try{
 		//sets theme
-		if(req.cookies.userToken != 'Anonymous'){
+		if(req.cookies.userToken != 'Anonymous' || req.cookies.userToken != undefined){
 			userToken = req.cookies.userToken;
 			userTheme = await sendSqlQuery(
 			'SELECT theme FROM users WHERE token = ?',
@@ -68,7 +68,7 @@ app.use(async (req, res, next) => {
 			}
 		}
 	}catch(err){
-		console.log(`An error occured while loading user themes: ${error}`);
+		console.log(`An error occured while loading user themes: ${err}`);
 		let errorMessage = await encodeURIComponent('An error occured while loading user themes');
 		return res.redirect(`/?error=${errorMessage}`);
 	}
