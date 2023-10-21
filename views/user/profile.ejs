@@ -1,5 +1,5 @@
 <div id="profileDiv">
-    <% if(user.hasProfilePicture) profilePicture = "/profilePictures/" + user.username + ".png"
+    <% if(user.hasProfilePicture) profilePicture = "/profilePictures/" + user.id + ".png"
        else profilePicture = "/profilePictures/Anonymous.png" %>
     <img src= <%= profilePicture %> width="300px" id="profilePFP">
     <p>user id: <%= user.id %></p>
