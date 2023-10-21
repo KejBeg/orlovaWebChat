@@ -331,7 +331,7 @@ router.post('/edit/changeProfilePic',upload.single('profilePicture'), async (req
 					height : 300
 				})
 				.png()
-				.toFile("public/profilePictures/" + userName[0].username +".png");
+				.toFile("public/profilePictures/" + userName[0].id +".png");
 			
 			//remove temp. file
 			fs.unlink(req.file.path, function(err){
