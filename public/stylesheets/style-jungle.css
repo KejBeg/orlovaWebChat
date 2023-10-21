@@ -4,15 +4,27 @@ body {
     font-family: 'Young Serif', serif;
 }
 
+#top-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 2px;
+    border-style: double;
+    border-width: 2px;
+    background-color: rgb(163, 226, 138);
+}
+
 #layoutA {
     background-color: rgb(163, 226, 138);
-    color: rgb(0, 63, 0);
+    color: rgb(63, 34, 0);
     border-style: double;
-    border-color: rgb(0, 63, 0);
-    border-width: 10px;
-    border-radius: 12px;
+    border-color: rgb(63, 34, 0);
+    border-width: 2px;
     cursor: pointer;
+    padding: 8px 115px;
 }
+
 
 #loginA {
     background-color: rgb(163, 226, 138);
@@ -253,4 +265,23 @@ body {
     border-style: double;
     border-color: rgb(0, 63, 0);
     border-width: 10px;
+}
+.chat-container {
+    height: 400px;
+    overflow-y: scroll;
+    border: 1px solid #000000;
+    padding: 10px;
+}
+
+.chat-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #0c4706;
+    border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #30e95f;
 }
