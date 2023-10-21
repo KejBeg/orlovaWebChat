@@ -104,18 +104,16 @@ function createTables() {
 
 	// Sets correct time zone for database (GTML+2 time)
 	sendSqlQuery(timeZoneQuery);
+	
+	// Story messages needs to be first because users table references it
+	// Create Story mesages table
+	sendSqlQuery(storyTable);
 
 	// Create users table
 	sendSqlQuery(usersTable);
 
-	// Create Story mesages table
-	sendSqlQuery(storyTable);
-	
 	// Create message table
 	sendSqlQuery(messageTable);
-	
-	// Creates story questions if they werent created yet
-	setupStoryQuestions();
 
 	// Creating default users
 	// Create Anonymous user if it doesn't exist
@@ -131,13 +129,15 @@ function createTables() {
 
 async function setupStoryQuestions(){
 	try {
-		firstQuestion = await sendSqlQuery(
+		let firstQuestion = await sendSqlQuery(
 			`SELECT question FROM storyMessages WHERE id = 0;`,
 			[],
 			true
 		);
+
+		firstQuestion = await firstQuestion[0];
 		
-		if (firstQuestion[0].question != null) return;
+		if (firstQuestion != null) return;
 	
 	
 		console.log('Inserting questions into storyMessages table');
@@ -162,7 +162,7 @@ async function setupStoryQuestions(){
 		`
 
 		// Inserting questions into storyMessages table
-		sendSqlQuery(setupStoryQuery);
+		await sendSqlQuery(setupStoryQuery);
 	}
 	catch(error) {
 		//ignore (trust me its okay)
@@ -173,6 +173,9 @@ async function setupStoryQuestions(){
 
 // Creating all tables
 createTables();
+
+// Creates story questions if they werent created yet
+setupStoryQuestions();
 
 // Exports
 module.exports = {
