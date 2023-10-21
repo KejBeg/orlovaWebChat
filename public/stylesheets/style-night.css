@@ -3,14 +3,26 @@ body {
     font-family: 'Emilys Candy', serif;
 }
 
+#top-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 2px;
+    border-style: double;
+    border-width: 2px;
+    border-color: #f7da4c;
+    background-color: #192847;
+}
+
 #layoutA {
     background-color: #192847;
     color: #f7da4c;
     border-style: double;
     border-color: #f7da4c;
-    border-width: 10px;
-    border-radius: 12px;
+    border-width: 2px;
     cursor: pointer;
+    padding: 8px 115px;
 }
 
 #loginA {
@@ -246,4 +258,23 @@ body {
     border-style: double;
     border-color: #f7da4c;
     border-width: 10px;
+}
+.chat-container {
+    height: 400px;
+    overflow-y: scroll;
+    border: 1px solid #000000;
+    padding: 10px;
+}
+
+.chat-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #b1b346;
+    border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #192847;
 }
