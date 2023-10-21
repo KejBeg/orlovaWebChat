@@ -1,7 +1,7 @@
 {
   "name": "orlovawebchat",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Setup",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -32,5 +32,6 @@
   "devDependencies": {
     "dotenv": "^16.3.1",
     "nodemon": "^3.0.1"
-  }
+  },
+  "keywords": []
 }
