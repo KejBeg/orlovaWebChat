@@ -16,10 +16,18 @@ socket.on('connect', () => {
 
 			// If user is not Anonymous, setting the profile picture to the user's
 			if (data[i].username != 'Anonymous') {
-				let profilePicture = `<img src="/profilePictures/${data[i].username}.png" width="30px" id="chatPFP">`
+				profilePicture = `<img src="/profilePictures/${data[i].id}.png" width="30px" id="chatPFP">`
+			}
+
+			let messageAuthor = data[i].username;
+			let messageText = data[i].message;
+			let isOffensive = data[i].isOffensive;
+
+			if (isOffensive) {
+				messageText = 'This message has been flagged as offensive'
 			}
 			
-			newMessage.innerHTML = `${profilePicture}${data[i].username}: ${data[i].message}`
+			newMessage.innerHTML = `${profilePicture}${messageAuthor}: ${messageText}`
 			messageList.appendChild(newMessage);
 		}
 	});
