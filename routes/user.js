@@ -187,8 +187,14 @@ router.get('/logout', async (req, res) => {
 // Gets all users from the database and renders the user list page
 router.get('/list', async (req, res) => {
 	try {
-		// Get all users
-		let users = await sendSqlQuery('SELECT * FROM users', [], true);
+		// Get all users that send at least one message
+		let users = await sendSqlQuery(
+			`SELECT u.* FROM users u 
+			 INNER JOIN messages m 
+			 ON u.id = m.author 
+			 GROUP BY u.id`, 
+			[], 
+			true);
 
 		res.render('user/list', { users: users });
 	} catch (error) {
