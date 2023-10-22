@@ -1,9 +1,42 @@
+// Importing socket.io
 const socket = io('http://localhost:8080');
+
+// Creating offensive message text
+const offensiveMessageText = 'This message has been flagged as offensive'
+
+function offensiveMessageFilter(event) {
+	// Getting variables
+	const message = event.target;
+	const messageId = message.id;
+
+	// Getting the wanted message Array
+	messageArray = data[data.length - messageId];
+	
+	// Splitting the message to be only pfp
+	messagePfp = message.innerHTML.split('>')[0] + '>';
+
+	// Setting the message author and text
+	messageAuthor = messageArray.username;
+	messageText = messageArray.message;
+	
+	// Setting the message to be offensive
+	let overAllMessage = `${messagePfp}${messageAuthor}: ${messageText}`
+
+	// If the message is already offensive, set it to innofensive
+	if (message.innerHTML != `${messagePfp}${messageAuthor}: ${offensiveMessageText}`) {
+		overAllMessage = `${messagePfp}${messageAuthor}: ${offensiveMessageText}`
+	}
+
+	// Setting on client
+	message.innerHTML = overAllMessage;
+}
 
 socket.on('connect', () => {
 	socket.on('recieveMessage', (data) => {
+		// Setting global variable
+ 		window.data = data
+		
 		const messageList = document.querySelector('#chatDiv')
-		console.log(`Recieved message array: ${data[0].id}`);
 
 		// Deleting all messages
 		messageList.innerHTML = '';	
@@ -19,21 +52,38 @@ socket.on('connect', () => {
 				profilePicture = `<img src="/profilePictures/${data[i].id}.png" width="30px" id="chatPFP">`
 			}
 
+			// Getting variables
 			let messageAuthor = data[i].username;
 			let messageText = data[i].message;
 			let isOffensive = data[i].isOffensive;
 
+			
+			// Make it a bit more obvious that the message is offensive
 			if (isOffensive) {
-				messageText = 'This message has been flagged as offensive'
+				messageText = offensiveMessageText;
+				newMessage.style.color = 'red';
+				newMessage.className = 'offensiveMessage';
+				newMessage.id = data[i].id;
+				
+				// Offensive message filter
+				newMessage.addEventListener('click', (event) => offensiveMessageFilter(event));
 			}
 			
-			newMessage.innerHTML = `${profilePicture}${messageAuthor}: ${messageText}`
+			// Setting the message to be sent to the client
+			let overAllMessage = `${profilePicture}${messageAuthor}: ${messageText}`
+
+			newMessage.innerHTML = overAllMessage;
+
+			// Adding the message to the message list
 			messageList.appendChild(newMessage);
 		}
 	});
 });
 
-document.querySelector('[name="send"]').addEventListener('click', () => {
+document.querySelector('[name="chatForm"]').addEventListener('submit', (event) => {
+	// Preventing the form from refreshing the page
+	event.preventDefault();
+
 	const userToken = document.cookie.split('=')[1];
 	const message = document.querySelector('[name="message"]').value;
 
