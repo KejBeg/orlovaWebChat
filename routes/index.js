@@ -50,7 +50,7 @@ async function sendMessage(data) {
 			[userToken],
 			true
 		);
-
+		
 		authorIsBanned = authorId[0].isBanned;
 		if (authorIsBanned) {
 			console.log(`User ${authorId} tried to send a message while banned`);
@@ -152,7 +152,7 @@ async function getMessageArray() {
 	try {
 		// Getting the messages from the database
 		let messageArray = await sendSqlQuery(
-			`SELECT messages.message, messages.isOffensive, users.username, users.isBanned
+			`SELECT messages.message, messages.isOffensive, users.username, users.isBanned, users.hasProfilePicture, users.id
 			FROM messages
 			JOIN users ON messages.author = users.id
 			ORDER BY time DESC
@@ -163,7 +163,7 @@ async function getMessageArray() {
 		);
 	
 		// Reverse the array
-		// messageArray.reverse();
+		messageArray.reverse();
 	
 		return messageArray;
 	} catch (error) {
