@@ -16,7 +16,7 @@ socket.on('connect', () => {
 
 			// If user is not Anonymous, setting the profile picture to the user's
 			if (data[i].username != 'Anonymous') {
-				let profilePicture = `<img src="/profilePictures/${data[i].username}.png" width="30px" id="chatPFP">`
+				profilePicture = `<img src="/profilePictures/${data[i].id}.png" width="30px" id="chatPFP">`
 			}
 			
 			newMessage.innerHTML = `${profilePicture}${data[i].username}: ${data[i].message}`
