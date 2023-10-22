@@ -30,8 +30,8 @@ app.use(async (req, res, next) => {
 	try{
 		let userToken = await req.cookies.userToken;
 
-		// Setting user token to Anonymous if it doesn't exist
-		if (userToken == undefined || userToken == null) {
+		// Setting user token to Anonymous if it doesn't exist or if user has invalid token
+		if (userToken == undefined || userToken == null || !userExistsByToken(userToken)) {
 			res.cookie('userToken', 'Anonymous');
 		}
 
@@ -86,6 +86,30 @@ function selectRandomTheme(){
 			break;
 	}
 	return userTheme;
+}
+
+//chtěl jsem to importnout přes user.js ale když jsem to udělal stejně jako to je v database.js se sendSqlQuery tak to nejelo tak na to kašlu
+/**
+ * Gets if user exists by token
+ * @param {string} token Token for which to scan
+ * @returns
+ */
+async function userExistsByToken(token) {
+	try {
+		let result = await sendSqlQuery(
+			'SELECT * FROM users WHERE token = ?',
+			[token],
+			true
+		);
+	
+		if (result == undefined || result == '') {
+			return false;
+		} else {
+			return true;
+		}
+	} catch (error) {
+		throw new Error(`An error occured while checking if a user exists by token: ${error}`);
+	}
 }
 
 // Routers
