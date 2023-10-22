@@ -19,46 +19,31 @@ const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
 // Socket IO connection
 socketIo.on('connect', async (socket) => {
 	console.log(`Connected to socketIO, token: ${socket.id}`);
-})
 
-// Routes
 
-// GET index route
-// Gets the last n messages from the database and renders the index page
-router.get('/', async (req, res) => {
-	try {
-		let messageArray = await getMessageArray();
-
-		// Getting error message
-		let error = await req.query.error;
+	// Realtime sending ofm messages
+	socket.on('sendMessage', (data) => sendMessage(data));
 	
-		res.render('index', { messages: messageArray, error : error});
-	
-		//records activity in database
-		sendSqlQuery(
-			'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
-			[req.cookies.userToken]
-		);
-	} catch (error) {
-		console.log(`An error occured while loading the index page: ${error}`);
-		let errorMessage = await encodeURIComponent('An error occured while loading the index page');
-		return res.redirect(`/?error=${errorMessage}`);
-	}
 });
 
-// POST index route
-// Lets you send a message
-// Gets message from POST request and inserts it into the database
-router.post('/', async (req, res) => {
+/**
+ * When a client sends a message, this function is called 
+ * and the message is sent to the database,
+ * and then all the messages sent to all the clients.
+ * @param {object} data data that is being sent from the client
+ */
+async function sendMessage(data) {
 	try {
-		let message = await req.body.message;
-		let authorToken = await req.cookies.userToken;
-		let isOffensive = await isMessageOffensive(message);
+		const userToken = await data.userToken;
+		const message = await data.message;
+
+		// Getting if the message is offensive
+		const isOffensive = await isMessageOffensive(message);
 
 		// Get author id and if hes banned
 		let authorId = await sendSqlQuery(
 			'SELECT id, isBanned FROM users WHERE token = ?',
-			[authorToken],
+			[userToken],
 			true
 		);
 
@@ -69,7 +54,7 @@ router.post('/', async (req, res) => {
 			return res.redirect(`/?error=${errorMessage}`)
 		}
 
-		if (message.replace(/\s/g, '').length == 0){
+		if (message.replace(/\s/g, '').length == 0) {
 			console.log(`User ${authorId} tried to send only spaces`);
 			let errorMessage = await encodeURIComponent('You cannot send only spaces');
 			return res.redirect(`/?error=${errorMessage}`)
@@ -98,12 +83,35 @@ router.post('/', async (req, res) => {
 		// Sending the latest message array to the client
 		socketIo.emit('recieveMessage', messageArray)
 
-		// Redirecting to index
-		return res.redirect('/');
 	} catch (error) {
 		console.log(`An error occured while sending a message: ${error}`);
 		let errorMessage = await encodeURIComponent('An error occured while sending a message');
 		return res.redirect(`/?error=${error}`);
+	}
+}
+
+// Routes
+
+// GET index route
+// Gets the last n messages from the database and renders the index page
+router.get('/', async (req, res) => {
+	try {
+		let messageArray = await getMessageArray();
+
+		// Getting error message
+		let error = await req.query.error;
+	
+		res.render('index', { messages: messageArray, error : error});
+	
+		//records activity in database
+		sendSqlQuery(
+			'UPDATE users SET lastActiveDate = CURRENT_TIMESTAMP WHERE token = ?',
+			[req.cookies.userToken]
+		);
+	} catch (error) {
+		console.log(`An error occured while loading the index page: ${error}`);
+		let errorMessage = await encodeURIComponent('An error occured while loading the index page');
+		return res.redirect(`/?error=${errorMessage}`);
 	}
 });
 
