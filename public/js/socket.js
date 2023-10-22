@@ -48,7 +48,7 @@ socket.on('connect', () => {
 			let profilePicture = '<img src="/profilePictures/Anonymous.png" width="30px" id="chatPFP">'
 
 			// If user is not Anonymous, setting the profile picture to the user's
-			if (data[i].username != 'Anonymous') {
+			if (data[i].hasProfilePicture) {
 				profilePicture = `<img src="/profilePictures/${data[i].id}.png" width="30px" id="chatPFP">`
 			}
 
