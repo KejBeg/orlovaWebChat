@@ -21,6 +21,9 @@ const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
 socketIo.on('connect', async (socket) => {
 	console.log(`Connected to socketIO, token: ${socket.id}`);
 
+	// Sending the message array to the client
+	let messageArray = await getMessageArray();
+	socket.emit('recieveMessage', messageArray);
 
 	// Realtime sending ofm messages
 	socket.on('sendMessage', (data) => sendMessage(data));
@@ -82,7 +85,9 @@ async function sendMessage(data) {
 		let messageArray = await getMessageArray()
 
 		// Sending the latest message array to the client
+		// socketIo.on('connect', (socket) => {
 		socketIo.emit('recieveMessage', messageArray)
+		// });
 
 	} catch (error) {
 		console.log(`An error occured while sending a message: ${error}`);
@@ -103,7 +108,9 @@ router.get('/', async (req, res) => {
 		// Getting error message
 		let error = await req.query.error;
 	
-		res.render('index', { messages: messageArray, error : error});
+		socketIo.emit('recieveMessage', messageArray)
+
+		res.render('index', {error : error});
 	
 		//records activity in database
 		sendSqlQuery(
@@ -145,10 +152,10 @@ async function getMessageArray() {
 	try {
 		// Getting the messages from the database
 		let messageArray = await sendSqlQuery(
-			`SELECT messages.message, messages.isOffensive, users.username, users.isBanned
+			`SELECT messages.id, messages.message, messages.isOffensive, users.username, users.isBanned
 			FROM messages
 			JOIN users ON messages.author = users.id
-			ORDER BY time DESC
+			ORDER BY time ASC
 			LIMIT ?
 			`,
 			[parseInt(process.env.GET_MESSAGE_LIMIT)],
