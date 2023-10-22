@@ -1,4 +1,5 @@
 // Imports
+const { log } = require('console');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs'); //interacts with files
@@ -143,7 +144,7 @@ async function getMessageArray() {
 	try {
 		// Getting the messages from the database
 		let messageArray = await sendSqlQuery(
-			`SELECT *
+			`SELECT messages.message, messages.isOffensive, users.username, users.isBanned
 			FROM messages
 			JOIN users ON messages.author = users.id
 			ORDER BY time DESC
