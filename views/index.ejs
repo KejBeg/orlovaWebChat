@@ -1,4 +1,4 @@
-<script id="chat-script" src="/js/socket.js"></script>
+<script id="chat-script" src="/js/socket.js" defer></script>
 <h1 align="center" id="chatH1">Leavescord</h1>
 <div id="chatDiv" class="chat-container">
     <% for(i = 0; i < messages.length; i++) { %>
@@ -7,7 +7,10 @@
     <p> <img src= <%= profilePicture%> width="30px" id="chatPFP"> <%= messages[i].username + ": " + messages[i].message %> </p>
     <% } %>    
 </div>
-<form name="chatForm" method="post">
-    <input type="text" name="message" id="chatInput" class="messageBox">
-    <input type="submit" value="Send" id="chatInput" class="backendSubmit">
+<form name="chatForm">
 </form>
+<input type="text" name="message" id="chatInput" class="messageBox">
+<input type="submit" name="send" value="Send" id="chatInput" class="backendSubmit">
+
+<!-- <input type="text" id="message-input">
+<button type="button" id="send">Send</button> -->
