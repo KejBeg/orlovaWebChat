@@ -10,7 +10,7 @@ function offensiveMessageFilter(event) {
 	const messageId = message.id;
 
 	// Getting the wanted message Array
-	messageArray = data[data.length - messageId];
+	messageArray = data[messageId-1];
 	
 	// Splitting the message to be only pfp
 	messagePfp = message.innerHTML.split('>')[0] + '>';
@@ -63,15 +63,16 @@ socket.on('connect', () => {
 				messageText = offensiveMessageText;
 				newMessage.style.color = 'red';
 				newMessage.className = 'offensiveMessage';
-				newMessage.id = data[i].id;
 				
 				// Offensive message filter
 				newMessage.addEventListener('click', (event) => offensiveMessageFilter(event));
 			}
 			
+			newMessage.id = data[i].id;
+
 			// Setting the message to be sent to the client
 			let overAllMessage = `${profilePicture}${messageAuthor}: ${messageText}`
-
+			
 			newMessage.innerHTML = overAllMessage;
 
 			// Adding the message to the message list

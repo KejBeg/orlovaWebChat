@@ -155,7 +155,7 @@ async function getMessageArray() {
 			`SELECT messages.id, messages.message, messages.isOffensive, users.username, users.isBanned
 			FROM messages
 			JOIN users ON messages.author = users.id
-			ORDER BY time ASC
+			ORDER BY time DESC
 			LIMIT ?
 			`,
 			[parseInt(process.env.GET_MESSAGE_LIMIT)],
@@ -163,7 +163,7 @@ async function getMessageArray() {
 		);
 	
 		// Reverse the array
-		messageArray.reverse();
+		// messageArray.reverse();
 	
 		return messageArray;
 	} catch (error) {
