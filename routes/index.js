@@ -87,7 +87,8 @@ async function sendMessage(data) {
 	} catch (error) {
 		console.log(`An error occured while sending a message: ${error}`);
 		let errorMessage = await encodeURIComponent('An error occured while sending a message');
-		return res.redirect(`/?error=${error}`);
+		// TODO
+		// return res.redirect(`/?error=${error}`);
 	}
 }
 
