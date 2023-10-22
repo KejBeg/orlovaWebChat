@@ -317,7 +317,7 @@ router.post('/edit/changeProfilePic',upload.single('profilePicture'), async (req
 		
 		//gets profile name
 		userName = await sendSqlQuery(
-			'SELECT username FROM users WHERE token = ?;',
+			'SELECT id FROM users WHERE token = ?;',
 			[currentToken],
 			true
 		);
