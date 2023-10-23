@@ -289,7 +289,7 @@
     #chatDiv{
         position: relative;
         width: 31.15cm;
-        height: 17cm;
+        height: 16cm;
         margin-left: 17.25%;
         border-style: double;
         border-color: rgb(65, 173, 177);
@@ -342,7 +342,7 @@
     #storyDiv{
         position: relative;
         width: 31.15cm;
-        height: 5cm;
+        height: 4cm;
         margin-left: 17.25%;
         margin-top: 15%;
         border-style: double;
@@ -374,8 +374,7 @@
         border-style: double;
         border-width: 20px;
         border-radius: 24px;
-        
-    }
+        }
     
     #loginInput {
         position: relative;
@@ -440,7 +439,12 @@
     }
     
     .chat-container::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-    }
+        border-radius: 10px;    }
+
   }
 
+
+
+.offensiveMessage{
+	color: red;
+}
