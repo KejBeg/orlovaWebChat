@@ -78,6 +78,9 @@ socket.on('connect', () => {
 			// Adding the message to the message list
 			messageList.appendChild(newMessage);
 		}
+
+		// Scrolling down
+		document.querySelector('#chatDiv').scrollTop = document.querySelector('#chatDiv').scrollHeight;
 	});
 });
 
