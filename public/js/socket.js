@@ -4,17 +4,33 @@ const socket = io('http://localhost:8080');
 // Creating offensive message text
 const offensiveMessageText = 'This message has been flagged as offensive'
 
+/**
+ * @param {int} messageId 
+ * @param {string} username 
+ * @returns Styled message author
+ */
 function createMessageAuthor(messageId, username) {
 	return `<a href="/user/list/${messageId}">${username}</a>`
 
 }
 
+/**
+ * @param {int} messageId 
+ * @param {string} message 
+ * @returns Styled message text
+ */
 function createMessageText(messageId, message) {
 	return `${message}`
 }
 
-function bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID) {
-	return `<p id='${messageID}' class='messageChat'> ${messagePfp}${messageAuthor}: ${messageText} </p>`
+/**
+ * @param {string} messagePfp 
+ * @param {string} messageAuthor 
+ * @param {string} messageText 
+ * @returns Bundled message data
+ */
+function bundleAllMessageData(messagePfp, messageAuthor, messageText) {
+	return `${messagePfp}${messageAuthor}: ${messageText}`
 }
 
 function offensiveMessageFilter(event) {
@@ -34,13 +50,16 @@ function offensiveMessageFilter(event) {
 	messageID = messageObj.msgID;
 	
 	// Setting the message to be offensive
-	let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID);
+	let overAllMessage;
 
-	// If the message is already offensive, set it to innofensive
-	console.log(`innerHTML: ${message.innerHTML}`);
-	console.log(`overAllMessage: ${bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID)}`);
-	if (message.innerHTML == bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID)) {
-		let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText, messageID);
+	// If message is offensive, set it to inoffensive
+	// If message is inoffensive, set it to offensive
+	if (message.title == 'offensive') {
+		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText);
+		message.title = 'inoffensive';
+	} else {
+		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText);
+		message.title = 'offensive';
 	}
 
 	// Setting on client
@@ -77,19 +96,21 @@ socket.on('connect', () => {
 			// Make it a bit more obvious that the message is offensive
 			if (isOffensive) {
 				messageText = offensiveMessageText;
-				newMessage.style.color = 'red';
 				newMessage.className = 'offensiveMessage';
+
+				newMessage.title = 'inoffensive'
 				
 				// Offensive message filter
 				newMessage.addEventListener('click', (event) => offensiveMessageFilter(event));
 			}
 			
+			// Setting the message id and class
 			newMessage.id = data[i].msgID;
+			newMessage.className = 'messageChat';
 
-			messageID = data[i].msgID;
 
 			// Setting the message to be sent to the client
-			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText, messageID);
+			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText);
 			newMessage.innerHTML = overAllMessage;
 
 			// Adding the message to the message list
