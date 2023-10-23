@@ -152,9 +152,10 @@ async function getMessageArray() {
 	try {
 		// Getting the messages from the database
 		let messageArray = await sendSqlQuery(
-			`SELECT messages.message, messages.isOffensive, users.username, users.isBanned, users.hasProfilePicture, users.id
+			`SELECT messages.message, messages.isOffensive, users.username, users.isBanned, users.hasProfilePicture, users.id, messages.id AS msgID
 			FROM messages
 			JOIN users ON messages.author = users.id
+			JOIN messages.id AS msgID
 			ORDER BY time DESC
 			LIMIT ?
 			`,
