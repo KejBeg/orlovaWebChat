@@ -4,6 +4,19 @@ const socket = io('http://localhost:8080');
 // Creating offensive message text
 const offensiveMessageText = 'This message has been flagged as offensive'
 
+function createMessageAuthor(messageId, username) {
+	return `<a href="/user/list/${messageId}">${username}</a>`
+
+}
+
+function createMessageText(messageId, message) {
+	return `${message}`
+}
+
+function bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID) {
+	return `<p id='${messageID}' class='messageChat'> ${messagePfp}${messageAuthor}: ${messageText} </p>`
+}
+
 function offensiveMessageFilter(event) {
 	// Getting variables
 	const message = event.target;
@@ -13,18 +26,20 @@ function offensiveMessageFilter(event) {
 	messageArray = data[messageId-1];
 	
 	// Splitting the message to be only pfp
-	messagePfp = message.innerHTML.split('>')[0] + '>';
+	messagePfp = message.innerHTML.split('a>')[0] + '>';
 
 	// Setting the message author and text
-	messageAuthor = messageArray.username;
-	messageText = messageArray.message;
+	messageAuthor = createMessageAuthor(messageId, messageArray.username);
+	messageText = createMessageText(messageId, messageArray.message);
 	
 	// Setting the message to be offensive
-	let overAllMessage = `${messagePfp}${messageAuthor}: ${messageText}`
+	let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText);
 
 	// If the message is already offensive, set it to innofensive
-	if (message.innerHTML != `${messagePfp}${messageAuthor}: ${offensiveMessageText}`) {
-		overAllMessage = `${messagePfp}${messageAuthor}: ${offensiveMessageText}`
+	console.log(`innerHTML: ${message.innerHTML}`);
+	console.log(`overAllMessage: ${bundleAllMessageData(messagePfp, messageAuthor, messageText)}`);
+	if (message.innerHTML == bundleAllMessageData(messagePfp, messageAuthor, messageText)) {
+		let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText);
 	}
 
 	// Setting on client
@@ -53,8 +68,8 @@ socket.on('connect', () => {
 			}
 
 			// Getting variables
-			let messageAuthor = `<a href="/user/list/${data[i].id}">${data[i].username}</a>`;
-			let messageText = data[i].message;
+			let messageAuthor = createMessageAuthor(data[i].id, data[i].username);
+			let messageText = createMessageText(data[i].id, data[i].message);
 			let isOffensive = data[i].isOffensive;
 
 			
@@ -70,9 +85,10 @@ socket.on('connect', () => {
 			
 			newMessage.id = data[i].msgID;
 
+			messageID = data[i].msgID;
+
 			// Setting the message to be sent to the client
-			let overAllMessage = `<p id='${data[i].msgID}' class='messageChat'> ${profilePicture}${messageAuthor}: ${messageText} </p>`
-			
+			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText, messageID);
 			newMessage.innerHTML = overAllMessage;
 
 			// Adding the message to the message list
