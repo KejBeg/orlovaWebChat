@@ -1,7 +1,6 @@
 <div id="storyDiv">
 	<form action="" method="post" name="questionForm">
-		<input id="answer" type="number" name="answerID"/>
-		<input type="submit" value="debugValueSubmit" />
+		<input id="answer" type="hidden" name="answerID"/>
 		<h1 id="storyH1"><%= q %></h1>
 		<table align="center">
 			<td><% if(a.answerId1 != null)  { %> <input type="button" id="storyInput" name="answerButton1" onclick="sendAnswer(this.value)" value=<%= a.answerId1%>> <%= a.answer1 %> </input> <% } %> </td>
