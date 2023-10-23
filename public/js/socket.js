@@ -45,15 +45,15 @@ socket.on('connect', () => {
 			const newMessage = document.createElement('p');
 
 			// By default, the profile picture is anonymous
-			let profilePicture = '<img src="/profilePictures/Anonymous.png" width="30px" id="chatPFP">'
+			let profilePicture = `<a href="/user/list/${data[i].id}"><img src="/profilePictures/Anonymous.png" width="30px" id="chatPFP"></a>`
 
 			// If user is not Anonymous, setting the profile picture to the user's
 			if (data[i].hasProfilePicture) {
-				profilePicture = `<img src="/profilePictures/${data[i].id}.png" width="30px" id="chatPFP">`
+				profilePicture = `<a href="/user/list/${data[i].id}"><img src="/profilePictures/${data[i].id}.png" width="30px" id="chatPFP"></a>`
 			}
 
 			// Getting variables
-			let messageAuthor = data[i].username;
+			let messageAuthor = `<a href="/user/list/${data[i].id}">${data[i].username}</a>`;
 			let messageText = data[i].message;
 			let isOffensive = data[i].isOffensive;
 
