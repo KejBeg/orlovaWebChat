@@ -3,3 +3,227 @@
 	border-radius: 10px;
 	text-align: center;
 }
+
+#top-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 2px;
+    border-style: double;
+    border-width: 2px;
+}
+
+#layoutA {
+    border-style: double;
+    border-width: 2px;
+    cursor: pointer;
+    padding: 8px 115px;
+}
+
+#loginA {
+    font-size: large;
+    border-style: double;
+    border-width: 20px;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+#chatH1 {
+    border-style: double;
+    border-width: 0.5cm;
+    width: 8cm;
+    border-radius: 24px; 
+    margin-left: 41%;
+    padding-bottom: 1px;
+}
+
+#storyH1 {
+    text-align: center;
+}
+
+#loginH1 {
+    position: relative;
+    font-size: 80px;
+    text-align: center;
+    border-style: double;
+    width: 400px;
+    border-radius: 24px;
+    border-width: 18px; 
+    margin-left: 38%;
+    margin-top: 16%;
+}
+
+#registerH1 {
+    position: relative;
+    font-size: 80px;
+    text-align: center;
+    border-style: double;   
+    width: 400px;
+    border-radius: 24px;
+    border-width: 18px; 
+    margin-left: 38%;
+    margin-top: 16%;
+}
+
+#settingsH1 {
+    text-align: center;
+    font-size: 35px;
+}
+
+#chatDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 17cm;
+    margin-left: 17.25%;
+    border-style: double;
+    border-color: rgb(65, 173, 177);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#listDiv{
+    position: fixed;
+    width: 250px;
+    height: 17cm;
+    margin-left: 38%;
+    margin-top: 7%;
+    border-style: double;
+    border-color: rgb(63, 51, 0);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#profileDiv{
+    position: fixed;
+    width: 400px;
+    height: 17cm;
+    margin-left: 35%;
+    margin-top: 7%;
+    text-align: center;
+    border-style: double;
+    border-color: rgb(65, 173, 177);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#settingsDiv{   
+    position: fixed;
+    width: 50%;
+    height: 17cm;
+    margin-left: 24%;
+    margin-top: 7%;
+    text-align: left;
+    border-style: double;
+    border-color: rgb(65, 173, 177);
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+#settingsDivInsideDiv{
+    margin: 15px;
+}
+
+#storyDiv{
+    position: fixed;
+    width: 31.15cm;
+    height: 5cm;
+    margin-left: 17.25%;
+    margin-top: 15%;
+    border-style: double;
+    border-width: 20px;
+    border-radius: 24px;
+}
+
+.backendSubmit{
+    margin-left: 75%;
+}
+
+.messageBox{
+    margin-left: 20%;
+    padding-right: 39%;
+}
+
+#loginForm {
+    margin-left: 28%;
+}
+
+#registerForm {
+    margin-left: 31.5%;
+}
+
+#chatInput {
+    position: absolute;
+    font-size: large;
+    top:90%;
+    border-style: double;
+    border-width: 20px;
+    border-radius: 24px;
+    
+}
+
+#loginInput {
+    position: relative;
+    font-size: large;
+    border-style: double;
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Grandstander', cursive;
+}
+
+#registerInput {
+    position: relative;
+    font-size: large;
+    border-style: double;
+    border-width: 20px;
+    border-radius: 24px;
+    font-family: 'Grandstander', cursive;
+}
+
+#settingsInput {
+    position: relative;
+    font-size: large;
+    border-style: double;
+    border-width: 10px;
+    border-radius: 12px;
+    font-family: 'Grandstander', cursive;
+}
+
+#storyInput {
+    position: relative;
+    font-size: large;
+    border-style: double;
+    border-width: 5px;
+    border-radius: 5px;
+    width: 35px;
+}
+
+#chatPFP{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+#profilePFP{
+    width: 275px;
+    height: 275px;
+    border-radius: 100%;
+    margin-top: 10px;
+    border-width: 10px;
+}
+
+.chat-container {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 10px;
+}
+
+.chat-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
