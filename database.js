@@ -177,7 +177,7 @@ async function setupStoryQuestions(){
 	('23', 'Co jsou následky neolitismu?', 'Žádné pokud jsem opatrný', 'Ztráta přátel a zhoršené vidění', 'Bolest kloubů - hlavně loktu', '21', 24, '21'),
 	('24', 'Správně!', 'Jupii!', NULL, NULL, '25', NULL, NULL),
 	('25', 'Tak doufám, že ses něco nakonec naučil o neolitismu!', 'Ano, děkuju!', NULL, NULL, '26', NULL, NULL),
-	('26', 'Tak naschledanou příště! Autoři: Honza, Kuba, Sam a Robert', děkuju!', 'Můžu si to ještě zopakovat?, NULL, NULL, '1', NULL, NULL)
+	('26', 'Tak naschledanou příště! Autoři: Honza, Kuba, Sam a Robert','Můžu si to ještě zopakovat?', NULL, NULL, '1', NULL, NULL);
 	`
 
 	// Inserting questions into storyMessages table
