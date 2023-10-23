@@ -226,3 +226,7 @@
 .chat-container::-webkit-scrollbar-thumb {
     border-radius: 10px;
 }
+
+.offensiveMessage{
+	color: red;
+}

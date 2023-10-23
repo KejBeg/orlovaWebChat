@@ -96,7 +96,7 @@ socket.on('connect', () => {
 			// Make it a bit more obvious that the message is offensive
 			if (isOffensive) {
 				messageText = offensiveMessageText;
-				newMessage.className = 'offensiveMessage';
+				newMessage.classList.add('offensiveMessage');
 
 				newMessage.title = 'inoffensive'
 				
@@ -106,7 +106,7 @@ socket.on('connect', () => {
 			
 			// Setting the message id and class
 			newMessage.id = data[i].msgID;
-			newMessage.className = 'messageChat';
+			newMessage.classList.add('messageChat');
 
 
 			// Setting the message to be sent to the client
