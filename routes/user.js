@@ -453,7 +453,7 @@ function rephraseMySQLDate(mySQLDate, includeTime = false) {
 	try {
 		let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
 	
-		if (includeTime) return d + '.' + M + ' ' + y + ' - ' + h + ':' + m + ':' + s;
+		if (includeTime) return d + '.' + M + '.' + y + ' - ' + h + ':' + m + ':' + s;
 		return d + '.' + M + ' ' + y;
 	} catch (error) {
 		throw new Error(`An error occured while rephrasing a mySQL date: ${error}`);
