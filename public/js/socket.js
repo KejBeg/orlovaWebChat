@@ -23,23 +23,24 @@ function offensiveMessageFilter(event) {
 	const messageId = message.id;
 
 	// Getting the wanted message Array
-	messageArray = data[messageId-1];
+	messageObj = data[messageId-1];
 	
 	// Splitting the message to be only pfp
 	messagePfp = message.innerHTML.split('a>')[0] + '>';
 
 	// Setting the message author and text
-	messageAuthor = createMessageAuthor(messageId, messageArray.username);
-	messageText = createMessageText(messageId, messageArray.message);
+	messageAuthor = createMessageAuthor(messageId, messageObj.username);
+	messageText = createMessageText(messageId, messageObj.message);
+	messageID = messageObj.msgID;
 	
 	// Setting the message to be offensive
-	let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText);
+	let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID);
 
 	// If the message is already offensive, set it to innofensive
 	console.log(`innerHTML: ${message.innerHTML}`);
-	console.log(`overAllMessage: ${bundleAllMessageData(messagePfp, messageAuthor, messageText)}`);
-	if (message.innerHTML == bundleAllMessageData(messagePfp, messageAuthor, messageText)) {
-		let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText);
+	console.log(`overAllMessage: ${bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID)}`);
+	if (message.innerHTML == bundleAllMessageData(messagePfp, messageAuthor, messageText, messageID)) {
+		let overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText, messageID);
 	}
 
 	// Setting on client
