@@ -167,17 +167,17 @@ async function setupStoryQuestions(){
 	('14', 'To je normální čas pro člověka aby trávil na počítači', 'Ok', NULL, NULL, '16', NULL, NULL),
 	('15', 'Už se blížíš, a nebo jsi závislý. Bylo by dobré, kdyby ses pokusil trávit méně času u počítače', 'Nechci trávit méně času u PC', 'Pokusím se trávit méně času u PC', NULL, '16', '16', NULL),
 	
-	('16', 'Teď si řekneme o příznacích neolitismu, dobře?', 'Ano!', NULL, NULL, 17, NULL, NULL);
-	('17', 'Hlavnímy příznaky neolitismu jsou: Neodtržitelnost od internetu, ignorace okolí, Nedodržování pitného a stravovacího režimu, agrese při absenci internetu, Chybějící koníčky netýkající se sociálních sítí a počítačů', 'Dále..', NULL, NULL, '18', NULL, NULL);
-	('18', 'Následky neolitismu mohou být: ztráta koníčků, bolest páteře, ztráta sociální schopnosti', 'Ok!', NULL, NULL, 19, NULL, NULL);
-	('19', 'Teď malé opakování!', 'Jsem připravený!', 'Ještě bych si to zopakoval..', NULL, '20', '17', NULL);
-	('20', 'Jaké jsou příznaky neolitismu?', 'Neodtržitelnost od PC a sociálních sítí', 'Špatný zrak, bolest nohou', 'Zvýšené sociální schopnosti', '22', '21', '21');
-	('21', 'Špatně! zopakuj si to znova', 'Dobře..', NULL, NULL, '17', NULL, NULL);
-	('22', 'Správně!', 'Pokračovat', NULL, NULL, '23', NULL, NULL);
-	('23', 'Co jsou následky neolitismu?', 'Žádné pokud jsem opatrný', 'Ztráta přátel a zhoršené vidění', 'Bolest kloubů - hlavně loktu', '21', NULL, '21');
-	('24', 'Správně!', 'Jupii!', NULL, NULL, '25', NULL, NULL);
-	('25', 'Tak doufám, že ses něco nakonec naučil o neolitismu!', 'Ano, děkuju!', 'Můžu si to ještě zopakovat?', NULL, '26', '1', NULL);
-	('26', 'Tak naschledanou příště! Autoři: Honza, Kuba, Sam a Robert', NULL, NULL, NULL, NULL, NULL, NULL);
+	('16', 'Teď si řekneme o příznacích neolitismu, dobře?', 'Ano!', NULL, NULL, 17, NULL, NULL),
+	('17', 'Hlavnímy příznaky neolitismu jsou: Neodtržitelnost od internetu, ignorace okolí, Nedodržování pitného a stravovacího režimu, agrese při absenci internetu, Chybějící koníčky netýkající se sociálních sítí a počítačů', 'Dále..', NULL, NULL, '18', NULL, NULL),
+	('18', 'Následky neolitismu mohou být: ztráta koníčků, bolest páteře, ztráta sociální schopnosti', 'Ok!', NULL, NULL, 19, NULL, NULL),
+	('19', 'Teď malé opakování!', 'Jsem připravený!', 'Ještě bych si to zopakoval..', NULL, '20', '17', NULL),
+	('20', 'Jaké jsou příznaky neolitismu?', 'Neodtržitelnost od PC a sociálních sítí', 'Špatný zrak, bolest nohou', 'Zvýšené sociální schopnosti', '22', '21', '21'),
+	('21', 'Špatně! zopakuj si to znova', 'Dobře..', NULL, NULL, '17', NULL, NULL),
+	('22', 'Správně!', 'Pokračovat', NULL, NULL, '23', NULL, NULL),
+	('23', 'Co jsou následky neolitismu?', 'Žádné pokud jsem opatrný', 'Ztráta přátel a zhoršené vidění', 'Bolest kloubů - hlavně loktu', '21', 24, '21'),
+	('24', 'Správně!', 'Jupii!', NULL, NULL, '25', NULL, NULL),
+	('25', 'Tak doufám, že ses něco nakonec naučil o neolitismu!', 'Ano, děkuju!', 'Můžu si to ještě zopakovat?', NULL, '26', '1', NULL),
+	('26', 'Tak naschledanou příště! Autoři: Honza, Kuba, Sam a Robert', NULL, NULL, NULL, NULL, NULL, NULL)
 	`
 
 	// Inserting questions into storyMessages table
