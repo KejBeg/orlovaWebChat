@@ -68,10 +68,10 @@ socket.on('connect', () => {
 				newMessage.addEventListener('click', (event) => offensiveMessageFilter(event));
 			}
 			
-			newMessage.id = data[i].id;
+			newMessage.id = data[i].msgID;
 
 			// Setting the message to be sent to the client
-			let overAllMessage = `${profilePicture}${messageAuthor}: ${messageText}`
+			let overAllMessage = `<p id='${data[i].msgID}' class='messageChat'> ${profilePicture}${messageAuthor}: ${messageText} </p>`
 			
 			newMessage.innerHTML = overAllMessage;
 
