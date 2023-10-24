@@ -1,0 +1,120 @@
+body {
+    background-image: url("../images/tribal-background.png");
+    font-family: 'Almendra', serif;
+}
+
+#top-navbar {
+    border-color: rgb(63, 34, 0);
+    background-color: rgb(231, 240, 110);
+}
+
+#layoutA {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#loginA {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Almendra', serif;
+}
+
+#chatH1 {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#loginH1 {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#registerH1 {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#chatDiv{
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#listDiv{
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#profileDiv{
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#settingsDiv{
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#storyDiv{
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+}
+
+#chatInput {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+    font-family: 'Almendra', serif;
+}
+
+#loginInput {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+    font-family: 'Almendra', serif;
+}
+
+#registerInput {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+    font-family: 'Almendra', serif;
+}
+
+#settingsInput {
+    background-color: rgb(231, 240, 110);
+    color: rgb(63, 51, 0);
+    border-color: rgb(63, 51, 0);
+    font-family: 'Almendra', serif;
+}
+
+#storyInput {
+    background-color: rgb(231, 240, 110);
+    color: rgb(231, 240, 110);
+    border-color: rgb(63, 51, 0);
+    font-family: 'Almendra', serif;
+}
+
+#profilePFP{
+    border-color: rgb(63, 51, 0);
+}
+.chat-container {
+    border: 1px solid #000000;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #46340d;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #b3dd1b;
+}

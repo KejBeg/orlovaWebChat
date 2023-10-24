@@ -1,0 +1,120 @@
+body {
+    background-image: url("../images/nightsky.jpg");
+    font-family: 'Emilys Candy', serif;
+}
+
+#top-navbar {
+    border-color: #f7da4c;
+    background-color: #192847;
+}
+
+#layoutA {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#loginA {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+    font-family: 'Emilys Candy', serif;
+}
+
+#chatH1 {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#loginH1 {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#registerH1 {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#chatDiv{
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#listDiv{
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#profileDiv{
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#settingsDiv{
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#storyDiv{
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+}
+
+#chatInput {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+    font-family: 'Emilys Candy', serif;
+}
+
+#loginInput {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+    font-family: 'Emilys Candy', serif;
+}
+
+#registerInput {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+    font-family: 'Emilys Candy', serif;
+}
+
+#settingsInput {
+    background-color: #192847;
+    color: #f7da4c;
+    border-color: #f7da4c;
+    font-family: 'Emilys Candy', serif;
+}
+
+#storyInput {
+    background-color: #192847;
+    color: #192847;
+    border-color: #f7da4c;
+    font-family: 'Emilys Candy', serif;
+}
+
+#profilePFP{
+    border-color: #f7da4c;
+}
+.chat-container {
+    border: 1px solid #000000;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #b1b346;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #192847;
+}

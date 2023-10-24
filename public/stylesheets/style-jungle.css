@@ -1,0 +1,128 @@
+body {
+    background-image: url("../images/leaves.jpg");
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#top-navbar {
+    background-color: rgb(163, 226, 138);
+}
+
+#layoutA {
+    background-color: rgb(163, 226, 138);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+
+#loginA {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+    cursor: pointer;
+}
+
+#chatH1 {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#loginH1 {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#registerH1 {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#chatDiv{
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#listDiv{
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#profileDiv{
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#settingsDiv{
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#storyDiv{
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+}
+
+#chatInput {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#loginInput {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#registerInput {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#settingsInput {
+    background-color: rgb(163, 226, 138);
+    color: rgb(0, 63, 0);
+    border-color: rgb(0, 63, 0);
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#storyInput {
+    background-color: rgb(163, 226, 138);
+    color: rgb(163, 226, 138);
+    border-color: rgb(0, 63, 0);
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Young Serif', serif;
+}
+
+#profilePFP{
+    border-color: rgb(0, 63, 0);
+}
+.chat-container {
+    border: 1px solid #000000;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #0c4706;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #30e95f;
+}

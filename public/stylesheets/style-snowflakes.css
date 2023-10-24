@@ -1,0 +1,120 @@
+body {
+    background-image: url("../images/snowflakes.jpg");
+    font-family: 'Grandstander', cursive;
+}
+
+#top-navbar {
+    border-color: rgb(65, 173, 177);
+    background-color: rgb(199, 248, 246);
+}
+
+#layoutA {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#loginA {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+    font-family: 'Grandstander', cursive;
+}
+
+#chatH1 {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#loginH1 {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#registerH1 {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#chatDiv{
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#listDiv{
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(63, 51, 0);
+}
+
+#profileDiv{
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#settingsDiv{
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#storyDiv{
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(63, 51, 0);
+}
+
+#chatInput {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+}
+
+#loginInput {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+    font-family: 'Grandstander', cursive;
+}
+
+#registerInput {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+    font-family: 'Grandstander', cursive;
+}
+
+#settingsInput {
+    background-color: rgb(199, 248, 246);
+    color: rgb(65, 173, 177);
+    border-color: rgb(65, 173, 177);
+    font-family: 'Grandstander', cursive;
+}
+
+#storyInput {
+    background-color: rgb(199, 248, 246);
+    color: rgb(199, 248, 246);
+    border-color: rgb(65, 173, 177);
+    font-family: 'Grandstander', cursive;
+}
+
+#profilePFP{
+    border-color: rgb(65, 173, 177);
+}
+
+.chat-container {
+    border: 1px solid #000000;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #1fcae0;
+}

@@ -1,0 +1,119 @@
+body {
+    background-image: url("../images/autumn-leaves.jpg");
+    font-family: 'Yeseva One', serif;
+}
+
+#top-navbar {
+    background-color: rgb(255, 182, 87);
+}
+
+#layoutA {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#loginA {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Yeseva One', serif;
+}
+
+#chatH1 {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#loginH1 {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#registerH1 {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#chatDiv{
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#listDiv{
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#profileDiv{
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#settingsDiv{
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#storyDiv{
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+}
+
+#chatInput {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Yeseva One', serif;
+}
+
+#loginInput {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Yeseva One', serif;
+}
+
+#registerInput {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Yeseva One', serif;
+}
+
+#settingsInput {
+    background-color: rgb(255, 182, 87);
+    color: rgb(63, 34, 0);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Yeseva One', serif;
+}
+
+#storyInput {
+    background-color: rgb(255, 182, 87);
+    color: rgb(255, 182, 87);
+    border-color: rgb(63, 34, 0);
+    font-family: 'Yeseva One', serif;
+}
+
+#profilePFP{
+    border-color: rgb(63, 34, 0);
+}
+.chat-container {
+    border: 1px solid #000000;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #ad1212;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background-color: #926118;
+}

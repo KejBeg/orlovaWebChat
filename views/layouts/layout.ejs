@@ -3,9 +3,45 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Orlova Chat</title>
+		<title>Leavescord</title>
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<link rel="stylesheet" href= <%= theme %> />
+		<link rel="icon" href="images/leaf.ico" />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Young+Serif&display=swap" rel="stylesheet">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+	
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Almendra&display=swap" rel="stylesheet">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Grandstander&display=swap" rel="stylesheet">
+	
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
+		<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
 	</head>
 	<body>
-		<%- body %>
+		<section>
+			<%- include('../partials/error.ejs') %>
+			<nav id="top-navbar">
+				<span><a id="layoutA" href="/">Chat</a></span>
+				<span><a id="layoutA" href="/user/login">Login</a></span>
+				<span><a id="layoutA" href="/user/logout">Logout</a></span>
+				<span><a id="layoutA" href="/user/list">User List</a></span>
+				<span><a id="layoutA" href="/story">Story Mode</a></span>
+				<span><a id="layoutA" href="/user/edit">Settings</a></span>
+			</nav>
+			<%- body %>
+		</section>
 	</body>
 </html>

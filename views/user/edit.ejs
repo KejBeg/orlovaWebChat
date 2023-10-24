@@ -1,0 +1,33 @@
+<div id="settingsDiv">
+	<h1 id="settingsH1">Settings</h1>
+	<div id="settingsDivInsideDiv">
+		<h3>Change your username</h3>
+		<form action="/user/edit/changeUsername" method="post">
+			<input type="text" name="username" placeholder="username" id="settingsInput"/>
+			<input type="submit" id="settingsInput"/>
+		</form>
+
+		<h3>Change your profile picture (.jpeg, .png)</h3>
+		<form action="/user/edit/changeProfilePic" method="post" enctype="multipart/form-data">
+			<input type="file" name="profilePicture" id="settingsInput" accept="image/png, image/jpeg" />
+			<input type="submit" id="settingsInput"/>
+		</form>
+
+		<h3>Change your theme</h3>
+		<form action="/user/edit/changeTheme" method="post">
+			<input type="radio" name="theme" id="settingsInput" value="autumn" checked="true">
+			<label for="autumn">Autumn</label>
+			<input type="radio" name="theme" id="settingsInput" value="jungle">
+			<label for="jungle">Jungle</label>
+			<input type="radio" name="theme" id="settingsInput" value="snowflakes">
+			<label for="snowflakes">Snowflake</label>
+			<input type="radio" name="theme" id="settingsInput" value="tribal">
+			<label for="tribal">Tribal</label>
+			<input type="radio" name="theme" id="settingsInput" value="night">
+			<label for="night">Night</label>
+			<input type="radio" name="theme" id="settingsInput" value="random">
+			<label for="random">Random</label>
+			<input type="submit" id="settingsInput"/>
+		</form>
+		</div>
+</div>	
