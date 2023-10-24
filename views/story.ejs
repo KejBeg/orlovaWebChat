@@ -1,0 +1,17 @@
+<div id="storyDiv">
+	<form action="" method="post" name="questionForm">
+		<input id="answer" type="hidden" name="answerID"/>
+		<h1 id="storyH1"><%= q %></h1>
+		<table align="center">
+			<td><% if(a.answerId1 != null)  { %> <input type="button" id="storyInput" name="answerButton1" onclick="sendAnswer(this.value)" value=<%= a.answerId1%>> <%= a.answer1 %> </input> <% } %> </td>
+			<td><% if(a.answerId2 != null)  { %> <input type="button" id="storyInput" name="answerButton2" onclick="sendAnswer(this.value)" value=<%= a.answerId2%>> <%= a.answer2 %> </input> <% } %> </td>
+			<td><% if(a.answerId3 != null)  { %> <input type="button" id="storyInput" name="answerButton3" onclick="sendAnswer(this.value)" value=<%= a.answerId3 %>> <%= a.answer3 %> </input> <% } %> </td>
+		</table>
+	</form>
+	<script>
+		function sendAnswer(id){
+			document.getElementById("answer").value = id;
+			questionForm.submit();
+		}
+	</script>
+</div>
