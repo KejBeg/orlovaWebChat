@@ -95,7 +95,7 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
 	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	lastActiveDate TIMESTAMP DEFAULT '1970-01-01 00:00:00'
+	lastActiveDate TIMESTAMP'
 	)`;
 
 console.log('Generating tables');
