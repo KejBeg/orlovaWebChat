@@ -104,7 +104,7 @@ console.log('Generating tables');
 async function createTables() {
 
 	// Sets correct time zone for database (GTML+2 time)
-	await sendSqlQuery(timeZoneQuery);
+	// await sendSqlQuery(timeZoneQuery);
 	
 	// Story messages needs to be first because users table references it
 	// Create Story mesages table
