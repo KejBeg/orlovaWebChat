@@ -13,7 +13,8 @@ const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
 	cors: {
 		origin: `*`,
 		method: ['GET', 'POST'],
-	}
+	},
+	secure : true
 })
 
 // Socket IO connection
