@@ -462,3 +462,8 @@
 .offensiveMessage{
 	color: red;
 }
+
+.message-author a {
+    color: inherit;
+    text-decoration: none;
+}
