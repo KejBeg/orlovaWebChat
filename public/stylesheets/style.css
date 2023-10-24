@@ -4,6 +4,20 @@
 	text-align: center;
 }
 
+.messageChat {
+    display: table;
+    background-color:rgb(255, 255, 255);
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-color: black;
+    border-radius: 20px;
+}
+
+.messageChat::target-text {
+    margin-bottom: 5cm;
+}
+
 @media (max-width: 767px) {
     #top-navbar {
         display: flex;
@@ -447,4 +461,9 @@
 
 .offensiveMessage{
 	color: red;
+}
+
+.message-author a {
+    color: inherit;
+    text-decoration: none;
 }
