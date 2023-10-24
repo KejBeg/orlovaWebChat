@@ -6,11 +6,6 @@ const socketIoUrl = 'wss://' + currentUrl.split('/')[2].split(':')[0];
 
 const socket = io(window.location.origin, {
 	transports: ['websocket', 'polling'],
-	secure: true,
-	cors: {
-		origin: '*',
-		method: ['GET', 'POST'],
-	},
 });
 
 // Creating offensive message text
