@@ -35,20 +35,28 @@ function bundleAllMessageData(messagePfp, messageAuthor, messageText, messageTim
 
 function offensiveMessageFilter(event) {
 	// Getting variables
-	const message = event.target;
+	let message = event.target;
+
+	// Getting the right message
+	while (message.classList.contains('messageChat') == false) {
+		message = message.parentNode;
+	}
+
+	// Getting the message we want 
+
 	const messageId = message.id;
 
 	// Getting the wanted message Array
-	messageObj = data[messageId-1];
+	let messageObj = data[messageId];
 	
 	// Splitting the message to be only pfp
-	messagePfp = message.innerHTML.split('a>')[0] + '>';
+	let messagePfp = document.querySelector('.message-pfp').innerHTML;
 
 	// Setting the message author and text
-	messageAuthor = createMessageAuthor(messageId, messageObj.username);
-	messageText = createMessageText(messageId, messageObj.message);
-	messageID = messageObj.msgID;
-	messageTime = MySQLDateToTimeString(messageObj.time);
+	let messageAuthor = createMessageAuthor(messageId, messageObj.username);
+	let messageText = createMessageText(messageId, messageObj.message);
+	let messageID = messageObj.msgID;
+	let messageTime = MySQLDateToTimeString(messageObj.time);
 	
 	// Setting the message to be offensive
 	let overAllMessage;
@@ -94,6 +102,10 @@ socket.on('connect', () => {
 			let isOffensive = data[i].isOffensive;
 			let messageTime = MySQLDateToTimeString(data[i].time);
 			
+			// Setting the message id and class
+			newMessage.id = data[i].msgID;
+			newMessage.classList.add('messageChat');
+
 			// Make it a bit more obvious that the message is offensive
 			if (isOffensive) {
 				messageText = offensiveMessageText;
@@ -104,11 +116,6 @@ socket.on('connect', () => {
 				// Offensive message filter
 				newMessage.addEventListener('click', (event) => offensiveMessageFilter(event));
 			}
-			
-			// Setting the message id and class
-			newMessage.id = data[i].msgID;
-			newMessage.classList.add('messageChat');
-
 
 			// Setting the message to be sent to the client
 			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText, messageTime);
