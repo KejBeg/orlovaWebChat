@@ -10,11 +10,11 @@ const connection = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 
 const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
+	secure : true,
 	cors: {
 		origin: `*`,
 		method: ['GET', 'POST'],
 	},
-	secure : true
 })
 
 // Socket IO connection
