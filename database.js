@@ -150,9 +150,9 @@ async function setupStoryQuestions(){
 	('0', 'Ahoj!', 'Ahoj.', NULL, NULL, '1', NULL, NULL),
 	('1', 'Chceš se naučit něco o netolismu a závislosti na internetu?', 'Ano!', 'ani ne..', NULL, '3', '2', NULL),
 	('2', 'Tak až si to rozmyslíš tak jdi zpátky na začátek', 'Jít na začátek', NULL, NULL, 0, NULL, NULL),
-	('3', 'Tak Jdeme na to! Víš něco o neolitismu?', 'Ano', 'Ne', 'Co to je neolitismus?', '4', '9', '9'),
-	('4', 'Co je to neolitismus?', 'Je to nakupování drog přes internet', 'Je to závislost na "Virtuálních drogách', '..nějaký fetish?', '5', '6', '5'),
-	('5', 'Špatně zkus ještě jednou. Co je to neolitismus?', 'Je to nakupování drog přes internet', 'Je to závislost na "Virtuálních drogách', '..nějaký fetish?', '5', '6', '5'),
+	('3', 'Tak Jdeme na to! Víš něco o netolismu?', 'Ano', 'Ne', 'Co to je neolitismus?', '4', '9', '9'),
+	('4', 'Co je to netolismus?', 'Je to nakupování drog přes internet', 'Je to závislost na "Virtuálních drogách', '..nějaký fetish?', '5', '6', '5'),
+	('5', 'Špatně zkus ještě jednou. Co je to netolismus?', 'Je to nakupování drog přes internet', 'Je to závislost na "Virtuálních drogách', '..nějaký fetish?', '5', '6', '5'),
 	('6', 'Co to znamená "virtuální drogy"?', 'Vyhledávání drog online', 'Užívání drog s lidma na internetu', 'Závislost na PC, sociálních sítích a podobně', '7', '7', '8'),
 	('7', 'Špatně zkus to ještě jednou. Co to znamená "virtuální drogy"?', 'Vyhledávání drog online', 'Užívání drog s lidma na internetu', 'Závislost na PC, sociálních sítích a podobně', '7', '7', '8'),
 	
@@ -167,16 +167,16 @@ async function setupStoryQuestions(){
 	('14', 'To je normální čas pro člověka aby trávil na počítači', 'Ok', NULL, NULL, '16', NULL, NULL),
 	('15', 'Už se blížíš, a nebo jsi závislý. Bylo by dobré, kdyby ses pokusil trávit méně času u počítače', 'Nechci trávit méně času u PC', 'Pokusím se trávit méně času u PC', NULL, '16', '16', NULL),
 	
-	('16', 'Teď si řekneme o příznacích neolitismu, dobře?', 'Ano!', NULL, NULL, 17, NULL, NULL),
-	('17', 'Hlavnímy příznaky neolitismu jsou: Neodtržitelnost od internetu, ignorace okolí, Nedodržování pitného a stravovacího režimu, agrese při absenci internetu, Chybějící koníčky netýkající se sociálních sítí a počítačů', 'Dále..', NULL, NULL, '18', NULL, NULL),
-	('18', 'Následky neolitismu mohou být: ztráta koníčků, bolest páteře, ztráta sociální schopnosti', 'Ok!', NULL, NULL, 19, NULL, NULL),
+	('16', 'Teď si řekneme o příznacích netolismu, dobře?', 'Ano!', NULL, NULL, 17, NULL, NULL),
+	('17', 'Hlavnímy příznaky netolismu jsou: Neodtržitelnost od internetu, ignorace okolí, Nedodržování pitného a stravovacího režimu, agrese při absenci internetu, Chybějící koníčky netýkající se sociálních sítí a počítačů', 'Dále..', NULL, NULL, '18', NULL, NULL),
+	('18', 'Následky netolismu mohou být: ztráta koníčků, bolest páteře, ztráta sociální schopnosti', 'Ok!', NULL, NULL, 19, NULL, NULL),
 	('19', 'Teď malé opakování!', 'Jsem připravený!', 'Ještě bych si to zopakoval..', NULL, '20', '17', NULL),
-	('20', 'Jaké jsou příznaky neolitismu?', 'Neodtržitelnost od PC a sociálních sítí', 'Špatný zrak, bolest nohou', 'Zvýšené sociální schopnosti', '22', '21', '21'),
+	('20', 'Jaké jsou příznaky netolismu?', 'Neodtržitelnost od PC a sociálních sítí', 'Špatný zrak, bolest nohou', 'Zvýšené sociální schopnosti', '22', '21', '21'),
 	('21', 'Špatně! zopakuj si to znova', 'Dobře..', NULL, NULL, '17', NULL, NULL),
 	('22', 'Správně!', 'Pokračovat', NULL, NULL, '23', NULL, NULL),
-	('23', 'Co jsou následky neolitismu?', 'Žádné pokud jsem opatrný', 'Ztráta přátel a zhoršené vidění', 'Bolest kloubů - hlavně loktu', '21', 24, '21'),
+	('23', 'Co jsou následky netolismu?', 'Žádné pokud jsem opatrný', 'Ztráta přátel a zhoršené vidění', 'Bolest kloubů - hlavně loktu', '21', 24, '21'),
 	('24', 'Správně!', 'Jupii!', NULL, NULL, '25', NULL, NULL),
-	('25', 'Tak doufám, že ses něco nakonec naučil o neolitismu!', 'Ano, děkuju!', NULL, NULL, '26', NULL, NULL),
+	('25', 'Tak doufám, že ses něco nakonec naučil o netolismu!', 'Ano, děkuju!', NULL, NULL, '26', NULL, NULL),
 	('26', 'Tak naschledanou příště! Autoři: Honza, Kuba, Sam a Robert','Můžu si to ještě zopakovat?', NULL, NULL, '1', NULL, NULL);
 	`
 
