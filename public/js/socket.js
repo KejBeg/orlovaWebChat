@@ -4,10 +4,9 @@ const currentUrl = window.location.href;
 // Get the domain name, remove the port, change protocol to ws
 const socketIoUrl = currentUrl.split('/')[2].split(':')[0];
 
-// const socket = io(`wss://${socketIoUrl}`, {
-// 	transports: ['websocket'],
-// });
-const socket = io('https://88.100.111.139')
+const socket = io(`wss://${socketIoUrl}`, {
+	transports: ['websocket'],
+});
 
 // Creating offensive message text
 const offensiveMessageText = 'This message has been flagged as offensive'
