@@ -135,7 +135,18 @@ const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split(/\r?\n/);
 function isMessageOffensive(message) {
 	try {
 		for (word in swearWords) {
-			if (message.toLowerCase().includes(swearWords[word])) return true;
+			//message processing
+			processedMessage = message;
+			processedMessage = processedMessage.toLowerCase();
+			processedMessage = processedMessage.replace(/\s/g, ''); //deletes spaces
+
+			//prevents people from saying 'bádword' and it not being detected as 'badword'
+			processedMessage += processedMessage.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); //adds english dialect (ex. 'č' to 'c')
+
+			if (processedMessage.toLowerCase().includes(swearWords[word])) {;
+				console.log("detected " + swearWords[word] + " in message "+ message +" (flagged as offensive)");
+				return true
+			}
 		}
 	
 		return false;
