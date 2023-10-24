@@ -1,5 +1,5 @@
 // Importing socket.io
-const socket = io('http://localhost:8080');
+const socket = io(`${window.location.href.strip('.com')}:8080`);
 
 // Creating offensive message text
 const offensiveMessageText = 'This message has been flagged as offensive'
