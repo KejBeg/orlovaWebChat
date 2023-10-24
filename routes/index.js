@@ -9,11 +9,9 @@ const socketIoImport = require('socket.io')
 const connection = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 
-// TODO
-// Setting up socket IO with CORS
 const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
 	cors: {
-		origin: [`http://localhost:${process.env.WEB_PORT}`]
+		origin: [`${process.env.URL}`]
 	}
 })
 
