@@ -6,6 +6,8 @@ const socketIoUrl = 'wss://' + currentUrl.split('/')[2].split(':')[0] + ":8080";
 
 const socket = io(socketIoUrl, {
 	transports: ['websocket', 'polling'],
+	timeout : 100000,
+	"force new connection" : true,
 });
 
 // Creating offensive message text
