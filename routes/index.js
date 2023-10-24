@@ -135,7 +135,18 @@ const swearWords = fs.readFileSync('bannedWords.txt', 'utf-8').split(/\r?\n/);
 function isMessageOffensive(message) {
 	try {
 		for (word in swearWords) {
-			if (message.toLowerCase().includes(swearWords[word])) return true;
+			//message processing
+			processedMessage = message;
+			processedMessage = processedMessage.toLowerCase();
+			processedMessage = processedMessage.replace(/\s/g, ''); //deletes spaces
+
+			//prevents people from saying 'bádword' and it not being detected as 'badword'
+			processedMessage += processedMessage.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); //adds english dialect (ex. 'č' to 'c')
+
+			if (processedMessage.toLowerCase().includes(swearWords[word])) {;
+				console.log("detected " + swearWords[word] + " in message "+ message +" (flagged as offensive)");
+				return true
+			}
 		}
 	
 		return false;
@@ -152,7 +163,7 @@ async function getMessageArray() {
 	try {
 		// Getting the messages from the database
 		let messageArray = await sendSqlQuery(
-			`SELECT messages.message, messages.isOffensive, messages.id AS msgID, users.username, users.isBanned, users.hasProfilePicture, users.id
+			`SELECT messages.message, messages.isOffensive,messages.time ,messages.id AS msgID, users.username, users.isBanned, users.hasProfilePicture, users.id
 			FROM messages
 			JOIN users ON messages.author = users.id
 			ORDER BY time DESC

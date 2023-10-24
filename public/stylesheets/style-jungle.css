@@ -4,6 +4,14 @@ body {
     font-family: 'Young Serif', serif;
 }
 
+.messageChat {
+    background-color: rgb(213, 255, 193);
+}
+
+.message-time {
+    color: rgb(163, 226, 138);
+}
+
 #top-navbar {
     background-color: rgb(163, 226, 138);
 }
@@ -13,7 +21,6 @@ body {
     color: rgb(63, 34, 0);
     border-color: rgb(63, 34, 0);
 }
-
 
 #loginA {
     background-color: rgb(163, 226, 138);
