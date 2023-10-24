@@ -7,6 +7,10 @@ body {
     background-color: rgb(255, 182, 87);
 }
 
+.messageChat {
+    background-color: rgb(255, 229, 194);
+}
+
 #layoutA {
     background-color: rgb(255, 182, 87);
     color: rgb(63, 34, 0);

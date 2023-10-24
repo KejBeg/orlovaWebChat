@@ -3,6 +3,10 @@ body {
     font-family: 'Almendra', serif;
 }
 
+.messageChat {
+    background-color: rgb(252, 255, 204);
+}
+
 #top-navbar {
     border-color: rgb(63, 34, 0);
     background-color: rgb(231, 240, 110);
