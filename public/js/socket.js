@@ -1,5 +1,10 @@
 // Importing socket.io
-const socket = io(`${window.location.href.strip('.com')}:8080`);
+const currentUrl = window.location.href;
+
+// Get the domain name, remove the port, leave the protocol
+const socketIoUrl = currentUrl.split(':')[0] + ':' + currentUrl.split(':')[1] + ':8080';
+
+const socket = io(`${socketIoUrl}}`);
 
 // Creating offensive message text
 const offensiveMessageText = 'This message has been flagged as offensive'
