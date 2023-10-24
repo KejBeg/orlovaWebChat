@@ -6,6 +6,7 @@ const socketIoUrl = 'wss://' + currentUrl.split('/')[2].split(':')[0];
 
 const socket = io(socketIoUrl, {
 	transports: ['websocket'],
+	upgrades: ['websocket'],
 });
 
 // Creating offensive message text
