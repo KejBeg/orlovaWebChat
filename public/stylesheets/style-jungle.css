@@ -8,6 +8,10 @@ body {
     background-color: rgb(213, 255, 193);
 }
 
+.message-time {
+    color: rgb(163, 226, 138);
+}
+
 #top-navbar {
     background-color: rgb(163, 226, 138);
 }
