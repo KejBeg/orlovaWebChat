@@ -30,7 +30,7 @@ function createMessageText(messageId, message) {
  * @returns Bundled message data
  */
 function bundleAllMessageData(messagePfp, messageAuthor, messageText) {
-	return `<span class="message-pfp">${messagePfp}</span><span class="message-author">${messageAuthor}</span>: <span class="message-text">${messageText}</span>`
+	return `<span class="message-pfp">${messagePfp}</span><span class="message-author">${messageAuthor}:</span> <span class="message-text">${messageText}</span>`
 }
 
 function offensiveMessageFilter(event) {
