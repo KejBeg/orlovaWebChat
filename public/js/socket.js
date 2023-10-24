@@ -136,6 +136,11 @@ document.querySelector('[name="chatForm"]').addEventListener('submit', (event) =
 	document.querySelector('[name="message"]').value = '';
 });
 
+/**
+ * @param {string} mySQLDate 
+ * @param {boolean} includeSeconds 
+ * @returns Converts mySQLDate into regular time
+ */
 function MySQLDateToTimeString(mySQLDate, includeSeconds = false){
 	try {
 		let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
