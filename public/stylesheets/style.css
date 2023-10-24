@@ -6,16 +6,23 @@
 
 .messageChat {
     display: table;
-    background-color:rgb(255, 255, 255);
     padding-right: 15px;
     padding-bottom: 5px;
     padding-top: 5px;
-    border-color: black;
     border-radius: 20px;
 }
 
-.messageChat::target-text {
-    margin-bottom: 5cm;
+.message-author {
+    vertical-align: super;
+}
+
+.message-author a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.message-text {
+    vertical-align: super;
 }
 
 @media (max-width: 767px) {
@@ -457,13 +464,6 @@
 
   }
 
-
-
 .offensiveMessage{
 	color: red;
-}
-
-.message-author a {
-    color: inherit;
-    text-decoration: none;
 }
