@@ -128,6 +128,9 @@ document.querySelector('[name="chatForm"]').addEventListener('submit', (event) =
 
 	const userToken = document.cookie.split('=')[1];
 	const message = document.querySelector('[name="message"]').value;
-
+	
 	socket.emit('sendMessage', { userToken: userToken, message: message });
+
+	// Clearing the message input
+	document.querySelector('[name="message"]').value = '';
 });
