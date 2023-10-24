@@ -7,6 +7,10 @@ body {
     background-color: rgb(222, 254, 255);
 }
 
+.message-time {
+    color: rgb(199, 248, 246);
+}
+
 #top-navbar {
     border-color: rgb(65, 173, 177);
     background-color: rgb(199, 248, 246);

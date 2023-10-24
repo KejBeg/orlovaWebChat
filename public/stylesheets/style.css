@@ -12,6 +12,10 @@
     border-radius: 20px;
 }
 
+.message-time {
+    vertical-align: super;
+}
+
 .message-author {
     vertical-align: super;
 }
