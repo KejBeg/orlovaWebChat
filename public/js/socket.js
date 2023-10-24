@@ -29,8 +29,8 @@ function createMessageText(messageId, message) {
  * @param {string} messageText 
  * @returns Bundled message data
  */
-function bundleAllMessageData(messagePfp, messageAuthor, messageText) {
-	return `<span class="message-pfp">${messagePfp}</span><span class="message-author">${messageAuthor}:</span> <span class="message-text">${messageText}</span>`
+function bundleAllMessageData(messagePfp, messageAuthor, messageText, messageTime) {
+	return `<span class="message-pfp">${messagePfp}</span><span class="message-author">${messageAuthor}: </span> <span class="message-text">${messageText}</span> <span class"message-time">${messageTime}</span>`
 }
 
 function offensiveMessageFilter(event) {
@@ -48,6 +48,7 @@ function offensiveMessageFilter(event) {
 	messageAuthor = createMessageAuthor(messageId, messageObj.username);
 	messageText = createMessageText(messageId, messageObj.message);
 	messageID = messageObj.msgID;
+	messageTime = MySQLDateToTimeString(messageObj.time);
 	
 	// Setting the message to be offensive
 	let overAllMessage;
@@ -55,10 +56,10 @@ function offensiveMessageFilter(event) {
 	// If message is offensive, set it to inoffensive
 	// If message is inoffensive, set it to offensive
 	if (message.title == 'offensive') {
-		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText);
+		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText, messageTime);
 		message.title = 'inoffensive';
 	} else {
-		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText);
+		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText, messageTime);
 		message.title = 'offensive';
 	}
 
@@ -91,7 +92,7 @@ socket.on('connect', () => {
 			let messageAuthor = createMessageAuthor(data[i].id, data[i].username);
 			let messageText = createMessageText(data[i].id, data[i].message);
 			let isOffensive = data[i].isOffensive;
-
+			let messageTime = MySQLDateToTimeString(data[i].time);
 			
 			// Make it a bit more obvious that the message is offensive
 			if (isOffensive) {
@@ -110,7 +111,7 @@ socket.on('connect', () => {
 
 
 			// Setting the message to be sent to the client
-			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText);
+			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText, messageTime);
 			newMessage.innerHTML = overAllMessage;
 
 			// Adding the message to the message list
@@ -134,3 +135,14 @@ document.querySelector('[name="chatForm"]').addEventListener('submit', (event) =
 	// Clearing the message input
 	document.querySelector('[name="message"]').value = '';
 });
+
+function MySQLDateToTimeString(mySQLDate, includeSeconds = false){
+	try {
+		let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
+
+		if(includeSeconds) return h + ':' + m + ":" + s;
+		return h + ':' + m;
+	} catch (error) {
+		throw new Error(`An error occured while rephrasing a mySQL date: ${error}`);
+	}
+}
