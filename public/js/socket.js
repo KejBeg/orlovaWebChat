@@ -5,9 +5,7 @@ const currentUrl = window.location.href;
 const socketIoUrl = 'wss://' + currentUrl.split('/')[2].split(':')[0];
 
 const socket = io(socketIoUrl, {
-	transports: ['websocket', 'polling'],
-	timeout : 100000,
-	"force new connection" : true,
+	transports: ['websocket'],
 });
 
 // Creating offensive message text
