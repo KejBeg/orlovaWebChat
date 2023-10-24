@@ -4,7 +4,7 @@ const currentUrl = window.location.href;
 // Get the domain name, remove the port, change protocol to ws
 const socketIoUrl = currentUrl.split('/')[2].split(':')[0];
 
-const socket = io(`wss://${socketIoUrl}`, {
+const socket = io.connect(`wss://${socketIoUrl}`, {
 	transports: ['xhr-polling', 'websocket', 'polling'],
 	polling: 10000
 });
