@@ -11,7 +11,7 @@ const sendSqlQuery = require('../database').sendSqlQuery;
 
 const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
 	cors: {
-		origin: `*`,
+		origin: `http://localhost:${process.env.PORT}`,
 		method: ['GET', 'POST'],
 	}
 })
