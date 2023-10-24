@@ -29,25 +29,34 @@ function createMessageText(messageId, message) {
  * @param {string} messageText 
  * @returns Bundled message data
  */
-function bundleAllMessageData(messagePfp, messageAuthor, messageText) {
-	return `${messagePfp}${messageAuthor}: ${messageText}`
+function bundleAllMessageData(messagePfp, messageAuthor, messageText, messageTime) {
+	return `<span class="message-pfp">${messagePfp}</span><span class="message-author">${messageAuthor}</span> <span class="message-time">(${messageTime}): </span> <span class="message-text">${messageText}</span>`
 }
 
 function offensiveMessageFilter(event) {
 	// Getting variables
-	const message = event.target;
+	let message = event.target;
+
+	// Getting the right message
+	while (message.classList.contains('messageChat') == false) {
+		message = message.parentNode;
+	}
+
+	// Getting the message we want 
+
 	const messageId = message.id;
 
 	// Getting the wanted message Array
-	messageObj = data[messageId-1];
+	let messageObj = data[messageId];
 	
 	// Splitting the message to be only pfp
-	messagePfp = message.innerHTML.split('a>')[0] + '>';
+	let messagePfp = document.querySelector('.message-pfp').innerHTML;
 
 	// Setting the message author and text
-	messageAuthor = createMessageAuthor(messageId, messageObj.username);
-	messageText = createMessageText(messageId, messageObj.message);
-	messageID = messageObj.msgID;
+	let messageAuthor = createMessageAuthor(messageId, messageObj.username);
+	let messageText = createMessageText(messageId, messageObj.message);
+	let messageID = messageObj.msgID;
+	let messageTime = MySQLDateToTimeString(messageObj.time);
 	
 	// Setting the message to be offensive
 	let overAllMessage;
@@ -55,10 +64,10 @@ function offensiveMessageFilter(event) {
 	// If message is offensive, set it to inoffensive
 	// If message is inoffensive, set it to offensive
 	if (message.title == 'offensive') {
-		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText);
+		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, offensiveMessageText, messageTime);
 		message.title = 'inoffensive';
 	} else {
-		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText);
+		overAllMessage = bundleAllMessageData(messagePfp, messageAuthor, messageText, messageTime);
 		message.title = 'offensive';
 	}
 
@@ -91,8 +100,12 @@ socket.on('connect', () => {
 			let messageAuthor = createMessageAuthor(data[i].id, data[i].username);
 			let messageText = createMessageText(data[i].id, data[i].message);
 			let isOffensive = data[i].isOffensive;
-
+			let messageTime = MySQLDateToTimeString(data[i].time);
 			
+			// Setting the message id and class
+			newMessage.id = data[i].msgID;
+			newMessage.classList.add('messageChat');
+
 			// Make it a bit more obvious that the message is offensive
 			if (isOffensive) {
 				messageText = offensiveMessageText;
@@ -103,14 +116,9 @@ socket.on('connect', () => {
 				// Offensive message filter
 				newMessage.addEventListener('click', (event) => offensiveMessageFilter(event));
 			}
-			
-			// Setting the message id and class
-			newMessage.id = data[i].msgID;
-			newMessage.classList.add('messageChat');
-
 
 			// Setting the message to be sent to the client
-			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText);
+			overAllMessage = bundleAllMessageData(profilePicture, messageAuthor, messageText, messageTime);
 			newMessage.innerHTML = overAllMessage;
 
 			// Adding the message to the message list
@@ -128,6 +136,25 @@ document.querySelector('[name="chatForm"]').addEventListener('submit', (event) =
 
 	const userToken = document.cookie.split('=')[1];
 	const message = document.querySelector('[name="message"]').value;
-
+	
 	socket.emit('sendMessage', { userToken: userToken, message: message });
+
+	// Clearing the message input
+	document.querySelector('[name="message"]').value = '';
 });
+
+/**
+ * @param {string} mySQLDate 
+ * @param {boolean} includeSeconds 
+ * @returns Converts mySQLDate into regular time
+ */
+function MySQLDateToTimeString(mySQLDate, includeSeconds = false){
+	try {
+		let [y, M, d, h, m, s] = mySQLDate.match(/\d+/g);
+
+		if(includeSeconds) return h + ':' + m + ":" + s;
+		return h + ':' + m;
+	} catch (error) {
+		throw new Error(`An error occured while rephrasing a mySQL date: ${error}`);
+	}
+}

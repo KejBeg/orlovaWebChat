@@ -3,6 +3,14 @@ body {
     font-family: 'Emilys Candy', serif;
 }
 
+.messageChat {
+    background-color: rgb(61, 61, 80);
+}
+
+.message-time {
+    color: #192847;
+}
+
 #top-navbar {
     border-color: #f7da4c;
     background-color: #192847;
