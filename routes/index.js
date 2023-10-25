@@ -1,9 +1,9 @@
 // Imports
-const { log } = require('console');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs'); //interacts with files
 const socketIoImport = require('socket.io')
+const { Server} = require("socket.io");
 
 // Import database
 const connection = require('../database').connection;
