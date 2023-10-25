@@ -9,11 +9,8 @@ const { Server} = require("socket.io");
 const connection = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 
-const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
-	cors: {
-		origin: `*`,
-	},
-})
+console.log(`http server ${global.httpServer}}`);
+const socketIo = socketIoImport(global.httpServer);
 
 // Socket IO connection
 socketIo.on('connect', async (socket) => {
