@@ -112,7 +112,10 @@ async function userExistsByToken(token) {
 	}
 }
 
+// Creating the http server
 const httpServer = require('http').createServer(app);
+
+// Globalizing httpServer for socketIo
 global.httpServer = httpServer;
 
 // Routers
