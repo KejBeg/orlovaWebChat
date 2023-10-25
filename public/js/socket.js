@@ -47,7 +47,7 @@ function offensiveMessageFilter(event) {
 	const messageId = message.id;
 
 	// Getting the wanted message Array
-	let messageObj = data[messageId];
+	let messageObj = data[messageId-1];
 	
 	// Splitting the message to be only pfp
 	let messagePfp = document.querySelector('.message-pfp').innerHTML;
