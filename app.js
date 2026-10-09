@@ -112,17 +112,26 @@ async function userExistsByToken(token) {
 	}
 }
 
+// Creating the http server
+const httpServer = require('http').createServer(app);
+
+// Globalizing httpServer for socketIo
+global.httpServer = httpServer;
+
 // Routers
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 const storyRouter = require('./routes/story');
+
 
 // Using the routers
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/story', storyRouter);
 
+
 // Listening to the port
-app.listen(process.env.WEB_PORT, () => {
-	console.log(`Listening to port ${process.env.WEB_PORT}`);
+httpServer.listen(process.env.PORT, () => {
+	console.log(`Listening to port ${process.env.PORT}`);
 });
+

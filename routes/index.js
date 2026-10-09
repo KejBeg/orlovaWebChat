@@ -1,21 +1,16 @@
 // Imports
-const { log } = require('console');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs'); //interacts with files
 const socketIoImport = require('socket.io')
+const { Server} = require("socket.io");
 
 // Import database
 const connection = require('../database').connection;
 const sendSqlQuery = require('../database').sendSqlQuery;
 
-// TODO
-// Setting up socket IO with CORS
-const socketIo = socketIoImport(process.env.SOCKETIO_PORT, {
-	cors: {
-		origin: [`http://localhost:${process.env.WEB_PORT}`]
-	}
-})
+console.log(`http server ${global.httpServer}}`);
+const socketIo = socketIoImport(global.httpServer);
 
 // Socket IO connection
 socketIo.on('connect', async (socket) => {

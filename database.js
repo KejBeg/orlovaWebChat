@@ -4,6 +4,7 @@ const mysql = require('mysql');
 // Database connection
 const connection = mysql.createConnection({
 	host: process.env.DATABASE_HOST,
+	port: process.env.DATABASE_PORT,
 	user: process.env.DATABASE_USER,
 	password: process.env.DATABASE_PASSWORD,
 	database: process.env.DATABASE_NAME,
@@ -94,7 +95,7 @@ usersTable = `CREATE TABLE IF NOT EXISTS users (
 	storyQuestion INT DEFAULT 0,
 	FOREIGN KEY (storyQuestion) REFERENCES storyMessages(id),
 	userCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	lastActiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	lastActiveDate TIMESTAMP DEFAULT '0000-00-00 00:00:00'
 	)`;
 
 console.log('Generating tables');
@@ -103,7 +104,7 @@ console.log('Generating tables');
 async function createTables() {
 
 	// Sets correct time zone for database (GTML+2 time)
-	await sendSqlQuery(timeZoneQuery);
+	// await sendSqlQuery(timeZoneQuery);
 	
 	// Story messages needs to be first because users table references it
 	// Create Story mesages table
